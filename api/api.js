@@ -15,12 +15,21 @@ const SERVER_ERROR_MSG = "Internal Server Error: Please try again later.";
 const BAD_REQUEST_MSG = "Error: Some of the provided parameters are invalid.";
 const FORBIDDEN_MSG = "Error: You are unauthorized to make this request.";
 var token = ""; //holds value of the token cookie
+const config = { headers: { Authorization: '' } }; //adds authorization header for axios (might not be needed)
 
 export default class API {
+    // default constructor. only thing that is needed is to get the token from cookie.
+    // Previous group has it set up to great a new api everytime a request is made.
+    // Therefore we need to get the token everytime.
+    constructor() {
+        token = cookieCutter.get("token");
+    }
+
   /* This function is for getInitialProps.
     cookieCutter is undefined in getInitialProps,
     so this function sets the token to the value of the cookie
     passed in from getInitialProps. */
+    // this might be doing nothing now that we get token properly.
   setToken(t = "") {
     token = t;
   }
@@ -77,8 +86,10 @@ export default class API {
   async Custom() {
     const url = rootNew + "/Custom";
     console.log(url);
-    try {
-      const response = await axios.get(url);
+      try {
+      // so axios is what sends the http header request to the backend. it needs to have the token sent
+      // for authorization everytime. that is what the extra header is now.
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -91,7 +102,7 @@ export default class API {
   async getFacultyList() {
     const url = rootNew + "/Role/GetFaculty";
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         //console.log(response);
@@ -116,7 +127,7 @@ export default class API {
   async getUsersByRole(roleName) {
     const url = rootNew + `/Role/GetUsersByRole?roleName=${roleName}`;
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         //console.log(response);
@@ -288,7 +299,7 @@ export default class API {
   async getSemesters() {
     const url = rootNew + "/Semester/GetSemesters";
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         //console.log(response);
@@ -370,7 +381,7 @@ export default class API {
   async getMajors(term, year) {
     const url = rootNew + `/Major/GetMajors?term=${term}&year=${year}`;
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -447,7 +458,7 @@ export default class API {
       rootNew +
       `/Course/GetCoursesByDepartment?term=${term}&year=${year}&department=${department}`;
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -598,7 +609,7 @@ export default class API {
       rootNew +
       `/Section/GetSection?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -623,7 +634,7 @@ export default class API {
       rootNew +
       `/Course/GetSectionsByCourse?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -648,7 +659,7 @@ export default class API {
       rootNew +
       `/Section/GetSectionsByInstructor?term=${term}&year=${year}&instructorEUID=${instructorEUID}`;
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -673,7 +684,7 @@ export default class API {
       rootNew +
       `/Course/GetCoursesByCoordinator?term=${term}&year=${year}&coordinatorEUID=${coordinatorEUID}`;
     try {
-      var response = await axios.get(url);
+      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -968,7 +979,7 @@ export default class API {
       rootNew +
       `/CourseOutcome/GetCourseOutcomes?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}`;
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1062,7 +1073,7 @@ export default class API {
       rootNew +
       `/CourseOutcome/GetLinkedMajorOutcomes?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${major}`;
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1153,7 +1164,7 @@ export default class API {
       rootNew +
       `/Major/GetMajorOutcomesByMajor?term=${term}&year=${year}&majorName=${majorName}`;
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1178,7 +1189,7 @@ export default class API {
       rootNew +
       `/Course/GetMajorOutcomesSatisfied?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1205,7 +1216,7 @@ export default class API {
       rootNew +
       `/Survey/GetQuestionSet?term=${term}&year=${year}&questionSetName=${questionSetName}`;
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1228,7 +1239,7 @@ export default class API {
   async getQuestions(year, term) {
     const url = rootNew + `/Survey/GetQuestions?term=${term}&year=${year}`;
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1319,7 +1330,7 @@ export default class API {
       `/Grade/GetGrades?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1384,7 +1395,7 @@ export default class API {
       `/StudentOutcomesCompleted/GetStudentOutcomesCompleted?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1443,7 +1454,7 @@ export default class API {
     const url = rootNew + `/GenerateFullReport?term=${term}&year=${year}`;
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
         return {
