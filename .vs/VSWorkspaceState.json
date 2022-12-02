@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\api",
-    "\\components"
+    "\\components",
+    "\\components\\form-components",
+    "\\components\\instructor-components",
+    "\\pages"
   ],
-  "SelectedNode": "\\components\\authContext.js",
+  "SelectedNode": "\\api\\api.js",
   "PreviewInSolutionExplorer": false
 }

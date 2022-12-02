@@ -152,7 +152,7 @@ export default class API {
   async addRoleToUser(euid, role) {
     const url = rootNew + `/Role/AddRoleToUser?EUID=${euid}&roleName=${role}`;
     try {
-      const response = await axios.post(url);
+        const response = await axios.post(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -176,7 +176,7 @@ export default class API {
     const url =
       rootNew + `/Role/RemoveRoleFromUser?EUID=${euid}&roleName=${role}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       console.log(response);
       if (response) {
         let status = this.checkStatus(response.status);
@@ -210,7 +210,8 @@ export default class API {
         firstName: Firstname,
         lastName: Lastname,
         euid: newEuid,
-      });
+      },
+          { headers: { 'Authorization': 'bearer ' + token } }      );
       console.log(response);
 
       if (response) {
@@ -236,7 +237,7 @@ export default class API {
   async deleteFacultyUser(Euid = "") {
     const url = rootNew + "/Users/DeleteUser";
     try {
-      const response = await axios.delete(url, { params: { EUID: Euid } });
+        const response = await axios.delete(url, { params: { EUID: Euid } }, { headers: { 'Authorization': 'bearer ' + token } });
       console.log(response);
       if (response) {
         let status = this.checkStatus(response.status);
@@ -274,7 +275,7 @@ export default class API {
       roles: [facultyType],
     };
     try {
-      const response = await axios.post(url, body);
+        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         console.log(response);
         let status = this.checkStatus(response.status);
@@ -328,7 +329,7 @@ export default class API {
       term: term,
     };
     try {
-      const response = await axios.post(url, body);
+        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         //console.log(response);
@@ -356,7 +357,8 @@ export default class API {
     try {
       const response = await axios.delete(url, {
         data: { year: year, term: term },
-      });
+      },
+          { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         //console.log(response);
@@ -405,7 +407,7 @@ export default class API {
     const url =
       rootNew + `/Major/AddMajor?term=${term}&year=${year}&name=${majorName}`;
     try {
-      var response = await axios.post(url);
+        var response = await axios.post(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         console.log(response);
@@ -432,7 +434,7 @@ export default class API {
       rootNew +
       `/Major/DeleteMajor?term=${term}&year=${year}&name=${majorName}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         console.log(response);
@@ -500,7 +502,7 @@ export default class API {
       department: department,
     };
     try {
-      const response = await axios.post(url, body);
+        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -525,7 +527,7 @@ export default class API {
       rootNew +
       `/Course/DeleteCourse?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -581,7 +583,8 @@ export default class API {
         coordinatorComment: newCoordinatorComment,
         isCourseCompleted: newIsCourseComplete,
         department: newDepartment,
-      });
+      },
+          { headers: { 'Authorization': 'bearer ' + token } }      );
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -726,7 +729,7 @@ export default class API {
       numberOfStudents: numberOfStudents,
     };
     try {
-      const response = await axios.post(url, body);
+        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -751,7 +754,7 @@ export default class API {
       rootNew +
       `/Section/DeleteSection?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -792,7 +795,8 @@ export default class API {
         isSectionCompleted: newIsSectionCompleted,
         sectionNumber: newSectionNumber,
         numberOfStudents: newNumberOfStudents,
-      });
+      },
+          { headers: { 'Authorization': 'bearer ' + token } }      );
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -824,7 +828,7 @@ export default class API {
       major: major,
     };
     try {
-      const response = await axios.post(url, body);
+        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -855,7 +859,7 @@ export default class API {
       rootNew +
       `/CourseOutcome/DeleteCourseOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&majorName=${major}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -892,7 +896,7 @@ export default class API {
       description: outcomeDescription,
     };
     try {
-      const response = await axios.post(url, body);
+        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -917,7 +921,7 @@ export default class API {
       rootNew +
       `/MajorOutcome/DeleteMajorOutcome?term=${term}&year=${year}&majorName=${majorName}&outcomeName=${outcomeName}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -953,7 +957,8 @@ export default class API {
       const response = await axios.patch(url, {
         name: newOutcomename,
         description: newDescription,
-      });
+      },
+          { headers: { 'Authorization': 'bearer ' + token } }      );
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -1015,7 +1020,7 @@ export default class API {
         name: outcomeName,
         description: outcomeDescription,
       };
-      const response = await axios.post(url, body);
+        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1040,7 +1045,7 @@ export default class API {
       rootNew +
       `/CourseOutcome/DeleteCourseOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&name=${outcomeName}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -1106,7 +1111,7 @@ export default class API {
       rootNew +
       `/CourseOutcome/LinkToMajorOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${majorName}&majorOutcomeName=${majorOutcomeName}`;
     try {
-      const response = await axios.post(url);
+        const response = await axios.post(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1139,7 +1144,7 @@ export default class API {
       rootNew +
       `/CourseOutcome/RemoveLinkToMajorOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${majorName}&majorOutcomeName=${majorOutcomeName}`;
     try {
-      const response = await axios.delete(url);
+        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1267,7 +1272,7 @@ export default class API {
       questions,
     };
     try {
-      const response = await axios.post(url, questions);
+        const response = await axios.post(url, questions, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1302,7 +1307,7 @@ export default class API {
       `/Survey/PostSurvey?EUID=${euid}&term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}&additionalComments=${additionalComments}`;
 
     try {
-      const response = await axios.post(url, answers);
+        const response = await axios.post(url, answers, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1363,7 +1368,7 @@ export default class API {
       `/Grade/SetGrades?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
 
     try {
-      const response = await axios.post(url, gradesArray);
+        const response = await axios.post(url, gradesArray, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -1428,7 +1433,7 @@ export default class API {
       `/StudentOutcomesCompleted/SetStudentOutcomesCompleted?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
 
     try {
-      const response = await axios.post(url, courseOutcomeObject);
+        const response = await axios.post(url, courseOutcomeObject, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
