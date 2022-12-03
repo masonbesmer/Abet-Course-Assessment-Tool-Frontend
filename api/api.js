@@ -822,7 +822,7 @@ export default class API {
   async assignCourseToMajor(year, term, department, courseNumber, major) {
     const url =
       rootNew +
-      `/CourseOutcome/addCourseOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}`;
+      `/CourseOutcome/addCourseOutcome?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
     const body = {
       courseOutcomeId: 0,
       major: major,
@@ -857,7 +857,7 @@ export default class API {
   ) {
     const url =
       rootNew +
-      `/CourseOutcome/DeleteCourseOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&majorName=${major}`;
+      `/CourseOutcome/DeleteCourseOutcome?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&majorName=${major}`;
     try {
         const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
@@ -982,7 +982,7 @@ export default class API {
   async getCourseOutcome(year, term, department, courseNumber) {
     const url =
       rootNew +
-      `/CourseOutcome/GetCourseOutcomes?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}`;
+      `/CourseOutcome/GetCourseOutcomes?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
     try {
       const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
@@ -1014,7 +1014,7 @@ export default class API {
   ) {
     const url =
       rootNew +
-      `/CourseOutcome/addCourseOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}`;
+      `/CourseOutcome/addCourseOutcome?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
     try {
       const body = {
         name: outcomeName,
@@ -1043,7 +1043,7 @@ export default class API {
   async deleteCourseOutcome(year, term, department, courseNumber, outcomeName) {
     const url =
       rootNew +
-      `/CourseOutcome/DeleteCourseOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&name=${outcomeName}`;
+      `/CourseOutcome/DeleteCourseOutcome?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&name=${outcomeName}`;
     try {
         const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
@@ -1076,7 +1076,7 @@ export default class API {
   ) {
     const url =
       rootNew +
-      `/CourseOutcome/GetLinkedMajorOutcomes?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${major}`;
+      `/CourseOutcome/GetLinkedMajorOutcomes?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${major}`;
     try {
       const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
@@ -1109,7 +1109,7 @@ export default class API {
   ) {
     const url =
       rootNew +
-      `/CourseOutcome/LinkToMajorOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${majorName}&majorOutcomeName=${majorOutcomeName}`;
+      `/CourseOutcome/LinkToMajorOutcome?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${majorName}&majorOutcomeName=${majorOutcomeName}`;
     try {
         const response = await axios.post(url, {}, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
@@ -1142,7 +1142,7 @@ export default class API {
   ) {
     const url =
       rootNew +
-      `/CourseOutcome/RemoveLinkToMajorOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${majorName}&majorOutcomeName=${majorOutcomeName}`;
+      `/CourseOutcome/RemoveLinkToMajorOutcome?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${majorName}&majorOutcomeName=${majorOutcomeName}`;
     try {
         const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
