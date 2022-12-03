@@ -152,7 +152,7 @@ export default class API {
   async addRoleToUser(euid, role) {
     const url = rootNew + `/Role/AddRoleToUser?EUID=${euid}&roleName=${role}`;
     try {
-        const response = await axios.post(url, { headers: { 'Authorization': 'bearer ' + token } });
+        const response = await axios.post(url, {}, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -407,7 +407,7 @@ export default class API {
     const url =
       rootNew + `/Major/AddMajor?term=${term}&year=${year}&name=${majorName}`;
     try {
-        var response = await axios.post(url, { headers: { 'Authorization': 'bearer ' + token } });
+        var response = await axios.post(url, {}, {headers: { 'Authorization': 'bearer ' + token }});
       if (response) {
         let status = this.checkStatus(response.status);
         console.log(response);
@@ -1111,7 +1111,7 @@ export default class API {
       rootNew +
       `/CourseOutcome/LinkToMajorOutcome?term=${term}&year=${year}&classDepartment=${department}&courseNumber=${courseNumber}&courseOutcomeName=${courseOutcomeName}&majorName=${majorName}&majorOutcomeName=${majorOutcomeName}`;
     try {
-        const response = await axios.post(url, { headers: { 'Authorization': 'bearer ' + token } });
+        const response = await axios.post(url, {}, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
