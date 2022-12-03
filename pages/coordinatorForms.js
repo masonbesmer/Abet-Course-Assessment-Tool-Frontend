@@ -13,6 +13,7 @@ import { getGrades, GetStudentOutcomesCompleted } from "../api/APIHelper";
 import CoordinatorGrades from "../components/form-components/CoordinatorGrades";
 import blankForm from "../components/form-components/blankForm.json";
 import CoordinatorOutcomes from "../components/form-components/CoordinatorOutcomes";
+import Navigation from "../components/instructor-components/Navigation";
 
 const formCompletion = ({ department, number, section, term, year }) => {
   const [comment, setComment] = useState("");
@@ -70,7 +71,9 @@ const formCompletion = ({ department, number, section, term, year }) => {
     getOutcomeForm();
   }, []);
 
-  return (
+    return (
+    <div>
+    <Navigation />
     <Center>
       {gradeForm && outcomeForm ? (
         <Flex mt="2em" direction="column" w="90%">
@@ -116,6 +119,7 @@ const formCompletion = ({ department, number, section, term, year }) => {
         </Flex>
       ) : null}
     </Center>
+    </div>
   );
 };
 
