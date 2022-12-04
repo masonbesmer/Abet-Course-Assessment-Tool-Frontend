@@ -3,10 +3,12 @@
     "",
     "\\api",
     "\\components",
-    "\\components\\form-components",
-    "\\components\\instructor-components",
-    "\\pages"
+    "\\components\\admin-components",
+    "\\components\\admin-components\\AdminReport",
+    "\\components\\admin-components\\GenerateSectionReport",
+    "\\pages",
+    "\\recoil"
   ],
-  "SelectedNode": "\\api\\api.js",
+  "SelectedNode": "\\pages\\coordinatorForms.js",
   "PreviewInSolutionExplorer": false
 }

@@ -99,6 +99,7 @@ const formCompletion = ({ department, number, section, term, year }) => {
           <Textarea
             mb="1em"
             size="lg"
+            fontSize="xl"
             bg="#edf2f7"
             placeholder="// Write a comment"
             onChange={(event) => {

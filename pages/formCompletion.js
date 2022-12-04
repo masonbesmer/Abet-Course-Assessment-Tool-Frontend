@@ -263,6 +263,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
             <Textarea
               mb="1em"
               size="lg"
+              fontSize="xl"
               bg="#edf2f7"
               placeholder="// Write a comment"
             ></Textarea>
