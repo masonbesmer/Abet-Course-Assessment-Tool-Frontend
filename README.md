@@ -11,7 +11,7 @@ assessed according to the course and relevant program outcomes. There is a
 current system, which is hard to use and hard to maintain. The program outcome
 mappings are obsolete due to ABET changes, so a new version is needed.
 
-This is the front-end for the Fall 2022 - Spring 2023 UNT ABET Tool Project
+This is the front-end for the Fall 2020 - Spring 2023 UNT ABET Tool Project
 
 ## Getting Started
  This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
