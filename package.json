@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run open-browser && next dev -p 3000",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "open-browser": "start http://localhost:3000/"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
