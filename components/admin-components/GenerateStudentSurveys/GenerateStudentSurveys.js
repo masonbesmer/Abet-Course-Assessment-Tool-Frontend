@@ -255,7 +255,7 @@ const GenerateStudentSurveys = () => {
                 })}
             </Select>
           </GridItem>
-          <GridItem>
+          <GridItem zIndex="dropdown">
             <SingleSelect
               disabled={checkIfSelectMajorAndSemester()}
               style={{ bottom: "5px" }}

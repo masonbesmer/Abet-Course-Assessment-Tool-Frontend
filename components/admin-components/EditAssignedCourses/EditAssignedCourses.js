@@ -10,6 +10,7 @@ import {
   Select,
   useToast,
   VStack,
+  Portal,
 } from "@chakra-ui/react";
 //api
 import {
@@ -308,7 +309,7 @@ const EditAssignedCourses = () => {
                 })}
             </Select>
           </GridItem>
-          <GridItem>
+          <GridItem zIndex="dropdown">
             <SingleSelect
               disabled={checkIfSelectMajorAndSemester()}
               style={{ bottom: "5px" }}
