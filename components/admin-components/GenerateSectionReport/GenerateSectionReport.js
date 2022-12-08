@@ -5,6 +5,11 @@ import Link from "next/link";
 import { getAllCourses, getInstructorCourses } from "../../../api/APIHelper";
 import CourseList from "./CourseList";
 
+//THIS IS A TEMP FIX ACCORDING TO CURRENT UNDERSTANDING OF THE REQUIREMENTS
+//THIS NEEDS TO BE CHANGED BEFORE FINAL UPDATE AS WELL AS MAKING IT PROPERLY CONNECT TO THE DATES IN THE DATABASE
+//CHANFE
+const currYear = new Date().getFullYear()
+
 const GenerateSectionReport = ({ user }) => {
   const [term, setTerm] = useState({
     semester: "",
@@ -14,15 +19,15 @@ const GenerateSectionReport = ({ user }) => {
   const terms = [
     {
       semester: "Spring",
-      year: 2020,
+      year: currYear,
     },
     {
       semester: "Summer",
-      year: 2020,
+      year: currYear,
     },
     {
       semester: "Fall",
-      year: 2020,
+      year: currYear,
     },
   ];
   const handleSetTerm = async (e) => {
