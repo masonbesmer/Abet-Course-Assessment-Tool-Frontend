@@ -11,30 +11,37 @@ assessed according to the course and relevant program outcomes. There is a
 current system, which is hard to use and hard to maintain. The program outcome
 mappings are obsolete due to ABET changes, so a new version is needed.
 
-This is the front-end for the Fall 2020 - Spring 2021 UNT ABET Tool Project
+This is the front-end for the UNT ABET Tool Project
 
-## Getting Started
- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Install node_modules:
-```bash
-npm install
-# or
-yarn install
-```
-then, run the development server:
+## Getting Started/First Time Setup
+1. Open Visual Studio Code
+2. Click the "New Terminal" option under the "Terminal" dropdown on the top of the window
+3. At the bottom of your window of Visual Studio Code, click inside of the box that appears
+4. Run the following command:
+    `cd \path\to\cloned\github\repo\`
+        Note: you can press tab to autofill path locations
+        The path would be the path to this readme document
+5. The terminal should now say: `PS \path\to\repo\here\` on the left
+6. Run the following command inside the terminal to install the proper items necessary to run the front end:
+    `npm install`
+    OR
+    `yarn install`
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## How to run the front end
+1. If you have just completed the getting started section, go to 3. If not, continue to 2.
+2. Simply run steps 1-5 on the Getting Started section which is just above this section. Continue to 3 when done
+3. Inside the terminal, simply run one of the following commands:
+    `npm run dev`
+    OR
+    `yarn dev`
+4. Visual Studio Code might automatically open a new browser that has the login page on it
+    If not, simply open a new tab in a browser and type `http://localhost:3000` in the search bar
+5. Although the front end is up and running, the back end needs to be running as well in order to log in
+    The UNT VPN also needs to be runnning for the back end to work properly
+6. You can now start editing pages, and they should automatically update as you save progress
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-## Useful Documentation
-
+## Useful Documentation (not needed for simply running the front end of the project)
 [Next.js](https://nextjs.org/docs/getting-started)
 [Chakra-UI](https://chakra-ui.com/docs/getting-started)
