@@ -4,11 +4,10 @@
     "\\api",
     "\\components",
     "\\components\\admin-components",
-    "\\components\\admin-components\\AdminReport",
-    "\\components\\admin-components\\GenerateSectionReport",
-    "\\pages",
-    "\\recoil"
+    "\\components\\admin-components\\CourseOutcome",
+    "\\components\\admin-components\\MajorsOutcomes",
+    "\\styles"
   ],
-  "SelectedNode": "\\pages\\coordinatorForms.js",
+  "SelectedNode": "\\components\\admin-components\\CourseOutcome\\AddNewCourseOutcome.js",
   "PreviewInSolutionExplorer": false
 }

@@ -285,7 +285,7 @@ const AddNewCourseOutcome = () => {
             </Select>
           </GridItem>
 
-          <GridItem>
+          <GridItem zIndex="dropdown">
             <SingleSelect
               disabled={checkIfSelectMajorAndSemseter()}
               value={selectCourse}
