@@ -220,7 +220,7 @@ const adminFullReport = ({
           <Text fontSize="6xl">Loading...</Text>
         </Center>
       ) : (
-        <Grid templateColumns="repeat(1, 1fr)" gap={8} margin="auto" w="80%">
+        <Grid templateColumns="repeat(1, 1fr)" gap={8} margin="50px 200px 150px 200px">
           <Button onClick={createPdfFile} colorScheme="teal" w="30%" mt="1%">
             Download pdf
           </Button>
