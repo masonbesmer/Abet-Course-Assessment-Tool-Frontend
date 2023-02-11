@@ -35,14 +35,7 @@ const Newlogin = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await login(
-        euidRef.current.value,
-        crypto.pbkdf2(passwordRef.current.value, pbkdf2Config.salt, pbkdf2Config.iterations, pbkdf2Config.keyLength, pbkdf2Config.hash, (err, key) => {
-          if (err) throw err;
-          console.log(key.toString('hex'));
-          return key.toString('hex');
-        })
-      );
+      const response = await login(euidRef.current.value, passwordRef.current.value);
       console.log("response" + response);
       if (response) {
         console.log("Reponse", response);
