@@ -7,7 +7,11 @@
 .env.build
 
 # VS Code workspace
+vscode/
 *.code-workspace
+
+# Secrets
+security/
 
 # Dependency directories
 node_modules/

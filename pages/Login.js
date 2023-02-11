@@ -13,6 +13,8 @@ import React, { useRef, useState, createContext, useContext } from "react";
 import { login, Custom } from "../api/APIHelper";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+const crypto = require("crypto"); // for hashing the password using pbkdf2 before contacting to the server
+import pbkdf2Config from './security/pbkdf2Config.json'; // for configuring the hashing algorithm
 
 const theme = createTheme({
   palette: {
@@ -35,7 +37,11 @@ const Newlogin = () => {
     try {
       const response = await login(
         euidRef.current.value,
-        passwordRef.current.value
+        crypto.pbkdf2(passwordRef.current.value, aesConfig.salt, aesConfig.iterations, aesConfig.keyLength, aesConfig.hash, (err, key) => {
+          if (err) throw err;
+          console.log(key.toString('hex'));
+          return key.toString('hex');
+        })
       );
       console.log("response" + response);
       if (response) {
