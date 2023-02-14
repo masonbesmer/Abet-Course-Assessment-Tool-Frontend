@@ -22,7 +22,7 @@ const generateKeyAndIV = (plaintext, salt, iterations, keyLength, initialization
 };
 
 
-const encrypt = (plaintext, data) => {
+const encrypt = (plaintext) => {
     // const aesConfig = JSON.parse(fs.readFileSync("../security/aesConfig.json", 'utf8')); // get configuration for the encryption algorithm
     const aesConfig = data; // get configuration for the encryption algorithm by using getServerSideProps to read the file
     
