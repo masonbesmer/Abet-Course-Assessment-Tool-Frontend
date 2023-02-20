@@ -3,12 +3,12 @@
 
 const crypto = require('crypto');
 // const fs = require("fs");
-const aesConfig = await getServerSideProps(); // get configuration for the encryption algorithm by using getServerSideProps to read the file
+const aesConfig = getServerSideProps(); // get configuration for the encryption algorithm by using getServerSideProps to read the file
 
 
 // function that only runs on the server (where 'fs' is available) to fetch the json file
 export async function getServerSideProps() {
-    const response = await fetch(`../security/aesConfig.json`);
+    const response = await fetch(`../security/aesConfig.json`, { method: 'GET' , headers: { 'Content-Type': 'application/json' } });
     const data = await response.json();
     return data;
 }
