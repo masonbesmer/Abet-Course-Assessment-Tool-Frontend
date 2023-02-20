@@ -3,6 +3,7 @@
 
 const crypto = require('crypto');
 // const fs = require("fs");
+const aesConfig = await getServerSideProps(); // get configuration for the encryption algorithm by using getServerSideProps to read the file
 
 
 // function that only runs on the server (where 'fs' is available) to fetch the json file
@@ -22,9 +23,9 @@ const generateKeyAndIV = (plaintext, salt, iterations, keyLength, initialization
 };
 
 
-const encrypt = (plaintext) => {
+async function encrypt (plaintext) {
     // const aesConfig = JSON.parse(fs.readFileSync("../security/aesConfig.json", 'utf8')); // get configuration for the encryption algorithm
-    const aesConfig = data; // get configuration for the encryption algorithm by using getServerSideProps to read the file
+    // const aesConfig = data; // get configuration for the encryption algorithm by using getServerSideProps to read the file
     
     let plainbytes = new TextEncoder().encode(plaintext); // encode the plaintext string as bytes
     let { key, iv } = generateKeyAndIV(plainbytes, aesConfig.salt, aesConfig.iterations, aesConfig.keyLength, aesConfig.initializationVectorLength); // generate key and initialization vector
