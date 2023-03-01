@@ -802,7 +802,7 @@ export async function login(userid, password) {
   }
   catch (e) {
     console.error(e);
-    //return new Error("Error encrypting password");
+    return new Error("Error encrypting password");
   }
   const api_helper = new API();
   const response = api_helper.login(userid, encodeURIComponent(password));
