@@ -64,9 +64,15 @@ const Newlogin = () => {
           duration: 9000,
           isClosable: true,
         });
-    } catch (error) {
-      console.log("Error: " + error);
-      alert("try 'admin' & 'admin'");
+    }
+    catch (error) {
+      if (error == TypeError) {
+        return new Error("TypeError: Login failed?");
+      }
+      else { // orginal catch exception
+        console.log("Error: " + error);
+        alert("try 'admin' & 'admin'");
+      }
     }
   }
 
