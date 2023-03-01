@@ -12,9 +12,6 @@
 vscode/
 *.code-workspace
 
-# Secrets
-security/
-
 # Dependency directories
 node_modules/
 
