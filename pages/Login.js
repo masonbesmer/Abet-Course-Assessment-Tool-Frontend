@@ -13,6 +13,8 @@ import React, { useRef, useState, createContext, useContext } from "react";
 import { login, Custom } from "../api/APIHelper";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+const crypto = require("crypto"); // for hashing the password using pbkdf2 before contacting to the server
+
 
 const theme = createTheme({
   palette: {
@@ -33,10 +35,7 @@ const Newlogin = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await login(
-        euidRef.current.value,
-        passwordRef.current.value
-      );
+      const response = await login(euidRef.current.value, passwordRef.current.value);
       console.log("response" + response);
       if (response) {
         console.log("Reponse", response);
@@ -65,9 +64,15 @@ const Newlogin = () => {
           duration: 9000,
           isClosable: true,
         });
-    } catch (error) {
-      console.log("Error: " + error);
-      alert("try 'admin' & 'admin'");
+    }
+    catch (error) {
+      if (error == TypeError) {
+        return new Error("TypeError: Login failed?");
+      }
+      else { // orginal catch exception
+        console.log("Error: " + error);
+        alert("try 'admin' & 'admin'");
+      }
     }
   }
 
