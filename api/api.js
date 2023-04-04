@@ -56,11 +56,11 @@ export default class API {
   //    Input: UserId, Password
   //    Output: "Admin", "Instructor", "Student/TA" or boolean for failure
   async login(userid = "", password = "") {
-    const url = rootNew + `/Login?EUID=${userid}&password=${password}`;
-    console.log(url);
+    const url = rootNew + `/Login`;
     try {
       var response = await axios.post(url, {
-        params: { euid: userid, password: password },
+        euid: userid,
+        password: password,
       });
       //console.log(response.data);
       if (response.data.hasOwnProperty("token")) {
