@@ -1,6 +1,5 @@
 import { RepeatOneSharp } from "@mui/icons-material";
 import API from "./api";
-import { encrypt, decrypt } from "./aes";
 
 // New Endpoint
 
@@ -797,15 +796,8 @@ export async function postInstructorForm(
 }
 
 export async function login(userid, password) {
-  try {
-    password = await encrypt(password);
-  }
-  catch (e) {
-    console.error(e);
-    return new Error("Error encrypting password");
-  }
   const api_helper = new API();
-  const response = api_helper.login(userid, encodeURIComponent(password));
+  const response = api_helper.login(userid, password);
   console.log(response);
   return response.then(function (result) {
     return result;
