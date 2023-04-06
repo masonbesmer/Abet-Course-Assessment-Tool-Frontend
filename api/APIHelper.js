@@ -796,19 +796,18 @@ export async function postInstructorForm(
 }
 
 export async function login(userid, password) {
-  const api_helper = new API();
-  const response = api_helper.login(userid, password);
-  console.log(response);
-  return response.then(function (result) {
+  const api_helper = new API(); // create a new instance of the API helper class
+  const response = api_helper.login(userid, password); // call the login method
+  console.log(response); // print the response to the console
+  return response.then((result) => {
     return result;
   });
 }
 
 export async function getAllCourses(userid, semester, year) {
-  let api_helper = new API();
-  let response = api_helper.getCourses(userid, semester, year);
-
-  response.then(function (result) {
+  const api_helper = new API();
+  const response = api_helper.getCourses(userid, semester, year);
+  response.then((result) => {
     return result;
   });
   const courses = await response;
