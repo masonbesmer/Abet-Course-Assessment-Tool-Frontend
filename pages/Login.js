@@ -13,8 +13,6 @@ import React, { useRef, useState, createContext, useContext } from "react";
 import { login, Custom } from "../api/APIHelper";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-const crypto = require("crypto"); // for hashing the password using pbkdf2 before contacting to the server
-
 
 const theme = createTheme({
   palette: {
@@ -31,14 +29,15 @@ const Newlogin = () => {
   const passwordRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  //Function for the submit button
+
+  // custom hook to handle login and prevent default form behavior
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); // prevent the default action of the submit button
+    const euidValue = euidRef.current.value; // get the value of the input field
+    const passwordValue = passwordRef.current.value; // get the value of the input field
     try {
-      const response = await login(euidRef.current.value, passwordRef.current.value);
-      console.log("response" + response);
+      const response = await login(euidValue, passwordValue); // call the login function from the APIHelper
       if (response) {
-        console.log("Reponse", response);
         toast({
           title: "Login Successful",
           description: "Please wait...",
@@ -46,33 +45,37 @@ const Newlogin = () => {
           duration: 9000,
           isClosable: true,
         });
+        // TODO: use switch case instead of if-else and maybe a map
+        // TODO: why do some use '==' and other use 'includes'?
         if (router.query && router.query.from) {
           router.push(router.query.from);
-        } else if (response.includes("Admin")) {
+        }
+        else if (response.includes("Admin")) {
           router.push("/adminHome");
-        } else if (response.includes("Coordinator")) {
+        }
+        else if (response.includes("Coordinator")) {
           router.push("/instructorHome");
-        } else if (response.includes("Instructor")) {
+        }
+        else if (response.includes("Instructor")) {
           router.push("/instructorHome");
-        } else if (response == "Student") {
+        }
+        else if (response == "Student") {
           router.push("/studentHome");
         }
-      } else
+      }
+      else {
         toast({
           title: "Incorrect UserID or password",
           status: "error",
           duration: 9000,
           isClosable: true,
         });
+      }
     }
     catch (error) {
-      if (error == TypeError) {
-        return new Error("TypeError: Login failed?");
-      }
-      else { // orginal catch exception
-        console.log("Error: " + error);
-        alert("try 'admin' & 'admin'");
-      }
+      console.error("Error:", error);
+      // alert("try 'admin' & 'admin'");
+      console.info("try 'admin' & 'admin'");
     }
   }
 
