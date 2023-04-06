@@ -6,7 +6,29 @@ const axios = require("axios");
 const root = "https://localhost:44372/api"; // The base URL for each request
 const rootNew = "https://localhost:44372"; // The base URL for each request
 
+const DEBUG_MODE = true; // enables debug messages
+var debug = {
+  log: (msg) => {
+    if (DEBUG_MODE) console.log(msg);
+  },
+  time: (msg) => {
+    if (DEBUG_MODE) console.time(msg);
+  },
+  timeEnd: (msg) => {
+    if (DEBUG_MODE) console.timeEnd(msg);
+  },
+};
+
+/**
+ * The expiration time for the JWT token in hours
+ * @type {number}
+ * @constant 24
+ */
+const JWT_EXPIRATION = 24;
+
 const OK = 200; //200 Ok status code
+const CREATED = 201; //201 Created status code
+const BAD_REQUEST = 400; //400 Bad Request status code
 const UNAUTHORIZED = 401; //401 Unauthorized status code
 const FORBIDDEN = 403; //403 Unauthorized status code
 const NOT_LOGGED_IN_MSG =
@@ -38,81 +60,122 @@ export default class API {
     //console.log(status);
     switch (status) {
       case 200:
-        return "Success";
-      case 401:
+        return "SUCCESS";
+      case 400:
+        return "BAD_REQUEST";
+      case 401 || "Request failed with status code 401":
         return "UNAUTHORIZED";
       case 403:
         return "UNAUTHORIZED";
-      case "Request failed with status code 401":
-        return "UNAUTHORIZED";
       default:
-        console.log(`Unknown status code from request:${status}`);
+        console.warn(`Unknown status code from request: ${status}`);
         return status;
     }
   }
+  
+  
+  
+  
+
+  
   //***New End Point***
 
-  //---login(userid, password)---
-  //    Input: UserId, Password
-  //    Output: "Admin", "Instructor", "Student/TA" or boolean for failure
-  async login(userid = "", password = "") {
-    const url = rootNew + `/Login`;
+
+
+  /**
+   * @function login - Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @param {*} euid 
+   * @param {*} password 
+   * @returns {*} "Admin", "Instructor", "Student/TA" or boolean for failure
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const role = await api.login("euid", "password"); // role holds the response from the backend
+   * if (role) { // if role is true or a string (truthy)
+   *   console.log("Login successful");
+   * }
+   * else { // if role is false or undefined
+   *   console.log("Login failed");
+   * }
+  **/
+  async login(userid, password) {
+    // Check if euid and password are undefined
+    if (userid == undefined) {
+      console.error("Error: euid is undefined");
+      return false;
+    }
+    if (password == undefined) {
+      console.error("Error: password is undefined");
+      return false;
+    }
+
+    const endpoint = `${rootNew}/Login`;
+    debug.time(`POST ${endpoint}`);
     try {
-      var response = await axios.post(url, {
+      // send a POST request to the backend Login endpoint and wait for response
+      var response = await axios.post(endpoint, {
         euid: userid,
         password: password,
       });
-      //console.log(response.data);
-      if (response.data.hasOwnProperty("token")) {
-        let token = response.data.token;
-        //console.log(token);
-        var expires = new Date();
-        expires.setHours(expires.getHours() + 24); //expires in 24 hours
-        expires = expires.toUTCString();
-        cookieCutter.set("token", token, { expires }); //set token cookie
-        const json = jwt.decode(token);
-        //console.log(json);
-        return json["role"]; //return the role
+      if ( response.data.hasOwnProperty("token") ) { // get data from reponse, if the token is returned
+        const token = response.data.token; //get the token from the data
+        debug.log(`Token: ${token}`);
+        var expires = new Date(); //create a new date object
+        expires.setHours(expires.getHours() + JWT_EXPIRATION); //expires in 24 hours
+        expires = expires.toUTCString(); //convert to UTC string
+        cookieCutter.set('token', token, { expires }); //set token cookie with expiration date
+        const json = jwt.decode(token); // decode the token to get the role
+        return json.role; //return the role
       }
-    } catch (error) {
-      console.error(error);
     }
+    catch (error) {
+      console.error(new Error(error));
+    }
+    debug.timeEnd(`POST ${endpoint}`);
   }
 
-  //---Custom()---
-  //    Input:
-  //    Output:
-  // For development, populated the database.
+
+
+  /**
+   * @function Custom - [Development] Sends a POST request to the backend Custom endpoint. The backend will run the function "`DoStuff()`" to populate the database.
+   * @returns {void}
+  **/
   async Custom() {
-    const url = rootNew + "/Custom";
-    console.log(url);
-      try {
+    const endpoint = `${rootNew}/Custom`;
+    debug.time(`POST ${endpoint}`);
+    try {
       // so axios is what sends the http header request to the backend. it needs to have the token sent
       // for authorization everytime. that is what the extra header is now.
-      const response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
-      console.log(response.data);
-    } catch (error) {
+      const response = await axios.get(endpoint, {headers: {'Authorization': 'bearer '+token}});
+      debug.log(response.data);
+    }
+    catch (error) {
       console.error(error);
     }
+    debug.timeEnd(`POST ${endpoint}`);
   }
 
-  //---getFacultyList()--- (Admin)
-  //    Input: none
-  //    Output: List of admins, instructors, coordinators
+
+
+  /**
+   * @function getFacultyList - Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @returns {[]} List of admins, instructors, coordinators
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const facultyList = await api.getFacultyList(); // facultyList holds the response from the backend
+  **/
   async getFacultyList() {
-    const url = rootNew + "/Role/GetFaculty";
+    const endpoint = `${rootNew}/Role/GetFaculty`;
     try {
-      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
+      var response = await axios.get(endpoint, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
-        //console.log(response);
-        //console.log(`status: ${status}`);
         return {
           data: response.data,
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       let status = this.checkStatus(error.message);
       return {
         data: null,
@@ -121,17 +184,22 @@ export default class API {
     }
   }
 
-  //---getUsersByRole()--- (Admin)
-  //    Input: role name
-  //    Output: List of faculty members with that role
+
+
+  // NOTE: Previous comment said "(Admin"), but this function does not appear to check for admin access.
+  /**
+   * @function getUsersByRole - Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @param {string} roleName - name of the role to filter results by
+   * @returns {object} - response object with data and status
+  **/
+  // TODO: Validate role name before sending to backend
   async getUsersByRole(roleName) {
-    const url = rootNew + `/Role/GetUsersByRole?roleName=${roleName}`;
+    // const url = rootNew + `/Role/GetUsersByRole?roleName=${roleName}`; // original method: query string
+    const endpoint = `${rootNew}/Role/GetUsersByRole`;
     try {
-      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
+      var response = await axios.get(endpoint, { roleName: roleName }, { headers: {'Authorization': 'bearer '+token} });
       if (response) {
         let status = this.checkStatus(response.status);
-        //console.log(response);
-        //console.log(`status: ${status}`);
         return {
           data: response.data,
           status: status,
@@ -146,13 +214,23 @@ export default class API {
     }
   }
 
-  //---AddRoleToUser()--- (Admin)
-  //    Input: euid, role
-  //    Output: success or failure
+
+
+  // NOTE: Previous comment said "(Admin"), but this function does not appear to check for admin access.
+  /**
+   * @function addRoleToUser Sends a POST request to the backend x endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @param {string} euid euid of the user to add a role to
+   * @param {string} role name of the role to add to the user
+   * @returns {object} response object with data and status
+   * 
+   * Backend: _AbetApi.EFModels.Role.AddRoleToUser_
+  **/
+  // TODO: Validate role name before sending to backend
   async addRoleToUser(euid, role) {
-    const url = rootNew + `/Role/AddRoleToUser?EUID=${euid}&roleName=${role}`;
+    // const endpoint = `${rootNew}/Role/AddRoleToUser?EUID=${euid}&roleName=${role}`; // original method: query string
+    const endpoint = `${rootNew}/Role/AddRoleToUser`;
     try {
-        const response = await axios.post(url, {}, { headers: { 'Authorization': 'bearer ' + token } });
+      const response = await axios.post(endpoint, { EUID: euid, roleName: role }, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -169,9 +247,16 @@ export default class API {
     }
   }
 
-  //---removeRoleFromUser()--- (Admin)
-  //    Input: EUID, role
-  //    Output: success or failure
+
+  
+  // NOTE: Previous comment said "(Admin"), but this function does not appear to check for admin access.
+  /**
+   * @function removeRoleFromUser Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @param {string} euid euid of the user to add a role to
+   * @param {string} role name of the role to add to the user
+   * @returns {object} response object with data and status
+  **/
+  // TODO: Validate role name before sending to backend
   async removeRoleFromUser(euid, role) {
     const url =
       rootNew + `/Role/RemoveRoleFromUser?EUID=${euid}&roleName=${role}`;
@@ -194,6 +279,8 @@ export default class API {
       };
     }
   }
+
+
 
   //---editFacultyUser()--- (Admin)
   //    Input: First name, last name, EUID
