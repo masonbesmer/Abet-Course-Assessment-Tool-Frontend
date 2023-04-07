@@ -3,8 +3,8 @@ import cookieCutter from "cookie-cutter";
 import jwt from "jsonwebtoken";
 const axios = require("axios");
 
-const root = "https://localhost:44372/api"; // The base URL for each request
-const rootNew = "https://localhost:44372"; // The base URL for each request
+const root = "https://localhost:44372/api"; // The base URL for each request // TODO: remove or change to root.api or something
+const rootNew = "https://localhost:44372"; // The base URL for each request // TODO: change to root or something--remove "New"
 
 const DEBUG_MODE = true; // enables debug messages
 var debug = {
@@ -31,21 +31,20 @@ const CREATED = 201; //201 Created status code
 const BAD_REQUEST = 400; //400 Bad Request status code
 const UNAUTHORIZED = 401; //401 Unauthorized status code
 const FORBIDDEN = 403; //403 Unauthorized status code
-const NOT_LOGGED_IN_MSG =
-  "Error: Your session has expired. Please log in again.";
+const NOT_LOGGED_IN_MSG = "Error: Your session has expired. Please log in again.";
 const SERVER_ERROR_MSG = "Internal Server Error: Please try again later.";
 const BAD_REQUEST_MSG = "Error: Some of the provided parameters are invalid.";
 const FORBIDDEN_MSG = "Error: You are unauthorized to make this request.";
 var token = ""; //holds value of the token cookie
-const config = { headers: { Authorization: '' } }; //adds authorization header for axios (might not be needed)
+const config = { headers: { Authorization: '' } }; //adds authorization header for axios (might not be needed) // TODO: remove if not needed
 
 export default class API {
-    // default constructor. only thing that is needed is to get the token from cookie.
-    // Previous group has it set up to great a new api everytime a request is made.
-    // Therefore we need to get the token everytime.
-    constructor() {
-        token = cookieCutter.get("token");
-    }
+  // default constructor. only thing that is needed is to get the token from cookie.
+  // Previous group has it set up to great a new api everytime a request is made.
+  // Therefore we need to get the token everytime.
+  constructor() {
+    token = cookieCutter.get("token");
+  }
 
   /* This function is for getInitialProps.
     cookieCutter is undefined in getInitialProps,
@@ -83,10 +82,10 @@ export default class API {
 
 
   /**
-   * @function login - Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
-   * @param {*} euid 
-   * @param {*} password 
-   * @returns {*} "Admin", "Instructor", "Student/TA" or boolean for failure
+   * @function login Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @param {string} euid 
+   * @param {string} password 
+   * @returns {string|boolean} "Admin", "Instructor", "Student/TA" or boolean for failure
    * @example
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
    * const role = await api.login("euid", "password"); // role holds the response from the backend
@@ -115,6 +114,7 @@ export default class API {
       var response = await axios.post(endpoint, {
         euid: userid,
         password: password,
+        // NOTE: does this need to be in `data: {}`?
       });
       if ( response.data.hasOwnProperty("token") ) { // get data from reponse, if the token is returned
         const token = response.data.token; //get the token from the data
@@ -136,28 +136,31 @@ export default class API {
 
 
   /**
-   * @function Custom - [Development] Sends a POST request to the backend Custom endpoint. The backend will run the function "`DoStuff()`" to populate the database.
+   * @function Custom [Development] Sends a POST request to the backend Custom endpoint. The backend will run the function "`DoStuff()`" to populate the database.
    * @returns {void}
   **/
   async Custom() {
     const endpoint = `${rootNew}/Custom`;
-    debug.time(`POST ${endpoint}`);
+    debug.time(`GET ${endpoint}`);
     try {
       // so axios is what sends the http header request to the backend. it needs to have the token sent
       // for authorization everytime. that is what the extra header is now.
-      const response = await axios.get(endpoint, {headers: {'Authorization': 'bearer '+token}});
+      const response = await axios.get(endpoint, {
+        headers: { 'Authorization': 'bearer ' + token },
+        // no data
+      });
       debug.log(response.data);
     }
     catch (error) {
       console.error(error);
     }
-    debug.timeEnd(`POST ${endpoint}`);
+    debug.timeEnd(`GET ${endpoint}`);
   }
 
 
 
   /**
-   * @function getFacultyList - Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @function getFacultyList Sends a POST request to the backend Login endpoint.
    * @returns {[]} List of admins, instructors, coordinators
    * @example
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
@@ -165,8 +168,12 @@ export default class API {
   **/
   async getFacultyList() {
     const endpoint = `${rootNew}/Role/GetFaculty`;
+    debug.time(`GET ${endpoint}`);
     try {
-      var response = await axios.get(endpoint, {headers: {'Authorization': 'bearer '+token}});
+      var response = await axios.get(endpoint, {
+        headers: { 'Authorization': 'bearer '+token },
+        // no data
+      });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -182,22 +189,28 @@ export default class API {
         status: status,
       };
     }
+    debug.timeEnd(`GET ${endpoint}`);
   }
 
 
 
-  // NOTE: Previous comment said "(Admin"), but this function does not appear to check for admin access.
   /**
-   * @function getUsersByRole - Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
-   * @param {string} roleName - name of the role to filter results by
-   * @returns {object} - response object with data and status
+   * @function getUsersByRole Sends a POST request to the backend /Role/GetUsersByRole endpoint.
+   * @param {string} roleName name of the role to filter results by
+   * @returns {object} response object with data and status
   **/
   // TODO: Validate role name before sending to backend
   async getUsersByRole(roleName) {
-    // const url = rootNew + `/Role/GetUsersByRole?roleName=${roleName}`; // original method: query string
-    const endpoint = `${rootNew}/Role/GetUsersByRole`;
+    const endpoint = `${rootNew}/Role/GetUsersByRole`; //?roleName=${roleName} (old)
+    debug.time(`GET ${endpoint}`);
     try {
-      var response = await axios.get(endpoint, { roleName: roleName }, { headers: {'Authorization': 'bearer '+token} });
+      var response = await axios.get(endpoint, {
+        headers: {'Authorization': 'bearer '+token},
+        data: {
+          EUID: euid,
+          roleName: roleName,
+        }
+      });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -205,32 +218,37 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       let status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
       };
     }
+    debug.timeEnd(`GET ${endpoint}`);
   }
 
 
 
-  // NOTE: Previous comment said "(Admin"), but this function does not appear to check for admin access.
   /**
-   * @function addRoleToUser Sends a POST request to the backend x endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @function addRoleToUser Sends a POST request to the backend /Role/AddRoleToUser endpoint.
    * @param {string} euid euid of the user to add a role to
    * @param {string} role name of the role to add to the user
    * @returns {object} response object with data and status
-   * 
-   * Backend: _AbetApi.EFModels.Role.AddRoleToUser_
   **/
   // TODO: Validate role name before sending to backend
   async addRoleToUser(euid, role) {
-    // const endpoint = `${rootNew}/Role/AddRoleToUser?EUID=${euid}&roleName=${role}`; // original method: query string
-    const endpoint = `${rootNew}/Role/AddRoleToUser`;
+    const endpoint = `${rootNew}/Role/AddRoleToUser`; //?EUID=${euid}&roleName=${role} (old)
+    debug.time(`POST ${endpoint}`);
     try {
-      const response = await axios.post(endpoint, { EUID: euid, roleName: role }, { headers: { 'Authorization': 'bearer ' + token } });
+      const response = await axios.post(endpoint, {
+        headers: { 'Authorization': 'bearer ' + token },
+        data: {
+          EUID: euid,
+          roleName: role,
+        }
+      });
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -238,31 +256,38 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       let status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
       };
     }
+    debug.timeEnd(`POST ${endpoint}`);
   }
 
 
   
-  // NOTE: Previous comment said "(Admin"), but this function does not appear to check for admin access.
   /**
-   * @function removeRoleFromUser Sends a POST request to the backend Login endpoint. The backend will check the credentials and return a JWT token if successful.
+   * @function removeRoleFromUser Sends a POST request to the backend /Role/RemoveRoleFromUser endpoint.
    * @param {string} euid euid of the user to add a role to
    * @param {string} role name of the role to add to the user
    * @returns {object} response object with data and status
   **/
   // TODO: Validate role name before sending to backend
   async removeRoleFromUser(euid, role) {
-    const url =
-      rootNew + `/Role/RemoveRoleFromUser?EUID=${euid}&roleName=${role}`;
+    const endpoint = `${rootNew}/Role/RemoveRoleFromUser`; //?EUID=${euid}&roleName=${role} (old)
+    debug.time(`POST ${endpoint}`);
     try {
-        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
-      console.log(response);
+      const response = await axios.post(endpoint, {
+        headers: { 'Authorization': 'bearer ' + token },
+        data: {
+          EUID: euid,
+          roleName: role,
+        }
+      });
+      debug.log(response);
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -270,7 +295,8 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       let status = this.checkStatus(error.message);
       console.error(error);
       return {
@@ -278,29 +304,38 @@ export default class API {
         status: status,
       };
     }
+    debug.timeEnd(`POST ${endpoint}`);
   }
 
 
 
-  //---editFacultyUser()--- (Admin)
-  //    Input: First name, last name, EUID
-  //    Output: success or failure
-  async editFacultyUser(
-    Firstname = "",
-    Lastname = "",
-    oldEuid = "",
-    newEuid = ""
-  ) {
-    const url = rootNew + `/Users/EditUser/?EUID=${oldEuid}`;
-    try {
-      const response = await axios.patch(url, {
-        firstName: Firstname,
-        lastName: Lastname,
-        euid: newEuid,
-      },
-          { headers: { 'Authorization': 'bearer ' + token } }      );
-      console.log(response);
+  // FIXME: "Faculty" functions below use inconsistent naming: User/Member
 
+  /**
+   * @function editFacultyUser Sends a PATCH request to the backend /Users/EditUser endpoint.
+   * @param {string} firstName first name of the falculty to edit
+   * @param {string} lastName last name of the faculty to edit
+   * @param {string} oldEuid original EUID of the faculty to edit
+   * @param {string} newEuid new EUID of the faculty to edit
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.editFacultyUser("John", "Doe", "abc1234", "xyz5678"); // response is an object with data and status
+   */
+  async editFacultyUser(firstName = "", lastName = "", oldEuid = "", newEuid = "") {
+    const endpoint = `${rootNew}/Users/EditUser/?EUID=${oldEuid}`; // FIXME: remove the EUID param from the URL and place it in the body
+    // FIXME: can the param in the URL be removed and placed in the body? i am unfamiliar with the PATCH method
+    debug.time(`PATCH ${endpoint}`);
+    try {
+      const response = await axios.patch(endpoint, {
+        headers: { 'Authorization': 'bearer ' + token },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          euid: newEuid,
+        }
+      });
+      debug.log(response);
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -308,7 +343,8 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       let status = this.checkStatus(error.message);
       console.error(error);
       return {
@@ -316,16 +352,42 @@ export default class API {
         status: status,
       };
     }
+    debug.timeEnd(`PATCH ${endpoint}`);
   }
 
-  //---deleteFacultyUser()--- (Admin)
-  //    Input: EUID
-  //    Output: success or failure
-  async deleteFacultyUser(Euid = "") {
-    const url = rootNew + "/Users/DeleteUser";
+
+
+  /**
+   * @function deleteFacultyUser Sends a DELETE request to the backend /Users/DeleteUser endpoint.
+   * @param {string} euid first name of the falculty to edit
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.deleteFacultyUser("abc1234"); // response is an object with data and status
+   */
+  async deleteFacultyUser(euid) {
+    // Validate input
+    if (!euid) { // if `euid` is null or undefined or falsy
+      console.error("Invalid or Missing EUID");
+      return {
+        data: null,
+        status: {
+          code: 400,
+          message: "Invalid or Missing EUID",
+        },
+      };
+    }
+
+    const endpoint = `${rootNew}/Users/DeleteUser`;
+    debug.time(`DELETE ${endpoint}`);
     try {
-        const response = await axios.delete(url, { params: { EUID: Euid } }, { headers: { 'Authorization': 'bearer ' + token } });
-      console.log(response);
+      const response = await axios.delete(endpoint,
+        { headers: { 'Authorization': 'bearer ' + token } },
+        { params: {
+          EUID: euid // <-- NOTE: good example for how to pass a parameter to the backend function without putting it in the URL
+        }},
+      );
+      debug.log(response);
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -333,7 +395,8 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       let status = this.checkStatus(error.message);
       console.error(error);
       return {
@@ -341,28 +404,72 @@ export default class API {
         status: status,
       };
     }
+    debug.timeEnd(`DELETE ${endpoint}`);
   }
 
-  //---addFacultyMember(firstName, lastName, userid, role)--- (Admin)
-  //    Input: First Name, Last Name and User Id
-  //    Output: Success or Failure
-  async addFacultyMember(
-    firstName = "",
-    lastName = "",
-    userId = "",
-    facultyType = ""
-  ) {
-    const url = rootNew + "/Users/AddUserWithRoles";
-    const body = {
-      user: {
-        firstName: firstName,
-        lastName: lastName,
-        euid: userId,
-      },
-      roles: [facultyType],
-    };
+
+
+  /**
+   * @function addFacultyMember Sends a POST request to the backend /Users/AddUserWithRoles endpoint.
+   * @param {string} firstName first name of the falculty to add
+   * @param {string} lastName last name of the faculty to add
+   * @param {string} userId first name of the falculty to add
+   * @param {string} facultyType first name of the falculty to add
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.addFacultyMember("abc1234"); // response is an object with data and status
+   */
+  async addFacultyMember(firstName, lastName, userId, facultyType) {
+    // Validate input
+    if (!firstName) { // if `firstName` is null or undefined or falsy
+      const msg = "Invalid or missing firstName";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg},
+      };
+    }
+    if (!lastName) { // if `lastName` is null or undefined or falsy
+      const msg = "Invalid or missing lastName";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!userId) { // if `userId` is null or undefined or falsy
+      const msg = "Invalid or missing userId";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!facultyType) { // if `facultyType` is null or undefined or falsy
+      const msg = "Invalid or missing facultyType";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+
+    const endpoint = `${rootNew}/Users/AddUserWithRoles`;
+    debug.time(`POST ${endpoint}`);
     try {
-        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
+      const response = await axios.post(endpoint,
+        { headers: { 'Authorization': 'bearer ' + token } },
+        { // body:
+          user: { // package the user data into a user object
+            firstName: firstName,
+            lastName: lastName,
+            euid: userId,
+          },
+          roles: [facultyType],
+        },
+      );
+      debug.log(response);
       if (response) {
         console.log(response);
         let status = this.checkStatus(response.status);
@@ -371,7 +478,8 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       let status = this.checkStatus(error.message);
       console.error(status);
       return {
@@ -379,7 +487,10 @@ export default class API {
         status: status,
       };
     }
+    debug.timeEnd(`POST ${endpoint}`);
   }
+
+
 
   //---getSemesters()--- (Admin)
   //    Input: none
