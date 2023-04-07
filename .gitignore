@@ -7,7 +7,6 @@
 .env.build
 .env.local
 .env.development
-*.config.js
 
 # VS Code workspace
 vscode/
