@@ -65,7 +65,7 @@ export default class API {
       case 401 || "Request failed with status code 401":
         return "UNAUTHORIZED";
       case 403:
-        return "UNAUTHORIZED";
+        return "FORBIDDEN";
       default:
         console.warn(`Unknown status code from request: ${status}`);
         return status;
