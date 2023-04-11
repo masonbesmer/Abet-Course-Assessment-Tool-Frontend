@@ -379,14 +379,21 @@ export default class API {
     }
 
     const endpoint = `${rootNew}/Users/DeleteUser`;
+    const data = {
+      euid: euid
+    };
+    const options = {
+      headers: { 'Authorization': 'bearer ' + token },
+      /* NOTE:
+       *   Unlike axios.post() and axios.put(), the 2nd param to axios.delete() is the Axios options, not the request body.
+       *   To send a request body with a DELETE request, you should use the data option.
+       * Source: https://masteringjs.io/tutorials/axios/delete
+       */
+      data: data
+    };
     debug.time(`DELETE ${endpoint}`);
     try {
-      const response = await axios.delete(endpoint,
-        { headers: { 'Authorization': 'bearer ' + token } },
-        { params: {
-          EUID: euid // <-- NOTE: good example for how to pass a parameter to the backend function without putting it in the URL
-        }},
-      );
+      const response = await axios.delete(endpoint, options);
       debug.log(response);
       if (response) {
         let status = this.checkStatus(response.status);
@@ -456,19 +463,18 @@ export default class API {
     }
 
     const endpoint = `${rootNew}/Users/AddUserWithRoles`;
+    const options = { headers: { 'Authorization': 'bearer ' + token } };
+    const data = {
+      user: { // package the user data into a user object
+        firstName: firstName,
+        lastName: lastName,
+        euid: userId,
+      },
+      roles: [facultyType],
+    };
     debug.time(`POST ${endpoint}`);
     try {
-      const response = await axios.post(endpoint,
-        { headers: { 'Authorization': 'bearer ' + token } },
-        { // body:
-          user: { // package the user data into a user object
-            firstName: firstName,
-            lastName: lastName,
-            euid: userId,
-          },
-          roles: [facultyType],
-        },
-      );
+      const response = await axios.post(endpoint, data, options);
       debug.log(response);
       if (response) {
         console.log(response);
