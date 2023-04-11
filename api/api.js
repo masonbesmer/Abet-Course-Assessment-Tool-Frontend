@@ -650,6 +650,7 @@ export default class API {
   }
 
   //All courses endpoint
+
   //---getCoursesByDepartment(term,year,department)--- (Admin)
   //    Input: term, year, department
   //    Output: the list of course along with request status
@@ -901,7 +902,6 @@ export default class API {
       };
     }
   }
-
 
   //---addNewSection()--- (Admin)
   //    Input: year, term, department, courseNumber, instructorEUID, isSectionComplete, sectionNumber, numberOfStudents
@@ -1676,6 +1676,8 @@ export default class API {
 
   // Old End Point
   // generic function for sending POST requests
+
+  //---sendPost()---
   //    Input: route and body
   //    Output: The JSON that is returned from the route
   async sendPost(route = "", body = {}, isFileDownload = false, fileName = "") {
@@ -1805,6 +1807,7 @@ export default class API {
     //To use this data you must do the following:
     //api.getAllCourses(userid, semester, year).then(courses => {/*here is where the data is accessible, courses is an array of JSON objects*/})
   }
+
   //---getCoursesBySemesterYear(semester, year)---  (Admin)
   //    Input: Semester, Year
   //    Output: All Courses for the corresponding semester and year
@@ -2075,7 +2078,7 @@ export default class API {
     return await this.sendPost("/programs/add-program", body);
   }
 
-  //---addProgram(program)--- (Admin)
+  //---getProgramNames()--- (Admin)
   //    Input: None
   //    Output: List of program names
   async getProgramNames() {
@@ -2272,6 +2275,7 @@ export default class API {
   }
 }
 
+// Displays an error message to the user
 class ErrorObj {
   constructor(message = "", isLoggedIn = true) {
     this.failure = true;
