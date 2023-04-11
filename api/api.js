@@ -136,6 +136,19 @@ export default class API {
 
 
   /**
+   * @function logout Sets the token and user cookies to expire immediately.
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * api.logout(); // sets the token and user cookies to expire immediately
+  **/
+  logout() {
+    cookieCutter.set("token", "", { expires: new Date().toUTCString() });
+    cookieCutter.set("user", "", { expires: new Date().toUTCString() });
+  }
+
+  
+
+  /**
    * @function Custom [Development] Sends a POST request to the backend Custom endpoint. The backend will run the function "`DoStuff()`" to populate the database.
    * @returns {void}
   **/
@@ -1780,14 +1793,6 @@ export default class API {
         if (statusCode == FORBIDDEN) return new ErrorObj(FORBIDDEN_MSG);
         else return new ErrorObj(SERVER_ERROR_MSG);
       });
-  }
-
-  //---logout(userid)---
-  //    Input: None
-  //    Output: None
-  logout() {
-    cookieCutter.set("token", "", { expires: new Date().toUTCString() });
-    cookieCutter.set("user", "", { expires: new Date().toUTCString() });
   }
 
   //---getCourses(userid, semester, year)---
