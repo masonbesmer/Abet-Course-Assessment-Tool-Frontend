@@ -492,17 +492,19 @@ export default class API {
 
 
 
-  //---getSemesters()--- (Admin)
-  //    Input: none
-  //    Output: List of semesters
+  /**
+   * @function getSemesters Sends a GET request to the backend /Semester/GetSemesters endpoint.
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.getSemesters(); // response is an object with data and status
+   */
   async getSemesters() {
     const url = rootNew + "/Semester/GetSemesters";
     try {
       var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
         let status = this.checkStatus(response.status);
-        //console.log(response);
-        //console.log(`status: ${status}`);
         return {
           data: response.data,
           status: status,
@@ -517,9 +519,15 @@ export default class API {
     }
   }
 
-  //---addNewSemester()--- (Admin)
-  //    Input: year, term
-  //    Output: Success or error message
+  /**
+   * @function addNewSemester Sends a POST request to the backend /Semester/AddSemester endpoint.
+   * @param {string} year year of the semester being added
+   * @param {string} term term of the semester being added
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.addNewSemester("2023", "Spring"); // response is an object with data and status
+   */
   async addNewSemester(year = 0, term = "") {
     const url = rootNew + "/Semester/AddSemester";
     const body = {
@@ -546,9 +554,15 @@ export default class API {
     }
   }
 
-  //---deleteSemester()--- (Admin)
-  //    Input: term & year
-  //    Output: success or failure
+  /**
+   * @function deleteSemester Sends a DELETE request to the backend /Semester/DeleteSemester endpoint.
+   * @param {string} year year of the semester being deleted
+   * @param {string} term term of the semester being deleted
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.deleteSemester("Fall","2021"); // response is an object with data and status
+   */
   async deleteSemester(term = "", year = 0) {
     //console.log(`term: ${term} year: ${year}`);
     const url = rootNew + "/Semester/DeleteSemester";
@@ -575,9 +589,15 @@ export default class API {
     }
   }
 
-  //---getMajors()--- (Admin)
-  //    Input: term & year
-  //    Output: return a list of major of that semester
+  /**
+   * @function getMajors Sends a GET request to the backend /Major/GetMajors endpoint.
+   * @param {string} year year that has the majors in that year
+   * @param {string} term term that has the majors in that term
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.getMajors("Summer","2022"); // response is an object with data and status
+   */
   async getMajors(term, year) {
     const url = rootNew + `/Major/GetMajors?term=${term}&year=${year}`;
     try {
@@ -598,9 +618,16 @@ export default class API {
     }
   }
 
-  //---addMajor()--- (Admin)
-  //    Input: major name, term & year
-  //    Output: success or failure
+  /**
+   * @function addMajor Sends a POST request to the backend /Major/AddMajor endpoint.
+   * @param {string} majorName major name of the major being added
+   * @param {string} term term of the major being added
+   * @param {string} year year of the major being added
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const response = await api.addMajor("Crypto Science", "Summer", "2023"); // response is an object with data and status
+   */
   async addMajor(majorName, term, year) {
     const url =
       rootNew + `/Major/AddMajor?term=${term}&year=${year}&name=${majorName}`;
