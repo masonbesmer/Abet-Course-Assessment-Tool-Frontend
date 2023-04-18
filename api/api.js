@@ -77,7 +77,7 @@ export default class API {
   
 
   
-  //***New End Point***
+  /***\  New End Point  \***/
 
 
 
@@ -336,6 +336,7 @@ export default class API {
    * const response = await api.editFacultyUser("John", "Doe", "abc1234", "xyz5678"); // response is an object with data and status
    */
   async editFacultyUser(firstName = "", lastName = "", oldEuid = "", newEuid = "") {
+    // TODO: Validate EUIDs before sending to backend instead of defaulting as optional empty strings and sending the request
     const endpoint = `${rootNew}/Users/EditUser/?EUID=${oldEuid}`; // FIXME: remove the EUID param from the URL and place it in the body
     // FIXME: can the param in the URL be removed and placed in the body? i am unfamiliar with the PATCH method
     debug.time(`PATCH ${endpoint}`);
@@ -438,8 +439,8 @@ export default class API {
    * @returns {object} response object with data and status
    * @example
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
-   * const response = await api.addFacultyMember("abc1234"); // response is an object with data and status
-   */
+   * const response = await api.addFacultyMember("John", "Doe", "abc1234", "Admin"); // response is an object with data and status
+  **/
   async addFacultyMember(firstName, lastName, userId, facultyType) {
     // Validate input
     if (!firstName) { // if `firstName` is null or undefined or falsy
@@ -491,7 +492,7 @@ export default class API {
       debug.log(response);
       if (response) {
         console.log(response);
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
@@ -499,7 +500,7 @@ export default class API {
       }
     }
     catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
       console.error(status);
       return {
         data: null,
@@ -511,122 +512,218 @@ export default class API {
 
 
 
-  //---getSemesters()--- (Admin)
-  //    Input: none
-  //    Output: List of semesters
+  /**
+   * @function getSemesters Sends a GET request to the backend /Semester/GetSemesters endpoint.
+   * @returns {object} response object with data (a list of semesters) and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { data } = await api.getSemesters(); // data is a list of semesters
+  **/
   async getSemesters() {
-    const url = rootNew + "/Semester/GetSemesters";
+    const endpoint = `${rootNew}/Semester/GetSemesters`;
+    const options = { headers: { 'Authorization': 'bearer ' + token } };
+    debug.time(`GET ${endpoint}`);
     try {
-      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
+      const response = await axios.get(endpoint, options);
       if (response) {
-        let status = this.checkStatus(response.status);
-        //console.log(response);
-        //console.log(`status: ${status}`);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
         };
       }
-    } catch (error) {
-      let status = this.checkStatus(error.message);
+    }
+    catch (error) {
+      const status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
       };
     }
+    debug.timeEnd(`GET ${endpoint}`);
   }
 
-  //---addNewSemester()--- (Admin)
-  //    Input: year, term
-  //    Output: Success or error message
-  async addNewSemester(year = 0, term = "") {
-    const url = rootNew + "/Semester/AddSemester";
+
+
+  /**
+   * @function addNewSemester Sends a POST request to the backend /Semester/AddSemester endpoint.
+   * @param {number} year the year of the semester to delete
+   * @param {string} term the term of the semester to delete
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.addNewSemester(2023, "Spring"); // status is an object with code and message
+  **/
+  async addNewSemester(year, term) {
+    if (!year) {
+      const msg = "Invalid or missing year";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!term) {
+      const msg = "Invalid or missing term";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+
+    const endpoint = `${rootNew}/Semester/AddSemester`;
+    const options = { headers: { 'Authorization': 'bearer ' + token } };
     const body = {
       year: year,
       term: term,
     };
+    debug.time(`POST ${endpoint}`);
     try {
-        const response = await axios.post(url, body, { headers: { 'Authorization': 'bearer ' + token } });
+      const response = await axios.post(endpoint, body, options);
       if (response) {
-        let status = this.checkStatus(response.status);
-        //console.log(response);
-        //console.log(`status: ${status}`);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
         };
       }
-    } catch (error) {
-      let status = this.checkStatus(error.message);
+    }
+    catch (error) {
+      const status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
       };
     }
+    debug.timeEnd(`POST ${endpoint}`);
   }
 
-  //---deleteSemester()--- (Admin)
-  //    Input: term & year
-  //    Output: success or failure
-  async deleteSemester(term = "", year = 0) {
-    //console.log(`term: ${term} year: ${year}`);
-    const url = rootNew + "/Semester/DeleteSemester";
+
+  /**
+   * @function deleteSemester Sends a DELETE request to the backend /Semester/DeleteSemester endpoint.
+   * @param {string} term the term of the semester to delete
+   * @param {number} year the year of the semester to delete
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.deleteSemester("Fall", 2022); // status is an object with code and message
+   * @see deleteFacultyUser
+  **/
+  async deleteSemester(term, year) {
+    if (!year) {
+      const msg = "Invalid or missing year";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!term) {
+      const msg = "Invalid or missing term";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+
+    const endpoint = `${rootNew}/Semester/DeleteSemester`;
+    const data = {
+      year: year,
+      term: term,
+    };
+    const options = {
+      headers: { 'Authorization': 'bearer ' + token },
+      data: data,
+    };
+    debug.time(`DELETE ${endpoint}`);
     try {
-      const response = await axios.delete(url, {
-        data: { year: year, term: term },
-      },
-          { headers: { 'Authorization': 'bearer ' + token } });
+      const response = await axios.delete(url, options);
       if (response) {
         let status = this.checkStatus(response.status);
-        //console.log(response);
-        //console.log(`status: ${status}`);
         return {
           data: response.data,
           status: status,
         };
       }
-    } catch (error) {
-      let status = this.checkStatus(error.message);
+    }
+    catch (error) {
+      const status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
       };
     }
+    debug.timeEnd(`DELETE ${endpoint}`);
   }
 
-  //---getMajors()--- (Admin)
-  //    Input: term & year
-  //    Output: return a list of major of that semester
+
+
+  /**
+   * @function getMajors Sends a GET request to the backend /Major/GetMajors endpoint.
+   * @param {string} year year that has the majors in that year
+   * @param {string} term term that has the majors in that term
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { data } = await api.getMajors("Summer","2022"); // data is a list of majors
+  **/
   async getMajors(term, year) {
     const url = rootNew + `/Major/GetMajors?term=${term}&year=${year}`;
+    const endpoint = `${rootNew}/Major/GetMajors`;
+    const options = {
+      params: {
+        term: term,
+        year: year,
+      }
+    }
+    debug.time(`GET ${endpoint}`);
     try {
       var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
         };
       }
     } catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
       };
     }
+    debug.timeEnd(`GET ${endpoint}`);
   }
 
-  //---addMajor()--- (Admin)
-  //    Input: major name, term & year
-  //    Output: success or failure
+  /**
+   * @function addMajor Sends a POST request to the backend /Major/AddMajor endpoint.
+   * @param {string} majorName major name of the major being added
+   * @param {string} term term of the major being added
+   * @param {string} year year of the major being added
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.addMajor("Crypto Science", "Summer", "2023"); // status is an object with code and message
+  **/
   async addMajor(majorName, term, year) {
-    const url =
-      rootNew + `/Major/AddMajor?term=${term}&year=${year}&name=${majorName}`;
+    const endpoint = `${rootNew}/Major/AddMajor`;
+    const data = {
+      name: majorName, // this is the expected format for the backend (?name=majorName); do not change
+      term: term,
+      year: year,
+    };
+    const options = {
+      headers: { 'Authorization': 'bearer ' + token },
+      params: data,
+    };
+    debug.time(`POST ${endpoint}`);
     try {
-        var response = await axios.post(url, {}, {headers: { 'Authorization': 'bearer ' + token }});
+      const response = await axios.post(endpoint, {}, options);
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         console.log(response);
         console.log(`status: ${status}`);
         return {
@@ -634,8 +731,9 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
-      let status = this.checkStatus(error.message);
+    }
+    catch (error) {
+      const status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
@@ -651,7 +749,7 @@ export default class API {
       rootNew +
       `/Major/DeleteMajor?term=${term}&year=${year}&name=${majorName}`;
     try {
-        const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
+      const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
         console.log(response);
@@ -662,7 +760,7 @@ export default class API {
         };
       }
     } catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
       console.error(status);
       return status;
     }
