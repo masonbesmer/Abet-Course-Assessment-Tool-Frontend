@@ -12,13 +12,13 @@ const CoordinatorOutcomes = ({outcome, index, result}) => {
                 <div className="vertical-container">
                     <Text fontSize="lg" fontWeight="bold">Student Work Used</Text>
                     <List styleType="disc">
-                        {/* insert list of student work attachments here */}
+                        {/* TODO: insert list of student work attachments here */}
                     </List>
                 </div>
                 <div className="vertical-container">
                     <Text fontSize="lg" fontWeight="bold">Number of Students Who Achieved 75% of this Outcome</Text>
                     <div className="student-outcome-container">
-                        {/* insert percentages of student results here */}
+                        {/* TODO: insert percentages of student results here */}
                     </div>
                 </div>
             </div>
