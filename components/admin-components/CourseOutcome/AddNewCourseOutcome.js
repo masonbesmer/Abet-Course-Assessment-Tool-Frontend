@@ -70,7 +70,7 @@ const AddNewCourseOutcome = () => {
       const majorListData = majorListRes.data;
       const status = majorListRes.status;
       if (!majorListData) return;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -155,7 +155,7 @@ const AddNewCourseOutcome = () => {
       );
       const outcomeList = outcomeListRes.data;
       const status = outcomeListRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -175,7 +175,7 @@ const AddNewCourseOutcome = () => {
     try {
       const semesterlistRes = await getSemesters();
       const status = semesterlistRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${status}`,

@@ -50,7 +50,7 @@ const AddNewMajorOutcome = () => {
       const majorListData = majorListRes.data;
       const status = majorListRes.status;
 
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -138,7 +138,7 @@ const AddNewMajorOutcome = () => {
       );
       const outcomeListData = outcomeListRes.data;
       const status = outcomeListRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${status}`,

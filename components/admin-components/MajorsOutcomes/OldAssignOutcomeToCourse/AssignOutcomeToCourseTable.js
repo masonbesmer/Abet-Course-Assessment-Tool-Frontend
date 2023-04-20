@@ -76,7 +76,7 @@ const AssignOutcomeToCourseTable = ({
         oldData.name
       );
       const status = deleteRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error deleting the course! Error: ${status}`,
@@ -113,7 +113,7 @@ const AssignOutcomeToCourseTable = ({
         newData.name
       );
       const status = res.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error adding the course! Error: ${status}`,

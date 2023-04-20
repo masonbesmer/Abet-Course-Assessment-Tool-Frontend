@@ -74,7 +74,7 @@ const SectionTable = ({
         section.sectionNumber
       );
       const status = deleteRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error deleting the section! Error: ${status}`,
@@ -132,7 +132,7 @@ const SectionTable = ({
         newSection.numberOfStudents
       );
       const status = res.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error adding the course! Error: ${status}`,
@@ -197,7 +197,7 @@ const SectionTable = ({
         newData.numberOfStudents
       );
       const status = editRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error editing the section! Error: ${status}`,
