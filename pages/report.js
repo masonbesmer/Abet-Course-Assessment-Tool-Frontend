@@ -23,6 +23,8 @@ const report = ({ number, section, semester, year, id }) => {
         setForm(formData);
     };
     console.log(form);
+
+    // retrieves the form data and sets the state when the page (component) loads (mounts)
     useEffect(() => {
         getForm();
     }, []);
@@ -52,7 +54,7 @@ const report = ({ number, section, semester, year, id }) => {
                     >
                         <Text bg="white" padding="1em">
                             Best students I've ever had.
-                    </Text>
+                        </Text>
                     </Box>
                 </Flex>)
                 : null

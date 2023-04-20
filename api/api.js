@@ -254,14 +254,17 @@ export default class API {
   async addRoleToUser(euid, role) {
     const endpoint = `${rootNew}/Role/AddRoleToUser`; //?EUID=${euid}&roleName=${role} (old)
     debug.time(`POST ${endpoint}`);
+    const headers = { 'Authorization': 'bearer ' + token };
+    const data = {
+      EUID: euid,
+      roleName: role,
+    };
+    const options = {
+      headers: headers,
+      params: data, // redundant
+    };
     try {
-      const response = await axios.post(endpoint, {
-        headers: { 'Authorization': 'bearer ' + token },
-        data: {
-          EUID: euid,
-          roleName: role,
-        }
-      });
+      const response = await axios.post(endpoint, data, options);
       if (response) {
         let status = this.checkStatus(response.status);
         return {
@@ -288,21 +291,23 @@ export default class API {
    * @param {string} role name of the role to add to the user
    * @returns {object} response object with data and status
   **/
-  // TODO: Validate role name before sending to backend
   async removeRoleFromUser(euid, role) {
-    const endpoint = `${rootNew}/Role/RemoveRoleFromUser`; //?EUID=${euid}&roleName=${role} (old)
+    const endpoint = `${rootNew}/Role/RemoveRoleFromUser`;
     debug.time(`POST ${endpoint}`);
+    const headers = { 'Authorization': 'bearer ' + token };
+    const data = {
+      EUID: euid,
+      roleName: role,
+    };
+    const options = {
+      headers: headers,
+      params: data, // redundant
+    };
     try {
-      const response = await axios.post(endpoint, {
-        headers: { 'Authorization': 'bearer ' + token },
-        data: {
-          EUID: euid,
-          roleName: role,
-        }
-      });
+      const response = await axios.post(endpoint, data, options);
       debug.log(response);
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
@@ -310,7 +315,7 @@ export default class API {
       }
     }
     catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
       console.error(error);
       return {
         data: null,
@@ -335,23 +340,57 @@ export default class API {
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
    * const response = await api.editFacultyUser("John", "Doe", "abc1234", "xyz5678"); // response is an object with data and status
    */
-  async editFacultyUser(firstName = "", lastName = "", oldEuid = "", newEuid = "") {
-    // TODO: Validate EUIDs before sending to backend instead of defaulting as optional empty strings and sending the request
+  async editFacultyUser(firstName, lastName, oldEuid, newEuid) {
+    // Validate input
+    if (!firstName) { // if `firstName` is null or undefined or falsy
+      const msg = "Invalid or missing firstName";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg},
+      };
+    }
+    if (!lastName) { // if `lastName` is null or undefined or falsy
+      const msg = "Invalid or missing lastName";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!oldEuid) { // if `oldEuid` is null or undefined or falsy
+      const msg = "Invalid or missing oldEuid";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!newEuid) { // if `newEuid` is null or undefined or falsy
+      const msg = "Invalid or missing newEuid";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+
     const endpoint = `${rootNew}/Users/EditUser/?EUID=${oldEuid}`; // FIXME: remove the EUID param from the URL and place it in the body
-    // FIXME: can the param in the URL be removed and placed in the body? i am unfamiliar with the PATCH method
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      euid: newEuid,
+    };
+    const options = {
+      heeaders : { 'Authorization': 'bearer ' + token },
+      params: data,
+    };
     debug.time(`PATCH ${endpoint}`);
     try {
-      const response = await axios.patch(endpoint, {
-        headers: { 'Authorization': 'bearer ' + token },
-        data: {
-          firstName: firstName,
-          lastName: lastName,
-          euid: newEuid,
-        }
-      });
+      const response = await axios.patch(endpoint, options);
       debug.log(response);
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
@@ -359,7 +398,7 @@ export default class API {
       }
     }
     catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
       console.error(error);
       return {
         data: null,
@@ -403,14 +442,14 @@ export default class API {
        *   To send a request body with a DELETE request, you should use the data option.
        * Source: https://masteringjs.io/tutorials/axios/delete
        */
-      data: data
+      params: data
     };
     debug.time(`DELETE ${endpoint}`);
     try {
       const response = await axios.delete(endpoint, options);
       debug.log(response);
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
@@ -418,7 +457,7 @@ export default class API {
       }
     }
     catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
       console.error(error);
       return {
         data: null,
@@ -900,7 +939,7 @@ export default class API {
         isCourseCompleted: newIsCourseComplete,
         department: newDepartment,
       },
-          { headers: { 'Authorization': 'bearer ' + token } }      );
+          { headers: { 'Authorization': 'bearer ' + token } });
       if (response) {
         let status = this.checkStatus(response.status);
 
@@ -924,9 +963,7 @@ export default class API {
   //    Input: term, year, department, courseNumber, sectionNumber
   //    Output: List of faculty members with that role
   async getSection(term, year, department, courseNumber, sectionNumber) {
-    const url =
-      rootNew +
-      `/Section/GetSection?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
+    const endpoint = `/Section/GetSection?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
     try {
       var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
       if (response) {
@@ -974,20 +1011,29 @@ export default class API {
   //    Input: term, year, department, courseNumber
   //    Output: List of sections that are assigned to an instructor
   async GetSectionsByInstructor(term, year, instructorEUID) {
-    const url =
-      rootNew +
-      `/Section/GetSectionsByInstructor?term=${term}&year=${year}&instructorEUID=${instructorEUID}`;
+    const endpoint = `${rootNew}/Section/GetSectionsByInstructor`;
+    const data = {
+      term: term,
+      year: year,
+      instructorEUID: instructorEUID,
+    };
+    const options = {
+      headers: { Authorization: 'bearer ' + token },
+      params: data,
+    }
     try {
-      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
+      const response = await axios.get(endpoint, options);
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
+        const { resData } = response.data;
         return {
-          data: response.data,
+          data: resData,
           status: status,
         };
       }
-    } catch (error) {
-      let status = this.checkStatus(error.message);
+    }
+    catch (error) {
+      const status = this.checkStatus(error.message);
       return {
         data: null,
         status: status,
@@ -1854,11 +1900,53 @@ export default class API {
       });
   }
 
-  async sendFile(route = "", formData = new FormData()) {
-    const url = root + route; // Combine the root URL with the specified route
+
+  async sendStudentCourseWork(data) {
+    if (!data) {
+      const msg = "No data provided.";
+      const e = new Error(msg);
+      console.error(e);
+      return e;
+    }
+
+    const endpoint = `${rootNew}/student-work/upload`;
+    const headers = { "Authorization": 'bearer ' + token };
+    const params = {
+      files: [...data],
+    };
+    try {
+      const response = axios.post(endpoint, params, headers);
+      const { status } = response;
+      if (status == OK) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    catch {
+      
+    }
+
+    
+
+
+  }
+
+
+  async sendFile(route, formData = new FormData()) {
+
+    if (!route) {
+      const msg = "No route specified."
+      const e = new Error(msg);
+      console.error(e);
+      return e;
+    }
+
+    const endpoint = `${root}${route}`; // Combine the root URL with the specified route
     var statusCode; //holds the status code of the response
 
-    return await fetch(url, {
+    return await fetch(endpoint, {
       method: "POST",
       body: formData,
       headers: {
