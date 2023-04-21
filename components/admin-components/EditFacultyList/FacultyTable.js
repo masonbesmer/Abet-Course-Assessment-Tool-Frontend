@@ -82,14 +82,14 @@ const FacultyTable = ({ columns, data, selectFaculty, refreshTable }) => {
       const roleStatus = roleRes.status;
       console.log(roleStatus)
       
-      if (status == "Success") {
+      if (status == "SUCCESS") {
         toast({
           description: `Successfully added the new faculty member! Please refresh the page if you don't see the new change.`,
           status: "success",
           duration: 2000,
           isClosable: true,
         });
-      } else if (roleStatus == "Success") {
+      } else if (roleStatus == "SUCCESS") {
         toast({
           description: `Role added to existing user! Please refresh the page if you don't see the new change.`,
           status: "success",
@@ -115,7 +115,7 @@ const FacultyTable = ({ columns, data, selectFaculty, refreshTable }) => {
       const res = await removeRoleFromUser(oldData.euid, selectFaculty);
       if (res) {
         console.log(res);
-        if (res.status == "Success") {
+        if (res.status == "SUCCESS") {
           toast({
             description: `User successfully deleted! Please refresh the page if you don't see the new change.`,
             status: "success",
@@ -147,7 +147,7 @@ const FacultyTable = ({ columns, data, selectFaculty, refreshTable }) => {
       );
       const status = res.status;
       console.log(res);
-      if (status == "Success") {
+      if (status == "SUCCESS") {
         toast({
           description: `Change Successful! Please refresh the page if you don't see the new change.`,
           status: "success",

@@ -81,7 +81,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
       );
       const sectionData = sectionRes.data;
       const status = sectionRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the section information! Error: ${status}`,
@@ -212,7 +212,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
       const outcomeStatus = outcomeRes.status;
       const fileUploadStatus = fileUploadRes.status;
 
-      if (gradeStatus == "Success" && outcomeStatus == "Success") {
+      if (gradeStatus == "SUCCESS" && outcomeStatus == "SUCCESS") {
         toast({
           description: `Form submitted!`,
           status: "success",
@@ -220,7 +220,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         return;
-      } else if (!gradeStatus == "Success") {
+      } else if (!gradeStatus == "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${gradeStatus}`,
           status: "error",
@@ -228,7 +228,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         return;
-      } else if (!outcomeStatus == "Success") {
+      } else if (!outcomeStatus == "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${outcomeStatus}`,
           status: "error",

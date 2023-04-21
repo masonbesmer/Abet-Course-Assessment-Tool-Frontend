@@ -90,7 +90,7 @@ const EditSurveyQuestions = () => {
         setSurveyQuestions(indexedQuestionsData);
       }
       const status = questionsRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${res}`,

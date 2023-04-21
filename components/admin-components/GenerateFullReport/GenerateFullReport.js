@@ -16,7 +16,7 @@ const GenerateFullReport = ({ user }) => {
       const semesterlist = await getSemesters();
       const status = semesterlist.status;
       console.log(status);
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data!

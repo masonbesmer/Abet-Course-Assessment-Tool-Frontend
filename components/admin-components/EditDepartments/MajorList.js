@@ -13,7 +13,7 @@ const MajorList = ({ refreshTable, majorName, term, year, color }) => {
       ) {
         const res = await deleteMajor(majorName, term, year);
         const status = res.status;
-        if (status == "Success") {
+        if (status == "SUCCESS") {
           toast({
             description: `Successfuly removed ${majorName} for ${year} ${term}`,
             status: "success",

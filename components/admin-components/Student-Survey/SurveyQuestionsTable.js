@@ -85,7 +85,7 @@ const SurveyQuestionsTable = ({
         newQuestionsArray
       );
       const status = res.status;
-      if (status == "Success") {
+      if (status == "SUCCESS") {
         toast({
           description: `Successfully added the new question! Please refresh the page if you don't see the new change.`,
           status: "success",
@@ -126,7 +126,7 @@ const SurveyQuestionsTable = ({
         questionsArray
       );
       const status = res.status;
-      if (status == "Success") {
+      if (status == "SUCCESS") {
         toast({
           description: `Successfully deleted the question! Please refresh the page if you don't see the new change.`,
           status: "success",
@@ -176,7 +176,7 @@ const SurveyQuestionsTable = ({
         questionsArray
       );
       const status = res.status;
-      if (status == "Success") {
+      if (status == "SUCCESS") {
         toast({
           description: `Successfully edited the question! Please refresh the page if you don't see the new change.`,
           status: "success",

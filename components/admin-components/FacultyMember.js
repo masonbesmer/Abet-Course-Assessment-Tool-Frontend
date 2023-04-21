@@ -15,7 +15,7 @@ const FacultyMember = ({ refreshTable, member, id, color }) => {
         const res = await deleteFacultyUser(id);
         if (res) {
           console.log(res);
-          if (res.status == "Success") {
+          if (res.status == "SUCCESS") {
             toast({
               description: `User successfully deleted! Please refresh the page if you don't see the new change.`,
               status: "success",

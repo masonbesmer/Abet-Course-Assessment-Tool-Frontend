@@ -73,7 +73,7 @@ const MappingTable3 = ({
         newLink.name
       );
       const status = linkedMajorOutcomeRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error mapping the course outcome to major outcome! Error: ${status}`,

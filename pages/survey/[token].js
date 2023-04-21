@@ -154,7 +154,7 @@ const studentSurvey = () => {
       );
       const outcomeList = outcomeListRes.data;
       const status = outcomeListRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -289,7 +289,7 @@ const studentSurvey = () => {
         allAnswerArray
       );
       const status = res.status;
-      if (status == "Success") {
+      if (status == "SUCCESS") {
         toast({
           description: `Successfully submitted the survey. Thank you!`,
           status: "success",
