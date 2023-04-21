@@ -741,9 +741,16 @@ export default class API {
     }
   }
 
-  //---deleteMajor()--- (Admin)
-  //    Input: majorName, term & year
-  //    Output: success or failure
+    /**
+   * @function deleteMajor Sends a POST request to the backend /Major/deleteMajor endpoint.
+   * @param {string} majorName major name of the major being added
+   * @param {string} term term of the major being added
+   * @param {string} year year of the major being added
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.deleteMajor("Crypto Science", "Summer", "2023"); // status is an object with code and message
+  **/
   async deleteMajor(majorName = "", term = "", year = 0) {
     const url =
       rootNew +
@@ -768,9 +775,16 @@ export default class API {
 
   //All courses endpoint
 
-  //---getCoursesByDepartment(term,year,department)--- (Admin)
-  //    Input: term, year, department
-  //    Output: the list of course along with request status
+  /**
+   * @function getCoursesByDepartment Sends a POST request to the backend /All/getCoursesByDepartment endpoint.
+   * @param {string} term term of the courses retrieved
+   * @param {string} year year of the courses retrieved
+   * @param {string} department department of courses retrieved
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.getCoursesByDepartment("2023", "Spring", "CSCE"); // status is an object with code and message
+  **/
   async getCoursesByDepartment(term, year, department) {
     const url =
       rootNew +
@@ -793,9 +807,23 @@ export default class API {
     }
   }
 
-  //---addNewCourse()--- (Admin)
-  //    Input: year, term, courseID, coordinatorEUID, courseNumber, displayName, coordinatorComment, isCourseCompleted, department
-  //    Output: success or failure
+  /**
+   * @function addNewCourse Sends a POST request to the backend /Course/AddCourse endpoint.
+   * @param {string} year year of the course being added
+   * @param {string} term term of the course being added
+   * @param {string} courseID course ID of the course being added
+   * @param {string} coordinatorEUID coordinator EUID of the course being added
+   * @param {string} courseNumber course number of the course being added
+   * @param {string} displayName display name of the course being added
+   * @param {string} coordinatorComment coordinator comment of the course being added
+   * @param {boolean} isCourseCompleted is course completed of the course being added
+   * @param {string} department department of the course being added
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.addNewCourse("2023", "Spring", "CSCE 121", "123456789", "121", "Intro to Programming", "This is a comment", true, "CSCE"); // status is an object with code and message
+   **/
+
   async addNewCourse(
     year,
     term,
@@ -835,9 +863,17 @@ export default class API {
     }
   }
 
-  //---deleteCourse()--- (Admin)
-  //    Input: term, year, department, course number
-  //    Output: success or failure
+  /**
+   * @function deleteCourse Sends a POST request to the backend /Course/DeleteCourse endpoint.
+   * @param {*} term term of the course being deleted 
+   * @param {*} year year of the course being deleted
+   * @param {*} department department of the course being deleted
+   * @param {*} courseNumber course number of the course being deleted
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.deleteCourse("2023", "Spring", "CSCE", "121"); // status is an object with code and message
+   **/
   async deleteCourse(term = "", year = 0, department = "", courseNumber = "") {
     const url =
       rootNew +
@@ -861,9 +897,23 @@ export default class API {
     }
   }
 
-  //---EditCourse()--- (Admin)
-  //    Input: term, year, department, course number, newCoordinatorEUID, newCourseNumber, newDisplayName, newCoordinatorComment, newIsCourseComplete, newDepartment
-  //    Output: success or failure
+/**
+ * @function editCourse Sends a PATCH request to the backend /Course/EditCourse endpoint.
+ * @param {string} term term of the course being edited
+ * @param {string} year year of the course being edited 
+ * @param {string} department department of the course being edited
+ * @param {string} courseNumber course number of the course being edited
+ * @param {string} newCoordinatorEUID new coordinator EUID of the course being edited
+ * @param {string} newCourseNumber new course number of the course being edited
+ * @param {string} newDisplayName new display name of the course being edited
+ * @param {string} newCoordinatorComment new coordinator comment of the course being edited
+ * @param {boolean} newIsCourseComplete new is course completed of the course being edited
+ * @param {string} newDepartment new department of the course being edited
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.editCourse("2023", "Spring", "CSCE", "121", "123456789", "121", "Intro to Programming", "This is a comment", true, "CSCE"); // status is an object with code and message
+ **/
   async editCourse(
     term = "",
     year = 0,
@@ -945,9 +995,17 @@ export default class API {
     }
   }
 
-  //---getSectionsByCourse()--- (Admin)
-  //    Input: term, year, department, courseNumber
-  //    Output: List of sections within a course
+/**
+ * @function getSectionsByCourse Sends a GET request to the backend /Section/GetSectionsByCourse endpoint. 
+ * @param {string} term term of the course being edited
+ * @param {string} year year of the course being edited
+ * @param {string} department department of the course being edited
+ * @param {string} courseNumber course number of the course being edited
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.getSectionsByCourse("2023", "Spring", "CSCE", "121"); // status is an object with code and message
+ */
   async getSectionsByCourse(term, year, department, courseNumber) {
     const url =
       rootNew +
@@ -970,9 +1028,16 @@ export default class API {
     }
   }
 
-  //---GetSectionsByInstructor()--- (Admin)
-  //    Input: term, year, department, courseNumber
-  //    Output: List of sections that are assigned to an instructor
+/**
+ * @function getSectionsByInstructor Sends a GET request to the backend /Section/GetSectionsByInstructor endpoint.
+ * @param {string} term term of the course being edited
+ * @param {string} year year of the course being edited
+ * @param {string} instructorEUID EUID of the instructor
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.getSectionsByInstructor("2023", "Spring", "123456789"); // status is an object with code and message 
+ */
   async GetSectionsByInstructor(term, year, instructorEUID) {
     const url =
       rootNew +
@@ -995,9 +1060,16 @@ export default class API {
     }
   }
 
-  //---GetSectionsByCoordinator()--- (Admin)
-  //    Input: term, year, department, courseNumber
-  //    Output: List of sections that are assigned to an coordinator
+  /**
+  * @function GetSectionsByCoordinator Sends a GET request to the backend /Section/GetSectionsByCoordinator endpoint.
+  * @param {string} term term of the course being edited
+  * @param {string} year year of the course being edited
+  * @param {string} coordinatorEUID EUID of the coordinator
+  * @returns {object} response object with data and status
+  * @example
+  * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+  * const { status } = await api.getSectionsByCoordinator("2023", "Spring", "123456789"); // status is an object with code and message
+   */
   async GetSectionsByCoordinator(term, year, coordinatorEUID) {
     const url =
       rootNew +
@@ -1020,9 +1092,21 @@ export default class API {
     }
   }
 
-  //---addNewSection()--- (Admin)
-  //    Input: year, term, department, courseNumber, instructorEUID, isSectionComplete, sectionNumber, numberOfStudents
-  //    Output: success or failure
+/**
+ * @function addNewSection Sends a POST request to the backend /Section/AddSection endpoint.
+ * @param {string} year year of the course being edited
+ * @param {string} term term of the course being edited
+ * @param {string} department department of the course being edited
+ * @param {string} courseNumber course number of the course being edited
+ * @param {string} instructorEUID EUID of the instructor
+ * @param {boolean} isSectionComplete boolean value indicating if the section is complete
+ * @param {string} sectionNumber section number of the section being added
+ * @param {number} numberOfStudents number of students in the section being added
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.addNewSection("2023", "Spring", "CSCE", "121", "123456789", false, "001", 20); // status is an object with code and message
+ */
   async addNewSection(
     year,
     term,
@@ -1061,9 +1145,18 @@ export default class API {
     }
   }
 
-  //---deleteSection()--- (Admin)
-  //    Input: term, year, department, course number, sectionNumber
-  //    Output: success or failure
+/**
+ * @function deleteSection Sends a DELETE request to the backend /Section/DeleteSection endpoint.
+ * @param {string} term term of the course being edited
+ * @param {string} year year of the course being edited
+ * @param {string} department department of the course being edited
+ * @param {string} courseNumber course number of the course being edited
+ * @param {string} sectionNumber section number of the section being deleted
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.deleteSection("2023", "Spring", "CSCE", "121", "001"); // status is an object with code and message
+ */
   async deleteSection(term, year, department, courseNumber, sectionNumber) {
     const url =
       rootNew +
@@ -1087,9 +1180,22 @@ export default class API {
     }
   }
 
-  //---editSection()--- (Admin)
-  //    Input: term, year, department, course number, newCoordinatorEUID, newDisplayName, newCoordinatorComment, newIsCourseComplete, newDepartment
-  //    Output: success or failure
+/**
+ * @function editSection Sends a PATCH request to the backend /Section/EditSection endpoint.
+ * @param {string} term term of the course being edited
+ * @param {string} year year of the course being edited
+ * @param {string} department department of the course being edited
+ * @param {string} courseNumber course number of the course being edited
+ * @param {string} sectionNumber section number of the section being edited
+ * @param {string} newInstructorEUID EUID of the new instructor
+ * @param {boolean} newIsSectionCompleted boolean value indicating if the section is complete
+ * @param {string} newSectionNumber new section number of the section being edited
+ * @param {number} newNumberOfStudents new number of students in the section being edited
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.editSection("2023", "Spring", "CSCE", "121", "001", "123456789", false, "002", 20); // status is an object with code and message
+ **/
   async editSection(
     term,
     year,
@@ -1131,9 +1237,18 @@ export default class API {
 
   //Outcome
 
-  //---assignCourseToMajor()--- (Admin)
-  //    Input: year,term,department,courseNumber,major
-  //    Output: success or failure
+/**
+ * @function assignCourseToMajor Sends a POST request to the backend /CourseOutcome/addCourseOutcome endpoint.
+ * @param {string} year year of the course being assigned to a major
+ * @param {string} term term of the course being assigned to a major
+ * @param {string} department department of the course being assigned to a major
+ * @param {string} courseNumber course number of the course being assigned to a major
+ * @param {string} major major to which the course is being assigned
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.assignCourseToMajor("2023", "Spring", "CSCE", "121", "Computer Science"); // status is an object with code and message
+ */
   async assignCourseToMajor(year, term, department, courseNumber, major) {
     const url =
       rootNew +
