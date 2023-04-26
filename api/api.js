@@ -540,7 +540,7 @@ export default class API {
     }
     catch (error) {
       const status = this.checkStatus(error.message);
-      console.error(status);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -574,6 +574,7 @@ export default class API {
     }
     catch (error) {
       const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -630,6 +631,7 @@ export default class API {
     }
     catch (error) {
       const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -637,6 +639,7 @@ export default class API {
     }
     debug.timeEnd(`POST ${endpoint}`);
   }
+
 
 
   /**
@@ -689,6 +692,7 @@ export default class API {
     }
     catch (error) {
       const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -730,6 +734,7 @@ export default class API {
       }
     } catch (error) {
       const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -737,6 +742,8 @@ export default class API {
     }
     debug.timeEnd(`GET ${endpoint}`);
   }
+
+
 
   /**
    * @function addMajor Sends a POST request to the backend /Major/AddMajor endpoint.
@@ -781,6 +788,7 @@ export default class API {
   }
 
 
+
   /**
    * @function deleteMajor Sends a DELETE request to the backend /Major/DeleteMajor endpoint.
    * @param {string} majorName major name of the major being deleted
@@ -820,6 +828,8 @@ export default class API {
     }
     debug.timeEnd(`DELETE ${endpoint}`);
   }
+
+
 
   //All courses endpoint
 
