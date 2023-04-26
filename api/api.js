@@ -712,14 +712,15 @@ export default class API {
     const url = rootNew + `/Major/GetMajors?term=${term}&year=${year}`;
     const endpoint = `${rootNew}/Major/GetMajors`;
     const options = {
+      headers: { 'Authorization': 'bearer ' + token },
       params: {
         term: term,
         year: year,
-      }
-    }
+      },
+    };
     debug.time(`GET ${endpoint}`);
     try {
-      var response = await axios.get(url, {headers: {'Authorization': 'bearer '+token}});
+      var response = await axios.get(url, options);
       if (response) {
         const status = this.checkStatus(response.status);
         return {
@@ -760,7 +761,7 @@ export default class API {
     };
     debug.time(`POST ${endpoint}`);
     try {
-      const response = await axios.post(endpoint, {}, options);
+      const response = await axios.post(endpoint, data, options); // data is the body of the request
       if (response) {
         const status = this.checkStatus(response.status);
         console.log(response);
