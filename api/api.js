@@ -713,6 +713,23 @@ export default class API {
    * const { data } = await api.getMajors("Summer", "2022"); // data is a list of majors
   **/
   async getMajors(term, year) {
+    if (!year) {
+      const msg = "Invalid or missing year";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!term) {
+      const msg = "Invalid or missing term";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+
     const endpoint = `${rootNew}/Major/GetMajors`;
     const data = {
       term: term,
@@ -757,6 +774,31 @@ export default class API {
    * const { status } = await api.addMajor("Crypto Science", "Summer", "2023"); // status is an object with code and message
   **/
   async addMajor(majorName, term, year) {
+    if (!year) {
+      const msg = "Invalid or missing year";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!term) {
+      const msg = "Invalid or missing term";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!majorName) {
+      const msg = "Invalid or missing major name";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+
     const endpoint = `${rootNew}/Major/AddMajor`;
     const data = {
       name: majorName, // this is the expected format for the backend (?name=majorName); do not change
@@ -801,6 +843,31 @@ export default class API {
    * const { data, status } = await api.deleteMajor("Crypto Science", "Summer", "2023");
   **/
   async deleteMajor(majorName, term, year) {
+    if (!year) {
+      const msg = "Invalid or missing year";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!term) {
+      const msg = "Invalid or missing term";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+    if (!majorName) {
+      const msg = "Invalid or missing major name";
+      console.error(msg);
+      return {
+        data: null,
+        status: { code: 400, message: msg },
+      };
+    }
+
     const endpoint = `${rootNew}/Major/DeleteMajor`;
     const data = {
       name: majorName, // this is the expected format for the backend (?name=majorName); do not change
