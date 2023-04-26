@@ -710,21 +710,21 @@ export default class API {
    * @returns {object} response object with data and status
    * @example
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
-   * const { data } = await api.getMajors("Summer","2022"); // data is a list of majors
+   * const { data } = await api.getMajors("Summer", "2022"); // data is a list of majors
   **/
   async getMajors(term, year) {
-    const url = rootNew + `/Major/GetMajors?term=${term}&year=${year}`;
     const endpoint = `${rootNew}/Major/GetMajors`;
+    const data = {
+      term: term,
+      year: year,
+    };
     const options = {
       headers: { 'Authorization': 'bearer ' + token },
-      params: {
-        term: term,
-        year: year,
-      },
+      params: data,
     };
     debug.time(`GET ${endpoint}`);
     try {
-      var response = await axios.get(url, options);
+      const response = await axios.get(endpoint, options);
       if (response) {
         const status = this.checkStatus(response.status);
         return {
@@ -732,7 +732,8 @@ export default class API {
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       const status = this.checkStatus(error.message);
       console.error(error);
       return {
