@@ -764,8 +764,6 @@ export default class API {
       const response = await axios.post(endpoint, data, options); // data is the body of the request
       if (response) {
         const status = this.checkStatus(response.status);
-        console.log(response);
-        console.log(`status: ${status}`);
         return {
           data: response.data,
           status: status,
@@ -774,6 +772,7 @@ export default class API {
     }
     catch (error) {
       const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -781,29 +780,45 @@ export default class API {
     }
   }
 
-  //---deleteMajor()--- (Admin)
-  //    Input: majorName, term & year
-  //    Output: success or failure
-  async deleteMajor(majorName = "", term = "", year = 0) {
-    const url =
-      rootNew +
-      `/Major/DeleteMajor?term=${term}&year=${year}&name=${majorName}`;
+
+  /**
+   * @function deleteMajor Sends a DELETE request to the backend /Major/DeleteMajor endpoint.
+   * @param {string} majorName major name of the major being deleted
+   * @param {string} term term of the major being deleted
+   * @param {string} year year of the major being deleted
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { data, status } = await api.deleteMajor("Crypto Science", "Summer", "2023");
+  **/
+  async deleteMajor(majorName, term, year) {
+    const endpoint = `${rootNew}/Major/DeleteMajor`;
+    const data = {
+      name: majorName, // this is the expected format for the backend (?name=majorName); do not change
+      term: term,
+      year: year,
+    };
+    const options = {
+      headers: { 'Authorization': 'bearer ' + token },
+      params: data, // the only way to send params in a DELETE request is to use the params object
+    };
+    debug.time(`DELETE ${endpoint}`);
     try {
-      const response = await axios.delete(url, { headers: { 'Authorization': 'bearer ' + token } });
+      const response = await axios.delete(endpoint, options);
       if (response) {
-        let status = this.checkStatus(response.status);
-        console.log(response);
-        console.log(`status: ${status}`);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
         };
       }
-    } catch (error) {
+    }
+    catch (error) {
       const status = this.checkStatus(error.message);
-      console.error(status);
+      console.error(error);
       return status;
     }
+    debug.timeEnd(`DELETE ${endpoint}`);
   }
 
   //All courses endpoint
