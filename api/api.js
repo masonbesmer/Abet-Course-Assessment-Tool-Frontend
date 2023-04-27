@@ -149,7 +149,7 @@ export default class API {
   
 
   /**
-   * @function Custom [Development] Sends a POST request to the backend Custom endpoint. The backend will run the function "`DoStuff()`" to populate the database.
+   * @function Custom [Development] Sends a POST request to the backend /Custom endpoint. The backend will run the function "`DoStuff()`" to populate the database.
    * @returns {void}
   **/
   async Custom() {
@@ -173,8 +173,8 @@ export default class API {
 
 
   /**
-   * @function getFacultyList Sends a POST request to the backend Login endpoint.
-   * @returns {[]} List of admins, instructors, coordinators
+   * @function getFacultyList Sends a POST request to the backend /Login endpoint.
+   * @returns {Array} List of admins, instructors, coordinators
    * @example
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
    * const facultyList = await api.getFacultyList(); // facultyList holds the response from the backend
@@ -183,12 +183,12 @@ export default class API {
     const endpoint = `${rootNew}/Role/GetFaculty`;
     debug.time(`GET ${endpoint}`);
     try {
-      var response = await axios.get(endpoint, {
-        headers: { 'Authorization': 'bearer '+token },
+      const response = await axios.get(endpoint, {
+        headers: { 'Authorization': 'bearer ' + token },
         // no data
       });
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
@@ -196,7 +196,8 @@ export default class API {
       }
     }
     catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -214,18 +215,19 @@ export default class API {
   **/
   // TODO: Validate role name before sending to backend
   async getUsersByRole(roleName) {
-    const endpoint = `${rootNew}/Role/GetUsersByRole`; //?roleName=${roleName} (old)
+    const endpoint = `${rootNew}/Role/GetUsersByRole`;
+    const data = {
+      roleName: roleName,
+    };
+    const options = {
+      headers: { 'Authorization': 'bearer ' + token },
+      params: data,
+    }
     debug.time(`GET ${endpoint}`);
     try {
-      var response = await axios.get(endpoint, {
-        headers: {'Authorization': 'bearer '+token},
-        data: {
-          EUID: euid,
-          roleName: roleName,
-        }
-      });
+      const response = await axios.get(endpoint, options);
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
@@ -233,7 +235,8 @@ export default class API {
       }
     }
     catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
@@ -266,7 +269,7 @@ export default class API {
     try {
       const response = await axios.post(endpoint, data, options);
       if (response) {
-        let status = this.checkStatus(response.status);
+        const status = this.checkStatus(response.status);
         return {
           data: response.data,
           status: status,
@@ -274,7 +277,8 @@ export default class API {
       }
     }
     catch (error) {
-      let status = this.checkStatus(error.message);
+      const status = this.checkStatus(error.message);
+      console.error(error);
       return {
         data: null,
         status: status,
