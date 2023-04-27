@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../api/api';
 
-const FileUpload = () => {
+const FileUpload = ({extension = ".accdb"}) => {
     const uploadfunction = () => {
         const formData = new FormData();
         const fileInput = document.getElementById('file-input');
@@ -14,7 +14,7 @@ const FileUpload = () => {
         <div>
             <input type="file" 
             id="file-input" 
-            accept=".accdb" />
+            accept={extension} />
 
             <button onClick={uploadfunction}>Upload_File</button>
         </div>

@@ -33,6 +33,8 @@ const formCompletion = ({ number, section, term, year, department }) => {
   const [gradeForm, setGradeForm] = useState();
   const [outcomeForm, setOutcomeForm] = useState();
   const [refreshKey, setRefreshKey] = useState(0); //For refreshing the table
+  const [commentField, setCommentField] = useState(''); // instructor comments textarea
+  const [fileInputField, setFileInputField] = useState();
   const toast = useToast({ position: "top" });
   const refreshTable = () => {
     setRefreshKey(refreshKey + 1);
@@ -152,6 +154,14 @@ const formCompletion = ({ number, section, term, year, department }) => {
     setOutcomeForm(tempForm);
   };
 
+  const handleCommentFieldChange = (e) => {
+    setCommentField(e.target.value);
+  }
+
+  const handleFileInputChange = (e) => {
+    setFileInputField(e.target.value);
+  }
+
   useEffect(() => {
     getOutcomeForm();
     getGradeForm();
@@ -174,7 +184,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           gradeForm[key].b +
           gradeForm[key].c +
           gradeForm[key].d +
-          gradeForm[key].f;
+          gradeForm[key].f; // counts the total number of students by adding grades for all categories
         console.log(totalStudentsNum);
         gradeForm[key].totalStudents = totalStudentsNum;
       }
@@ -196,8 +206,11 @@ const formCompletion = ({ number, section, term, year, department }) => {
         outcomeForm
       );
 
+      const fileUploadRes = null; // APIHelper function that sends the file to the backend
+
       const gradeStatus = gradeRes.status;
       const outcomeStatus = outcomeRes.status;
+      const fileUploadStatus = fileUploadRes.status;
 
       if (gradeStatus == "SUCCESS" && outcomeStatus == "SUCCESS") {
         toast({
@@ -257,6 +270,12 @@ const formCompletion = ({ number, section, term, year, department }) => {
               courseOutcomes={outcomeForm}
               handleOutcomesChange={handleOutcomesChange}
             />
+
+            <Text>
+              Student file upload
+            </Text>
+            <input type="file" accept=".pdf" onChange={handleFileInputChange} />
+            
             <Text fontSize="xl" fontWeight="bold" mb="1em">
               Instructor Comments
             </Text>
@@ -266,6 +285,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
               fontSize="xl"
               bg="#edf2f7"
               placeholder="// Write a comment"
+              onChange={handleCommentFieldChange}
             ></Textarea>
             <Box>
               <Button
