@@ -1412,9 +1412,18 @@ export default class API {
     }
   }
 
-  //---deleteCourseAssignedToMajor()--- (Admin)
-  //    Input: term, year, department, course number, major
-  //    Output: success or failure
+/** 
+  * @function deleteCourseAssignedToMajor Sends a DELETE request to the backend /CourseOutcome/DeleteCourseOutcome endpoint.
+  * @param {string} year year of the course being deleted
+  * @param {string} term term of the course being deleted
+  * @param {string} department department of the course being deleted
+  * @param {string} courseNumber course number of the course being deleted
+  * @param {string} major major to which the course is being deleted
+  * @returns {object} response object with data and status
+  * @example
+  * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+  * const { status } = await api.deleteCourseAssignedToMajor("2023", "Spring", "CSCE", "121", "Computer Science"); // status is an object with code and message
+  */
   async deleteCourseAssignedToMajor(
     term,
     year,
@@ -1444,9 +1453,18 @@ export default class API {
     }
   }
 
-  //---addNewOutcomeToMajor()--- (Admin)
-  //    Input: year,term,majorName,outcome Name, outcome Description
-  //    Output: success or failure
+/**
+ * @function addNewCourseToMajor Sends a POST request to the backend /CourseOutcome/AddCourseOutcome endpoint.
+ * @param {string} year year of the course being added
+ * @param {string} term term of the course being added
+ * @param {string} majorName major to which the course is being added
+ * @param {string} outcomeName name of the outcome being added
+ * @param {string} outcomeDescription description of the outcome being added
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.addNewCourseToMajor("2023", "Spring", "Computer Science", "Outcome 1", "Outcome 1 Description"); // status is an object with code and message 
+ */
   async addNewOutcomeToMajor(
     year,
     term,
@@ -1480,9 +1498,17 @@ export default class API {
     }
   }
 
-  //---deleteOutcomeFromMajor()--- (Admin)
-  //    Input: year,term,majorName,outcome Name
-  //    Output: success or failure
+/**
+ * @function deleteOutcomeFromMajor Sends a DELETE request to the backend /MajorOutcome/DeleteMajorOutcome endpoint.
+ * @param {string} year year of the course being deleted
+ * @param {string} term term of the course being deleted
+ * @param {string} majorName major to which the course is being deleted
+ * @param {string} outcomeName name of the outcome being deleted
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.deleteOutcomeFromMajor("2023", "Spring", "Computer Science", "Outcome 1"); // status is an object with code and message
+ */
   async deleteOutcomeFromMajor(year, term, majorName, outcomeName) {
     const url =
       rootNew +
@@ -1506,9 +1532,19 @@ export default class API {
     }
   }
 
-  //---editSection()--- (Admin)
-  //    Input: term, year, major name, old outcome name
-  //    Output: success or failure
+/**
+ * @function editOutcomeForMajor Sends a PATCH request to the backend /MajorOutcome/EditMajorOutcome endpoint.
+ * @param {string} year year of the course being edited
+ * @param {string} term term of the course being edited
+ * @param {string} majorName major to which the course is being edited
+ * @param {string} oldOutcomeName name of the outcome being edited
+ * @param {string} newOutcomeName new name of the outcome being edited
+ * @param {string} newDescription new description of the outcome being edited
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.editOutcomeForMajor("2023", "Spring", "Computer Science", "Outcome 1", "Outcome 1", "Outcome 1 Description"); // status is an object with code and message
+ */
   async editOutcomeForMajor(
     term,
     year,
@@ -1543,9 +1579,17 @@ export default class API {
     }
   }
 
-  //---getCourseOutcome()--- (Admin)
-  //    Input: year,term, department,courseNumber
-  //    Output: success or failure
+/**
+ * @function getCourseOutcome Sends a GET request to the backend /CourseOutcome/GetCourseOutcomes endpoint.
+ * @param {string} year year of the course being retrieved
+ * @param {string} term term of the course being retrieved
+ * @param {string} department department of the course being retrieved
+ * @param {string} courseNumber course number of the course being retrieved
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { data, status } = await api.getCourseOutcome("2023", "Spring", "Computer Science", "111"); // data is an object with the course outcome data and status is an object with code and message
+ */
   async getCourseOutcome(year, term, department, courseNumber) {
     const url =
       rootNew +
@@ -1568,9 +1612,19 @@ export default class API {
     }
   }
 
-  //---addOutcomeToCourse()--- (Admin)
-  //    Input: year,term,department,courseNumber ,outcomName, outcomeDescription
-  //    Output: success or failure
+/**
+ * @function addNewCourseOutcome Sends a POST request to the backend /CourseOutcome/addCourseOutcome endpoint.
+ * @param {string} year year of the course being added
+ * @param {string} term term of the course being added
+ * @param {string} department department of the course being added
+ * @param {string} courseNumber course number of the course being added
+ * @param {string} outcomeName name of the outcome being added
+ * @param {string} outcomeDescription description of the outcome being added
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.addNewCourseOutcome("2023", "Spring", "Computer Science", "111", "Outcome 1", "Outcome 1 Description"); // status is an object with code and message
+ */
   async addNewCourseOutcome(
     year,
     term,
@@ -1604,9 +1658,18 @@ export default class API {
     }
   }
 
-  //---deleteOutcomeFromMajor()--- (Admin)
-  //    Input: year,term,department,courseNumber,major,outcomName
-  //    Output: success or failure
+/**
+ * @function deleteCourseOutcome Sends a PATCH request to the backend /CourseOutcome/EditCourseOutcome endpoint.
+ * @param {string} year year of the course being edited
+ * @param {string} term term of the course being edited
+ * @param {string} department department of the course being edited
+ * @param {string} courseNumber course number of the course being edited
+ * @param {string} outcomeName name of the outcome being edited
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.deleteCourseOutcome("2023", "Spring", "Computer Science", "111", "Outcome 1"); // status is an object with code and message
+ */
   async deleteCourseOutcome(year, term, department, courseNumber, outcomeName) {
     const url =
       rootNew +
@@ -1630,9 +1693,19 @@ export default class API {
     }
   }
 
-  //---GetLinkedMajorOutcomes()--- (Admin)
-  //    Input: year,term,department,courseNumber,courseOutcomeName
-  //    Output: success or failure
+/**
+ * @function GetLinkedMajorOutcomes Sends a GET request to the backend /CourseOutcome/GetLinkedMajorOutcomes endpoint.
+ * @param {string} year year of the course being retrieved
+ * @param {string} term term of the course being retrieved
+ * @param {string} department department of the course being retrieved
+ * @param {string} courseNumber course number of the course being retrieved
+ * @param {string} courseOutcomeName name of the course outcome being retrieved
+ * @param {string} major name of the major being retrieved
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { data, status } = await api.GetLinkedMajorOutcomes("2023", "Spring", "Computer Science", "111", "Outcome 1", "Computer Science"); // data is an object with the linked major outcomes data and status is an object with code and message
+ */
   async GetLinkedMajorOutcomes(
     year,
     term,
@@ -1662,9 +1735,20 @@ export default class API {
     }
   }
 
-  //---LinkToMajorOutcome()--- (Admin)
-  //    Input: year,term,department,courseNumber,courseOutcomeName, majorName, majorOutcomeName
-  //    Output: success or failure
+/**
+ * @function LinkToMajorOutcome Sends a POST request to the backend /CourseOutcome/LinkToMajorOutcome endpoint.
+ * @param {string} year year of the course being linked
+ * @param {string} term term of the course being linked
+ * @param {string} department department of the course being linked
+ * @param {string} courseNumber course number of the course being linked
+ * @param {string} courseOutcomeName name of the course outcome being linked
+ * @param {string} majorName name of the major being linked
+ * @param {string} majorOutcomeName name of the major outcome being linked
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.LinkToMajorOutcome("2023", "Spring", "Computer Science", "111", "Outcome 1", "Computer Science", "Outcome 1"); // status is an object with code and message
+ */
   async LinkToMajorOutcome(
     year,
     term,
@@ -1695,9 +1779,20 @@ export default class API {
     }
   }
 
-  //---RemoveLinkToMajorOutcome()--- (Admin)
-  //    Input: year,term,department,courseNumber,courseOutcomeName, majorName, majorOutcomeName
-  //    Output: success or failure
+/** 
+ * @function RemoveLinkToMajorOutcome Sends a DELETE request to the backend /CourseOutcome/RemoveLinkToMajorOutcome endpoint.
+ * @param {string} year year of the course being unlinked
+ * @param {string} term term of the course being unlinked
+ * @param {string} department department of the course being unlinked
+ * @param {string} courseNumber course number of the course being unlinked
+ * @param {string} courseOutcomeName name of the course outcome being unlinked
+ * @param {string} majorName name of the major being unlinked
+ * @param {string} majorOutcomeName name of the major outcome being unlinked
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status } = await api.RemoveLinkToMajorOutcome("2023", "Spring", "Computer Science", "111", "Outcome 1", "Computer Science", "Outcome 1"); // status is an object with code and message
+*/
   async RemoveLinkToMajorOutcome(
     year,
     term,
@@ -1728,9 +1823,16 @@ export default class API {
     }
   }
 
-  //---getMajorOutcomesBymajor()--- (Admin)
-  //    Input: year,term, major name
-  //    Output: success or failure
+/**
+ * @function getMajorOutcomesByMajor Sends a GET request to the backend /Major/GetMajorOutcomesByMajor endpoint.
+ * @param {string} year year of the major outcomes being retrieved
+ * @param {string} term term of the major outcomes being retrieved
+ * @param {string} majorName name of the major outcomes being retrieved
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getMajorOutcomesByMajor("2023", "Spring", "Computer Science"); // status is an object with code and message, data is an array of major outcomes
+ */
   async getMajorOutcomesBymajor(year, term, majorName) {
     const url =
       rootNew +
@@ -1753,9 +1855,17 @@ export default class API {
     }
   }
 
-  //---getMajorOutcomesBymajor()--- (Admin)
-  //    Input: year,term, major name
-  //    Output: success or failure
+/** 
+ * @function getOutcomesByCourse Sends a GET request to the backend /Course/GetMajorOutcomesSatisfied endpoint.
+ * @param {string} year year of the course outcomes being retrieved
+ * @param {string} term term of the course outcomes being retrieved
+ * @param {string} department department of the course outcomes being retrieved
+ * @param {string} courseNumber course number of the course outcomes being retrieved
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getOutcomesByCourse("2023", "Spring", "Computer Science", "111"); // status is an object with code and message, data is an array of course outcomes
+*/
   async getOutcomesByCourse(year, term, department, courseNumber) {
     const url =
       rootNew +
@@ -1780,9 +1890,16 @@ export default class API {
 
   // Survey
 
-  //---getQuestionSet()--- (Admin)
-  //    Input: year,term, major name
-  //    Output: a list of questions belong to that question set
+/** 
+ * @function getQuestionSet() Sends a GET request to the backend /Survey/GetQuestionSet endpoint.
+ * @param {string} year year of the question set being retrieved
+ * @param {string} term term of the question set being retrieved
+ * @param {string} questionSetName name of the question set being retrieved
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getQuestionSet("2023", "Spring", "Question Set 1"); // status is an object with code and message, data is an array of questions
+*/
   async getQuestionSet(year, term, questionSetName) {
     const url =
       rootNew +
@@ -1805,9 +1922,15 @@ export default class API {
     }
   }
 
-  //---GetQuestion()--- (Admin)
-  //    Input: year,term,
-  //    Output: a list of all questions
+/** 
+ * @function getQuestions() Sends a GET request to the backend /Survey/GetQuestions endpoint.
+ * @param {string} year year of the questions being retrieved
+ * @param {string} term term of the questions being retrieved
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getQuestions("2023", "Spring"); // status is an object with code and message, data is an array of questions
+*/
   async getQuestions(year, term) {
     const url = rootNew + `/Survey/GetQuestions?term=${term}&year=${year}`;
     try {
@@ -1828,9 +1951,17 @@ export default class API {
     }
   }
 
-  //---saveQuestions()--- (Admin)
-  //    Input: year,term, questionSet, questions
-  //    Output: success or failure
+/** 
+ * @function saveQuestions() Sends a POST request to the backend /Survey/SaveQuestions endpoint.
+ * @param {string} year year of the questions being saved
+ * @param {string} term term of the questions being saved
+ * @param {string} questionSet name of the question set being saved
+ * @param {array} questions array of questions being saved
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.saveQuestions("2023", "Spring", "Question Set 1", [{question: "How are you?", answer: "Good"}]); // status is an object with code and message, data is an array of questions
+*/
   async saveQuestions(year, term, questionSet, questions) {
     const url =
       rootNew +
@@ -1856,9 +1987,21 @@ export default class API {
     }
   }
 
-  //---postSurvey()--- (student)
-  //    Input: year,term, euid,department,courseNumber,sectionNumber,additionalComments,answers
-  //    Output: success or failure
+/** 
+ * @function postSurvey() Sends a POST request to the backend /Survey/PostSurvey endpoint.
+ * @param {string} year year of the survey being posted
+ * @param {string} term term of the survey being posted
+ * @param {string} euid euid of the student posting the survey
+ * @param {string} department department of the course being surveyed
+ * @param {string} courseNumber course number of the course being surveyed
+ * @param {string} sectionNumber section number of the course being surveyed
+ * @param {string} additionalComments additional comments of the survey being posted
+ * @param {array} answers array of answers to the survey questions
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.postSurvey("2023", "Spring", "123456789", "CSCE", "1234", "001", "Good course", [{question: "How are you?", answer: "Good"}]); // status is an object with code and message, data is an array of questions
+*/
   async postSurvey(
     year,
     term,
@@ -1893,9 +2036,18 @@ export default class API {
 
   //Instructor and Coordinator Form
 
-  //---GetGrades()--- (Instructor)
-  //    Input: year, term, department, courseNumber, sectionNumber
-  //    Output: the grades object of a course
+/** 
+ * @function getGrades() Sends a GET request to the backend /Grade/GetGrades endpoint.
+ * @param {string} year year of the grades being retrieved
+ * @param {string} term term of the grades being retrieved
+ * @param {string} department department of the course being graded
+ * @param {string} courseNumber course number of the course being graded
+ * @param {string} sectionNumber section number of the course being graded
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getGrades("2023", "Spring", "CSCE", "1234", "001"); // status is an object with code and message, data is an array of grades
+*/
   async getGrades(year, term, department, courseNumber, sectionNumber) {
     const url =
       rootNew +
@@ -1919,9 +2071,19 @@ export default class API {
     }
   }
 
-  //---setGrades()--- (Instructor)
-  //    Input: year, term, department, courseNumber, sectionNumber,gradesArray
-  //    Output: success or failure
+/** 
+ * @function setGrades() Sends a POST request to the backend /Grade/SetGrades endpoint.
+ * @param {string} year year of the grades being set
+ * @param {string} term term of the grades being set
+ * @param {string} department department of the course being graded
+ * @param {string} courseNumber course number of the course being graded
+ * @param {string} sectionNumber section number of the course being graded
+ * @param {array} gradesArray array of grades being set
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.setGrades("2023", "Spring", "CSCE", "1234", "001", [{euid: "123456789", grade: "A"}]); // status is an object with code and message, data is an array of grades
+*/
   async setGrades(
     year,
     term,
@@ -1952,9 +2114,18 @@ export default class API {
     }
   }
 
-  //---GetStudentOutcomesCompleted()--- (Instructor)
-  //    Input: year, term, department, courseNumber, sectionNumber
-  //    Output: return the course outcome object of a course
+/** 
+ * @function GetStudentOutcomesCompleted() Sends a GET request to the backend /StudentOutcomesCompleted/GetStudentOutcomesCompleted endpoint.
+ * @param {string} year year of the student outcomes being retrieved
+ * @param {string} term term of the student outcomes being retrieved
+ * @param {string} department department of the course being graded
+ * @param {string} courseNumber course number of the course being graded
+ * @param {string} sectionNumber section number of the course being graded
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.GetStudentOutcomesCompleted("2023", "Spring", "CSCE", "1234", "001"); // status is an object with code and message, data is an array of student outcomes
+*/
   async GetStudentOutcomesCompleted(
     year,
     term,
@@ -1984,9 +2155,19 @@ export default class API {
     }
   }
 
-  //---SetStudentOutcomesCompleted()--- (student)
-  //    Input: year, term, department, courseNumber, sectionNumber
-  //    Output: success or failure
+/** 
+ * @function SetStudentOutcomesCompleted() Sends a POST request to the backend /StudentOutcomesCompleted/SetStudentOutcomesCompleted endpoint.
+ * @param {string} year year of the student outcomes being set
+ * @param {string} term term of the student outcomes being set
+ * @param {string} department department of the course being graded
+ * @param {string} courseNumber course number of the course being graded
+ * @param {string} sectionNumber section number of the course being graded
+ * @param {object} courseOutcomeObject object of student outcomes being set
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.SetStudentOutcomesCompleted("2023", "Spring", "CSCE", "1234", "001", {euid: "123456789", grade: "A"}); // status is an object with code and message, data is an array of student outcomes
+*/
   async SetStudentOutcomesCompleted(
     year,
     term,
@@ -2019,9 +2200,15 @@ export default class API {
 
   // Full Report EndPoint
 
-  //---GenerateFullReport()--- (Instructor)
-  //    Input: year, term, department, courseNumber, sectionNumber
-  //    Output: The data of all the courses within a semester and major
+/** 
+ * @function GenerateFullReport() Sends a GET request to the backend /GenerateFullReport endpoint.
+ * @param {string} year year of the report being generated
+ * @param {string} term term of the report being generated
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.GenerateFullReport("2023", "Spring"); // status is an object with code and message, data is an array of student outcomes
+*/
   async GenerateFullReport(year, term) {
     const url = rootNew + `/GenerateFullReport?term=${term}&year=${year}`;
 
@@ -2046,9 +2233,17 @@ export default class API {
   // Old End Point
   // generic function for sending POST requests
 
-  //---sendPost()---
-  //    Input: route and body
-  //    Output: The JSON that is returned from the route
+/** 
+ * @function sendPost() Sends a POST request to the backend.
+ * @param {string} route route of the request being sent
+ * @param {object} body body of the request being sent
+ * @param {boolean} isFileDownload boolean value for whether or not the request is a file download
+ * @param {string} fileName name of the file being downloaded
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.sendPost("/StudentOutcomesCompleted/GetStudentOutcomesCompleted", {year: "2023", term: "Spring", department: "CSCE", courseNumber: "1234", sectionNumber: "001"}); // status is an object with code and message, data is an array of student outcomes
+*/
   async sendPost(route = "", body = {}, isFileDownload = false, fileName = "") {
     const url = root + route; // Combine the root URL with the specified route
     var statusCode; //holds the status code of the response
@@ -2106,7 +2301,14 @@ export default class API {
       });
   }
 
-
+/** 
+ * @function sendStudentCourseWork() Sends a POST request to the backend /student-work/upload endpoint.
+ * @param {object} data data of the request being sent
+ * @returns {boolean} true if the request was successful, false otherwise
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.sendStudentCourseWork({files: [...files]}); // status is an object with code and message, data is an array of student outcomes
+*/
   async sendStudentCourseWork(data) {
     if (!data) {
       const msg = "No data provided.";
@@ -2132,14 +2334,19 @@ export default class API {
     }
     catch {
       
-    }
-
-    
-
+    }  
 
   }
 
-
+/** 
+ * @function sendFile() Sends a POST request to the backend.
+ * @param {string} route route of the request being sent
+ * @param {object} formData form data of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.sendFile("/StudentOutcomesCompleted/GetStudentOutcomesCompleted", formData); // status is an object with code and message, data is an array of student outcomes
+*/
   async sendFile(route, formData = new FormData()) {
 
     if (!route) {
@@ -2187,9 +2394,16 @@ export default class API {
       });
   }
 
-  //---getCourses(userid, semester, year)---
-  //    Input: UserId, Semester, Year
-  //    Output: Sections for the corresponding UserId, Semester and Year
+/** 
+ * @function getCourses() Sends a POST request to the backend /sections/by-userid-semester-year endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {number} year year of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getCourses(userid, semester, year); // status is an object with code and message, data is an array of student outcomes
+*/
   async getCourses(userid = "", semester = "", year = 0) {
     const body = { userid: userid, semester: semester, year: year };
 
@@ -2199,9 +2413,16 @@ export default class API {
     //api.getCourses(userId, semester, year).then(courses => {/*here is where the data is accessible, courses is an array of JSON objects*/})
   }
 
-  //---getAllCourses(userid, semester, year)---  (Admin)
-  //    Input: UserId, Semester, Year
-  //    Output: Sections for the corresponding Semester and Year
+/** 
+ * @function getAllCourses() Sends a POST request to the backend /sections/by-semester-year endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {number} year year of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getAllCourses(userid, semester, year); // status is an object with code and message, data is an array of student outcomes
+*/
   async getAllCourses(userid = "", semester = "", year = 0) {
     const body = { Userid: userid, Semester: semester, Year: year };
 
@@ -2211,9 +2432,15 @@ export default class API {
     //api.getAllCourses(userid, semester, year).then(courses => {/*here is where the data is accessible, courses is an array of JSON objects*/})
   }
 
-  //---getCoursesBySemesterYear(semester, year)---  (Admin)
-  //    Input: Semester, Year
-  //    Output: All Courses for the corresponding semester and year
+/** 
+ * @function getCoursesBySemesterYear() Sends a POST request to the backend /courses/get-by-year-semester endpoint.
+ * @param {string} semester semester of the request being sent
+ * @param {number} year year of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getCoursesBySemesterYear(semester, year); // status is an object with code and message, data is an array of student outcomes
+*/
   async getCoursesBySemesterYear(semester = "", year = 0) {
     const body = {
       semester: semester,
@@ -2225,9 +2452,19 @@ export default class API {
   //To use this data you must do the following:
   //api.getCoursesBySemesterYear(semester, year).then(courses => {/*here is where the data is accessible, courses is an array of JSON objects*/})
 
-  //---getFormsBySection(userid, year, semester, department, course, section)---
-  //    Input: UserId, Year, Semester, Department, CourseNumber, SectionNumber
-  //    Output: Forms for the corresponding UserId, Year, Semester, Department, CourseNumber, and SectionNumber
+/** 
+ * @function getFormBySection() Sends a POST request to the backend /forms/by-section endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} department department of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} sectionNumber section number of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getFormBySection(userid, year, semester, department, courseNumber, sectionNumber); // status is an object with code and message, data is an array of student outcomes
+*/
   async getFormBySection(
     userid = "",
     year = 0,
@@ -2255,9 +2492,18 @@ export default class API {
     //api.getFormsBySection(userid, year, semester, department, course, section).then(form => {/*here is where the data is accessible, form is an array of JSON objects*/})
   }
 
-  //---getFormsByCourse(userid, year, semester, department, course)---
-  //    Input: UserId, Year, Semester, Department, CourseNumber
-  //    Output: Forms for the corresponding UserId, Year, Semester, Department, and CourseNumber
+/** 
+ * @function getFormsByCourse() Sends a POST request to the backend /forms/by-course endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} department department of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getFormsByCourse(userid, year, semester, department, courseNumber); // status is an object with code and message, data is an array of student outcomes
+*/
   async getFormsByCourse(
     userid = "",
     year = 0,
@@ -2283,9 +2529,16 @@ export default class API {
     //api.getFormsByCourse(userid, year, semester, department, course).then(courses => {/*here is where the data is accessible, courses is an array of JSON objects*/})
   }
 
-  //---getAllForms(userid, semester, year)--- (Admin)
-  //    Input: UserId, Semester, Year
-  //    Output: Forms for the corresponding Semester and Year
+/** 
+ * @function getAllForms() Sends a POST request to the backend /forms/by-semester-year endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getAllForms(userid, year, semester); // status is an object with code and message, data is an array of student outcomes
+*/
   async getAllForms(userid = "", semester = "", year = 0) {
     const body = { userid: userid, semester: semester, year: year };
 
@@ -2295,9 +2548,25 @@ export default class API {
     //api.getAllForms(userid, semester, year).then(courses => {/*here is where the data is accessible, forms is an array of JSON objects*/})
   }
 
-  //---postForm(userId, year, semester, department, courseNumber, sectionNumber, isSectionCompleted, outcomes, ITGrades, CSGrades, CEGrades)---
-  //    Input: ^^^   (will also have pdf here later as an additional parameter)
-  //    Output: Success or Failure
+/** 
+ * @function postForm() Sends a POST request to the backend /forms endpoint.
+ * @param {string} userId user id of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} department department of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} sectionNumber section number of the request being sent
+ * @param {boolean} isSectionCompleted boolean of whether the section is completed or not
+ * @param {object} outcomes object of outcomes of the request being sent
+ * @param {object} ITGrades object of IT grades of the request being sent
+ * @param {object} CSGrades object of CS grades of the request being sent
+ * @param {object} CEGrades object of CE grades of the request being sent
+ * @param {object} CGrades object of C grades of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.postForm(userId, year, semester, department, courseNumber, sectionNumber, isSectionCompleted, outcomes, ITGrades, CSGrades, CEGrades, CGrades); // status is an object with code and message, data is an array of student outcomes
+*/
   async postForm(
     userId = "",
     year = 0,
@@ -2347,9 +2616,20 @@ export default class API {
     return await this.sendPost("/forms/post-form", body);
   }
 
-  //---postComment(userId, year, semester, department, courseNumber, coordinatorComment, isCourseCompleted)---
-  //    Input: UserId, Year, Semester, department, courseNumber, coordinatorComment, isCourseCompleted
-  //    Output: Success or Failure
+/** 
+ * @function postComment() Sends a POST request to the backend /courses/post-comment endpoint.
+ * @param {string} userId user id of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} department department of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} coordinatorComment coordinator comment of the request being sent
+ * @param {boolean} isCourseCompleted boolean of whether the course is completed or not
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.postComment(userId, year, semester, department, courseNumber, coordinatorComment, isCourseCompleted); // status is an object with code and message, data is an array of student outcomes
+*/
   async postComment(
     userId = "",
     year = 0,
@@ -2376,10 +2656,16 @@ export default class API {
     return await this.sendPost("/courses/post-comment", body);
   }
 
-  //---getBlankForm(userid)---
-  //    Input: Section object containing: CourseNumber, SectionNumber, and Id
-  //    Output: Blank Form
-  //async getBlankForm(userid) {
+/** 
+ * @function getBlankForm() Sends a POST request to the backend /forms/new-blank endpoint.
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} sectionNumber section number of the request being sent
+ * @param {number} sectionId section id of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getBlankForm(courseNumber, sectionNumber, sectionId); // status is an object with code and message, data is an array of student outcomes
+*/
   async getBlankForm(courseNumber = "", sectionNumber = "", sectionId = 0) {
     const body = {
       Section: {
@@ -2395,9 +2681,13 @@ export default class API {
     //api.getBlankForm(userid).then(result => {/*here is where the return value is accessible, it is a JSON*/})
   }
 
-  //--getDefaultYearAndSemester()--
-  //    Input: Nothing
-  //    Output: Object Including Current Default Year and Semester
+/** 
+ * @function getDefaultYearAndSemester() Gets the default year and semester based on the current date.
+ * @returns {object} object with year and semester
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { year, semester } = api.getDefaultYearAndSemester(); // year is a number, semester is a string
+*/
   getDefaultYearAndSemester() {
     var text =
       '{ "year": 0,' + // create string of object
@@ -2424,9 +2714,23 @@ export default class API {
     return ResultObj; // return object including the year and semester
   }
 
-  //---addSection(userid, firstName, lastName, year, semester, courseNumber, sectionNumber, department, numberOfStudents)--- (Admin)
-  //    Input: ^^^
-  //    Output: Success or Failure
+/** 
+ * @function addSection() Sends a POST request to the backend /sections/add-section endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {string} firstName first name of the request being sent
+ * @param {string} lastName last name of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} sectionNumber section number of the request being sent
+ * @param {string} department department of the request being sent
+ * @param {number} numberOfStudents number of students of the request being sent
+ * @param {boolean} isSectionCompleted boolean of whether the section is completed or not
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.addSection(userid, firstName, lastName, year, semester, courseNumber, sectionNumber, department, numberOfStudents, isSectionCompleted); // status is an object with code and message, data is an array of student outcomes
+*/
   async addSection(
     userid = "",
     firstName = "",
@@ -2459,9 +2763,7 @@ export default class API {
     return await this.sendPost("/sections/add-section", body);
   }
 
-  /*  //---getCoursesByDepartment(department)--- (Admin)
-  //    Input: department
-  //    Output: array of courses
+  /*
   async getCoursesByDepartment(department = "") {
     const body = {
       department,
@@ -2470,9 +2772,14 @@ export default class API {
     return await this.sendPost("/courses/get-by-department", body);
   } */
 
-  //---addProgram(program)--- (Admin)
-  //    Input: program name
-  //    Output: success or failure
+/** 
+ * @function addProgram() Sends a POST request to the backend /programs/add-program endpoint.
+ * @param {string} program program of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.addProgram(program); // status is an object with code and message, data is an array of student outcomes
+*/
   async addProgram(program = "") {
     const body = {
       program,
@@ -2481,16 +2788,32 @@ export default class API {
     return await this.sendPost("/programs/add-program", body);
   }
 
-  //---getProgramNames()--- (Admin)
-  //    Input: None
-  //    Output: List of program names
+/** 
+ * @function getProgramNames() Sends a POST request to the backend /programs/get-program-names endpoint.
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.getProgramNames(); // status is an object with code and message, data is an array of student outcomes
+*/
   async getProgramNames() {
     return await this.sendPost("/programs/get-program-names", {});
   }
 
-  //---addCourse(userid, firstName, lastName, year, semester, courseNumber, displayName, department)--- (Admin)
-  //    Input: ^^^
-  //    Output: success or failure
+/** 
+ * @function addCourse() Sends a POST request to the backend /courses/add-course endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {string} firstName first name of the request being sent
+ * @param {string} lastName last name of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} displayName display name of the request being sent
+ * @param {string} department department of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.addCourse(userid, firstName, lastName, year, semester, courseNumber, displayName, department); // status is an object with code and message, data is an array of student outcomes
+*/
   async addCourse(
     userid = "",
     firstName = "",
@@ -2519,9 +2842,17 @@ export default class API {
     return await this.sendPost("/courses/add-course", body);
   }
 
-  //---removeCourse(year, semester, courseNumber, department)--- (Admin)
-  //    Input: year, semester, courseNumber, department
-  //    Output: success or failure
+/** 
+ * @function removeCourse() Sends a POST request to the backend /courses/remove-course endpoint.
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} department department of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.removeCourse(year, semester, courseNumber, department); // status is an object with code and message, data is an array of student outcomes
+*/
   async removeCourse(
     year = 0,
     semester = "",
@@ -2540,9 +2871,14 @@ export default class API {
     return await this.sendPost("/courses/remove-course", body);
   }
 
-  //---postCourseOutcomes(outcomes)--- (Admin)
-  //    Input: array of outcome objects (see notes below)
-  //    Output: success or failure
+/** 
+ * @function postCourseOutcomes() Sends a POST request to the backend /course-outcomes/post-outcomes endpoint.
+ * @param {array} outcomes array of outcomes of the request being sent 
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.postCourseOutcomes(outcomes); // status is an object with code and message, data is an array of student outcomes
+*/
   async postCourseOutcomes(outcomes = []) {
     //an outcome object contains the following:
     //order (number), outcome (string), mappedStudentOutcomes(array of numbers)
@@ -2558,9 +2894,22 @@ export default class API {
     return await this.sendPost("/course-outcomes/post-outcomes", body);
   }
 
-  //---postSection(userid, firstName, lastName, year, semester, courseNumber, sectionNumber, department, numberOfStudents)--- (Instructor)
-  //   Input: Section object
-  //   Output: success or failure
+/** 
+ * @function postSection() Sends a POST request to the backend /sections/post-section endpoint.
+ * @param {string} userid user id of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} sectionNumber section number of the request being sent
+ * @param {string} department department of the request being sent
+ * @param {string} firstName first name of the request being sent
+ * @param {string} lastName last name of the request being sent
+ * @param {number} numberOfStudents number of students of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.postSection(userid, year, semester, courseNumber, sectionNumber, department, firstName, lastName, numberOfStudents); // status is an object with code and message, data is an array of student outcomes
+*/
   async postSection(
     userid = "",
     year = 0,
@@ -2592,10 +2941,31 @@ export default class API {
     return await this.sendPost("/sections/post-section", body);
   }
 
+  /** 
+   * @function uploadAccessDb() Sends a POST request to the backend /upload-access-db endpoint.
+   * @param {FormData} formData form data of the request being sent
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status, data } = await api.uploadAccessDb(formData); // status is an object with code and message, data is an array of student outcomes
+  */
   async uploadAccessDb(formData = new FormData()) {
     return await this.sendFile("/upload-access-db", formData);
   }
 
+  /**
+   * @function uploadStudentWork() Sends a POST request to the backend /student-work/upload endpoint.
+   * @param {FormData} formData form data of the request being sent
+   * @param {number} outcomeId outcome id of the request being sent
+   * @param {string} courseNumber course number of the request being sent
+   * @param {string} sectionNumber section number of the request being sent
+   * @param {string} semester semester of the request being sent
+   * @param {number} year year of the request being sent
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status, data } = await api.uploadStudentWork(formData, outcomeId, courseNumber, sectionNumber, semester, year); // status is an object with code and message, data is an array of student outcomes
+   */
   async uploadStudentWork(
     formData = new FormData(),
     outcomeId = 0,
@@ -2615,6 +2985,15 @@ export default class API {
     return await this.sendFile("/student-work/upload", formData);
   }
 
+  /** 
+   * @function downloadStudentWork() Sends a POST request to the backend /student-work/download endpoint.
+   * @param {string} fileId file id of the request being sent
+   * @param {string} fileName file name of the request being sent
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status, data } = await api.downloadStudentWork(fileId, fileName); // status is an object with code and message, data is an array of student outcomes
+  */
   async downloadStudentWork(fileId = "", fileName = "") {
     //fileId is the unique file name given to a file when it is uploaded
     //fileName is the original file name the file had before it was uploaded
@@ -2627,9 +3006,15 @@ export default class API {
       fileName
     );
   }
-  //---deleteStudentWork(...) --- (Instructor)
-  // Input: fileId
-  // Output: success or failure
+ 
+  /** 
+   * @function deleteStudentWork() Sends a POST request to the backend /student-work/delete endpoint.
+   * @param {string} fileId file id of the request being sent
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status, data } = await api.deleteStudentWork(fileId); // status is an object with code and message, data is an array of student outcomes
+  */
   async deleteStudentWork(fileId = "") {
     const body = {
       fileId,
@@ -2637,9 +3022,24 @@ export default class API {
     return await this.sendPost("/student-work/delete", body);
   }
 
-  //---postStudentSurvey(...)--- (Student)
-  //    Input: vvv
-  //    Output: success or failure
+/** 
+ * @function postStudentSurvey() Sends a POST request to the backend /student-surveys/post-survey endpoint.
+ * @param {string} courseNumber course number of the request being sent
+ * @param {string} sectionNumber section number of the request being sent
+ * @param {number} year year of the request being sent
+ * @param {string} semester semester of the request being sent
+ * @param {string} program program of the request being sent
+ * @param {string} classification classification of the request being sent
+ * @param {string} anticipatedGrade anticipated grade of the request being sent
+ * @param {number[]} outcomeRatings outcome ratings of the request being sent
+ * @param {number[]} taRatings ta ratings of the request being sent
+ * @param {string} taComment ta comment of the request being sent
+ * @param {string} courseComment course comment of the request being sent
+ * @returns {object} response object with data and status
+ * @example
+ * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+ * const { status, data } = await api.postStudentSurvey(courseNumber, sectionNumber, year, semester, program, classification, anticipatedGrade, outcomeRatings, taRatings, taComment, courseComment); // status is an object with code and message, data is an array of student outcomes
+*/
   async postStudentSurvey(
     courseNumber = "",
     sectionNumber = "",
