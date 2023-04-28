@@ -61,7 +61,7 @@ const SemesterTable = ({
       {
         const res = await deleteSemester(term, year);
         const status = res.status;
-        if (status == "Success") {
+        if (status == "SUCCESS") {
           toast({
             description: `Successfuly removed ${year} ${term}`,
             status: "success",
@@ -88,7 +88,7 @@ const SemesterTable = ({
     try {
       const res = await addNewSemester(newSemester.year, newSemester.term);
       const status = res.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error adding the semester! Error: ${status}`,

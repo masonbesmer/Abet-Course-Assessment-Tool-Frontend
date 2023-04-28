@@ -78,7 +78,7 @@ const AddNewMajorOutcomeTable = ({
         newData.description
       );
       const status = editRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error editing the outcome! Error: ${status}`,
@@ -112,7 +112,7 @@ const AddNewMajorOutcomeTable = ({
         oldData.name
       );
       const status = deleteRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error deleting the outcome! Error: ${status}`,
@@ -146,7 +146,7 @@ const AddNewMajorOutcomeTable = ({
         newData.description
       );
       const status = res.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error adding the outcome! Error: ${status}`,

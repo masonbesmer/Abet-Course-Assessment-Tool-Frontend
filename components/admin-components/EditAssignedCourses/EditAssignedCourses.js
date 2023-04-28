@@ -105,7 +105,7 @@ const EditAssignedCourses = () => {
       );
       const courseList = newCourseListRes.data;
       const status = newCourseListRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -156,7 +156,7 @@ const EditAssignedCourses = () => {
       );
       const sectionListData = sectionlistRes.data;
       const status = sectionlistRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,

@@ -73,7 +73,7 @@ const GenerateStudentSurveys = () => {
       );
       const courseList = newCourseListRes.data;
       const status = newCourseListRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -130,7 +130,7 @@ const GenerateStudentSurveys = () => {
       );
       var sectionListData = sectionlistRes.data;
       const status = sectionlistRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the section list! Error: ${status}`,

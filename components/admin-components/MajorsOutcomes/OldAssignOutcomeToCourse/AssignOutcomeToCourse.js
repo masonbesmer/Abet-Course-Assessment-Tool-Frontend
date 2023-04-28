@@ -82,7 +82,7 @@ const AssignOutcomeToCourse = () => {
       const majorListData = majorListRes.data;
       const status = majorListRes.status;
       if (!majorListData) return;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -169,7 +169,7 @@ const AssignOutcomeToCourse = () => {
       );
       const outcomeList = outcomeListRes.data;
       const status = outcomeListRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -208,7 +208,7 @@ const AssignOutcomeToCourse = () => {
       );
       const linkedData = linkedOutcomesRes.data;
       const status = linkedOutcomesRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${status}`,
@@ -229,7 +229,7 @@ const AssignOutcomeToCourse = () => {
     try {
       const semesterlistRes = await getSemesters();
       const status = semesterlistRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${status}`,
@@ -261,7 +261,7 @@ const AssignOutcomeToCourse = () => {
       );
       const outcomeListData = outcomelistRes.data;
       const status = outcomelistRes.status;
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${status}`,

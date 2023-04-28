@@ -56,7 +56,7 @@ const CreateNewMajor = () => {
       const status = res.status;
 
       console.log(res);
-      if (status == "Success") {
+      if (status == "SUCCESS") {
         toast({
           description: `Successfully added the new major! Please refresh the page if you don't see the new change.`,
           status: "success",
@@ -82,7 +82,7 @@ const CreateNewMajor = () => {
       const semesterlist = await getSemesters();
       const status = semesterlist.status;
       console.log(status);
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data!
@@ -115,7 +115,7 @@ const CreateNewMajor = () => {
       const status = majorList.status;
       console.log(status);
       //console.log(semTerm, semYear);
-      if (status != "Success") {
+      if (status != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data!
