@@ -37,37 +37,50 @@ const Newlogin = () => {
     const passwordValue = passwordRef.current.value; // get the value of the input field
     try {
       const response = await login(euidValue, passwordValue); // call the login function from the APIHelper
-      if (response) {
-        toast({
+      if (response) { // if the response is not null
+        const toastSuccess = toast({
           title: "Login Successful",
           description: "Please wait...",
           status: "success",
-          duration: 9000,
+          duration: 5000,
           isClosable: true,
         });
         // TODO: use switch case instead of if-else and maybe a map
         // TODO: why do some use '==' and other use 'includes'?
         if (router.query && router.query.from) {
           router.push(router.query.from);
+          toastSuccess;
         }
         else if (response.includes("Admin")) {
           router.push("/adminHome");
+          toastSuccess;
         }
         else if (response.includes("Coordinator")) {
           router.push("/instructorHome");
+          toastSuccess;
         }
         else if (response.includes("Instructor")) {
           router.push("/instructorHome");
+          toastSuccess;
         }
         else if (response == "Student") {
           router.push("/studentHome");
+          toastSuccess;
+        }
+        else { // if the response is not null but not one of the roles listed above
+          toast({
+            title: "Incorrect UserID or password",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
         }
       }
-      else {
+      else { // if the response is null
         toast({
-          title: "Incorrect UserID or password",
+          title: "Failed to login",
           status: "error",
-          duration: 9000,
+          duration: 5000,
           isClosable: true,
         });
       }
