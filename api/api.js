@@ -108,14 +108,11 @@ export default class API {
     }
 
     const endpoint = `${rootNew}/Login`;
+    const data = { euid: userid, password: password };
     debug.time(`POST ${endpoint}`);
     try {
       // send a POST request to the backend Login endpoint and wait for response
-      var response = await axios.post(endpoint, {
-        euid: userid,
-        password: password,
-        // NOTE: does this need to be in `data: {}`?
-      });
+      var response = await axios.post(endpoint, data);
       if ( response.data.hasOwnProperty("token") ) { // get data from reponse, if the token is returned
         const token = response.data.token; //get the token from the data
         debug.log(`Token: ${token}`);
