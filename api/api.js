@@ -3,8 +3,8 @@ import cookieCutter from "cookie-cutter";
 import jwt from "jsonwebtoken";
 const axios = require("axios");
 
-const root = "https://localhost:44372/api"; // The base URL for each request // TODO: remove or change to root.api or something
-const rootNew = "https://localhost:44372"; // The base URL for each request // TODO: change to root or something--remove "New"
+const root = `${process.env.BACKEND}/api`; // The base URL for each request // TODO: remove or change to root.api or something
+const rootNew = process.env.BACKEND; // The base URL for each request // TODO: change to root or something--remove "New"
 
 const DEBUG_MODE = true; // enables debug messages
 var debug = {
