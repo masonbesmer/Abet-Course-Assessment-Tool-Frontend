@@ -28,6 +28,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
     `npm install`
     OR
     `yarn install`
+7. Place necessary environment variables (`.env` files) within the top level directory of the repository.
+8. Before running, make sure you are using node version `16.x`, or the frontend won't run. You can use [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage and switch between node.js versions.
 
 ## How to run the front end
 1. If you have just completed the getting started section, go to 3. If not, continue to 2.
