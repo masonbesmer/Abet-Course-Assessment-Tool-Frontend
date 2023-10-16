@@ -43,7 +43,7 @@ const EditSurveyQuestions = () => {
     try {
       const semesterlistRes = await getSemesters();
       const res = semesterlistRes.status;
-      if (res != "Success") {
+      if (res != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${res}`,

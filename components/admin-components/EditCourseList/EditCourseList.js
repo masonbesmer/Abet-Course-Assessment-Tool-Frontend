@@ -68,7 +68,7 @@ const EditCourseList = () => {
       );
       const courseList = newCourseListRes.data;
       const res = newCourseListRes.status;
-      if (res != "Success") {
+      if (res != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${res}`,
@@ -140,7 +140,7 @@ const EditCourseList = () => {
     try {
       const semesterlistRes = await getSemesters();
       const res = semesterlistRes.status;
-      if (res != "Success") {
+      if (res != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${res}`,

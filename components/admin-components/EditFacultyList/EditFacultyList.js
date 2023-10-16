@@ -43,7 +43,7 @@ const EditFacultyList = () => {
       const facultyList = facultyListRes.data;
       const res = facultyListRes.status;
 
-      if (res != "Success") {
+      if (res != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the data! Error: ${res}`,
@@ -51,6 +51,8 @@ const EditFacultyList = () => {
           duration: 9000,
           isClosable: true,
         });
+        console.log(res);
+        console.log(facultyList);
         return;
       }
       setFaculty(facultyList);

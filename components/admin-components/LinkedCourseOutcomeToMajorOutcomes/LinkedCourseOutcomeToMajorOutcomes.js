@@ -115,7 +115,7 @@ const LinkedCourseOutcomeToMajorOutcomes = () => {
       );
       const courseList = newCourseListRes.data;
       const res = newCourseListRes.status;
-      if (res != "Success") {
+      if (res != "SUCCESS") {
         toast({
           title: "Error",
           description: `There was an error fetching the course list! Error: ${res}`,
