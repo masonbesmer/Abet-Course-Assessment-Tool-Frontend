@@ -28,7 +28,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
     `npm install`
     OR
     `yarn install`
-7. Place necessary environment variables (`.env` files) within the top level directory of the repository.
+7. Place necessary environment variables (`.env` files) within the top level directory of the repository. They should be marked as hidden files with a period at the start, like `.env.development` and `.env.local`
 8. Before running, make sure you are using node version `16.x`, or the frontend won't run. You can use [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage and switch between node.js versions.
 
 ## How to run the front end
@@ -39,7 +39,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
     OR
     `yarn dev`
 4. Visual Studio Code might automatically open a new browser that has the login page on it
-    If not, simply open a new tab in a browser and type `http://localhost:3000` in the search bar
+    If not, simply open a new tab in a browser and type `http://localhost:3000` (or whatever port you specified in your environment variables) in the search bar
 5. Although the front end is up and running, the back end needs to be running as well in order to log in
     The UNT VPN also needs to be runnning for the back end to work properly
 6. You can now start editing pages, and they should automatically update as you save progress
