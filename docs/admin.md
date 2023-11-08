@@ -7,7 +7,7 @@
 
 ### Add Faculty
 
-<kbd><img src='/images/admin/faculty/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/faculty/add.png'></img></kbd>
 
 **1. Under “Edit Faculty List”, select between “Admin”, “Coordinator”, or “Instructor”.\
 2. Click on the “+” symbol on the top right of the table.\
@@ -16,7 +16,7 @@
 
 ### Edit Faculty
 
-<kbd><img src='/images/admin/faculty/edit.png'></img></kbd>
+<kbd><img src='/docs/images/admin/faculty/edit.png'></img></kbd>
 
 **1. Under “Edit Faculty List”, select between “Admin”, “Coordinator”, or “Instructor”.\
 2. Click on the pencil icon.\
@@ -25,7 +25,7 @@
 
 ### Remove Faculty
 
-<kbd><img src='/images/admin/faculty/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/faculty/remove.png'></img></kbd>
 
 **1. Under “Edit Faculty List”, select between “Admin”, “Coordinator”, or “Instructor”.\
 2. Click on the trash can icon.\
@@ -35,7 +35,7 @@
 
 ### Add Semester
 
-<kbd><img src='/images/admin/semester/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/semester/add.png'></img></kbd>
 
 **1. Click on the “+” symbol on the top right of the table.\
 2. Enter the "Year" in the format (yyyy).\
@@ -44,7 +44,7 @@
 
 ### Remove Semester
 
-<kbd><img src='/images/admin/semester/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/semester/remove.png'></img></kbd>
 
 **1. Click on the trash can icon.\
 2. Click on “✔️” to confirm the action.**
@@ -56,7 +56,7 @@
 
 ### Add Majors
 
-<kbd><img src='/images/admin/majors/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/majors/add.png'></img></kbd>
 
 **1. Click on “Select Semester” and choose the semester term.\
 2. Click on “Select Major” and choose the major.\
@@ -64,7 +64,7 @@
 
 ### Remove Majors
 
-<kbd><img src='/images/admin/majors/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/majors/remove.png'></img></kbd>
 
 **1. Click on “Select Semester” and choose the semester term.\
 2. Click “Delete” on the major you want to delete.\
@@ -74,7 +74,7 @@
 
 ### Add Course List
 
-<kbd><img src='/images/admin/courseList/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseList/add.png'></img></kbd>
 
 **1. Under “Edit Course List”, choose the department and semester.\
 2. Click on the “+” symbol on the top right of the table.\
@@ -84,7 +84,7 @@
 
 ### Edit Course List
 
-<kbd><img src='/images/admin/courseList/edit.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseList/edit.png'></img></kbd>
 
 **1. Under “Edit Course List”, choose the department and semester.\
 2. Click on the pencil icon.\
@@ -94,7 +94,7 @@
 
 ### Remove Course List
 
-<kbd><img src='/images/admin/courseList/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseList/remove.png'></img></kbd>
 
 **1. Under “Edit Course List”, choose the department and semester.\
 2. Click on the trash can icon.\
@@ -104,7 +104,7 @@
 
 ### Add Course Section
 
-<kbd><img src='/images/admin/courseSection/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseSection/add.png'></img></kbd>
 
 **1. Under “Add & Edit Course’s Sections”, choose the department, semester, and course.\
 2. Click on the “+” symbol on the top right of the table.\
@@ -114,7 +114,7 @@
 
 ### Edit Course Section
 
-<kbd><img src='/images/admin/courseSection/edit.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseSection/edit.png'></img></kbd>
 
 **1. Under “Add & Edit Course’s Sections”, choose the department, semester, and course.\
 2. Click on the pencil icon.\
@@ -124,7 +124,7 @@
 
 ### Remove Course Section
 
-<kbd><img src='/images/admin/courseSection/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseSection/remove.png'></img></kbd>
 
 **1. Under “Add & Edit Course’s Sections”, choose the department, semester, and course.\
 2. Click on the trash can icon.\
@@ -134,7 +134,7 @@
 
 ### Add Course Outcomes
 
-<kbd><img src='/images/admin/courseOutcomes/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseOutcomes/add.png'></img></kbd>
 
 **1. Under “Add new course outcome”, choose the department, semester, and course.\
 2. Click on the “+” symbol on the top right of the table.\
@@ -143,7 +143,7 @@
 
 ### Remove Course Outcomes
 
-<kbd><img src='/images/admin/courseOutcomes/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/courseOutcomes/remove.png'></img></kbd>
 
 **1. Under “Add new course outcome”, choose the department, semester, and course.\
 2. Click on the trash can icon.\
@@ -153,7 +153,7 @@
 
 ### Add Majors Outcomes
 
-<kbd><img src='/images/admin/majorOutcomes/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/majorOutcomes/add.png'></img></kbd>
 
 **1. Under “Add New Major Outcome”, choose the department, semester, and major.\
 2. Click on the “+” symbol on the top right of the table.\
@@ -162,7 +162,7 @@
 
 ### Edit Majors Outcomes
 
-<kbd><img src='/images/admin/majorOutcomes/edit.png'></img></kbd>
+<kbd><img src='/docs/images/admin/majorOutcomes/edit.png'></img></kbd>
 
 **1. Under “Add New Major Outcome”, choose the department, semester, and major.\
 2. Click on the pencil icon.\
@@ -171,7 +171,7 @@
 
 ### Remove Majors Outcomes
 
-<kbd><img src='/images/admin/majorOutcomes/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/majorOutcomes/remove.png'></img></kbd>
 
 **1. Under “Add New Major Outcome”, choose the department, semester, and major.\
 2. Click on the trash can icon.\
@@ -181,7 +181,7 @@
 
 ### Add Student Survey Questions
 
-<kbd><img src='/images/admin/editStudentSurveyQuestions/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/editStudentSurveyQuestions/add.png'></img></kbd>
 
 **1. Under “Survey Set”, choose the semester and question set (Instructor or TA).\
 2. Click on the “+” symbol on the top right of the table.\
@@ -190,7 +190,7 @@
 
 ### Edit Student Survey Questions
 
-<kbd><img src='/images/admin/editStudentSurveyQuestions/edit.png'></img></kbd>
+<kbd><img src='/docs/images/admin/editStudentSurveyQuestions/edit.png'></img></kbd>
 
 **1. Under “Survey Set”, choose the semester and question set (Instructor or TA).\
 2. Click on the pencil icon.\
@@ -199,7 +199,7 @@
 
 ### Remove Student Survey Questions
 
-<kbd><img src='/images/admin/editStudentSurveyQuestions/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/editStudentSurveyQuestions/remove.png'></img></kbd>
 
 **1. Under “Survey Set”, choose the semester and question set (Instructor or TA).\
 2. Click on the trash can icon.\
@@ -209,7 +209,7 @@
 
 ### Add Course Outcomes to Major Outcomes
 
-<kbd><img src='/images/admin/mapCourseOutcomesToMajorOutcomes/add.png'></img></kbd>
+<kbd><img src='/docs/images/admin/mapCourseOutcomesToMajorOutcomes/add.png'></img></kbd>
 
 **1. Under “Student Outcome Mapping”, choose department, semester, major, course, and course outcome.\
 2. Click on the “+” symbol on the top right of the table.\
@@ -218,7 +218,7 @@
 
 ### Remove Course Outcomes to Major Outcomes
 
-<kbd><img src='/images/admin/mapCourseOutcomesToMajorOutcomes/remove.png'></img></kbd>
+<kbd><img src='/docs/images/admin/mapCourseOutcomesToMajorOutcomes/remove.png'></img></kbd>
 
 **1. Under “Student Outcome Mapping”, choose department, semester, major, course, and course outcome.\
 2. Click on the trash can icon.\
@@ -226,7 +226,7 @@
 
 ## Generate Student Survey Links
 
-<kbd><img src='/images/admin/generateStudentSurveyLinks/generate.png'></img></kbd>
+<kbd><img src='/docs/images/admin/generateStudentSurveyLinks/generate.png'></img></kbd>
 
 **1. Under “Generate Student Surveys”, choose the department, semester, and course.\
 2. Under “Link” is the student survey link.\
@@ -234,14 +234,14 @@
 
 ## Generate Full Reports
 
-<kbd><img src='/images/admin/generateFullReports/generate.png'></img></kbd>
+<kbd><img src='/docs/images/admin/generateFullReports/generate.png'></img></kbd>
 
 **1. Under “Generate Full ABET Report”, choose the semester.\
 2. Click on “Confirm”.**
 
 ## Generate Section Reports
 
-<kbd><img src='/images/admin/generateSectionReports/generate.png'></img></kbd>
+<kbd><img src='/docs/images/admin/generateSectionReports/generate.png'></img></kbd>
 
 **1. Under “Find Section ABET Report”, choose the semester.\
 2. Click on “View Report”.**
