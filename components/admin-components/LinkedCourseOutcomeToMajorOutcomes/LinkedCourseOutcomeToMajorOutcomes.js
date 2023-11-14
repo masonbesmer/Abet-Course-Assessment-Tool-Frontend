@@ -85,7 +85,7 @@ const LinkedCourseOutcomeToMajorOutcomes = () => {
       if (status != "SUCCESS") {
         toast({
           title: "Error",
-          description: `There was an error fetching the course list! Error: ${status}`,
+          description: `There was an error fetching the major list! Error: ${status}`,
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -166,17 +166,22 @@ const LinkedCourseOutcomeToMajorOutcomes = () => {
         theDepartment,
         selectCourse
       );
-      const outcomeList = outcomeListRes.data;
+      let outcomeList = outcomeListRes.data;
       const status = outcomeListRes.status;
       if (status != "SUCCESS") {
         toast({
           title: "Error",
-          description: `There was an error fetching the course list! Error: ${status}`,
+          description: `There was an error fetching the course outcome list! Error: ${status}`,
           status: "error",
           duration: 9000,
           isClosable: true,
         });
         return;
+      }
+
+      if(outcomeList == "The course specified has no course outcomes.")
+      {
+        outcomeList = [];
       }
 
       const outComeMapToNameAndDescription = outcomeList.map((outcome) => ({
@@ -209,15 +214,23 @@ const LinkedCourseOutcomeToMajorOutcomes = () => {
       if (status != "SUCCESS") {
         toast({
           title: "Error",
-          description: `There was an error fetching the course list! Error: ${status}`,
+          description: `There was an error fetching the linked major outcomes list! Error: ${status}`,
           status: "error",
           duration: 9000,
           isClosable: true,
         });
         return;
       }
-      setLinkedMajorOutcomeList(linkedData);
-      console.log(linkedData);
+      if(linkedData == "The course specified has no course outcomes.")
+      {
+        setLinkedMajorOutcomeList([]);
+        setSelectOutcome(null); //clear selection box
+      }
+      else
+      {
+        setLinkedMajorOutcomeList(linkedData);
+        console.log(linkedData);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -230,7 +243,7 @@ const LinkedCourseOutcomeToMajorOutcomes = () => {
       if (status != "SUCCESS") {
         toast({
           title: "Error",
-          description: `There was an error fetching the data! Error: ${status}`,
+          description: `There was an error fetching the semester list! Error: ${status}`,
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -262,7 +275,7 @@ const LinkedCourseOutcomeToMajorOutcomes = () => {
       if (status != "SUCCESS") {
         toast({
           title: "Error",
-          description: `There was an error fetching the data! Error: ${status}`,
+          description: `There was an error fetching the outcomes list by major! Error: ${status}`,
           status: "error",
           duration: 9000,
           isClosable: true,
