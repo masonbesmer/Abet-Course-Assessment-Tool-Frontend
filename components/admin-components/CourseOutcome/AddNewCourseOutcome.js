@@ -165,7 +165,14 @@ const AddNewCourseOutcome = () => {
         });
         return;
       }
-      setOutcomeList(outcomeList);
+      if(outcomeList == "The course specified has no course outcomes.")
+      {
+        setOutcomeList([]);
+      }
+      else
+      {
+        setOutcomeList(outcomeList);
+      }
     } catch (error) {
       console.log(error);
     }
