@@ -361,13 +361,14 @@ export default class API {
       lastName: lastName,
       euid: newEuid,
     };
+    const headers = { Authorization: "bearer " + token };
     const options = {
-      heeaders: { Authorization: "bearer " + token },
+      headers: headers,
       params: data,
     };
     debug.time(`PATCH ${endpoint}`);
     try {
-      const response = await axios.patch(endpoint, options);
+      const response = await axios.patch(endpoint, data, options);
       debug.log(response);
       if (response) {
         const status = this.checkStatus(response.status);
