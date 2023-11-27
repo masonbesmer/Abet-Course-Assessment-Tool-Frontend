@@ -6,6 +6,7 @@ import {
   editFacultyUser,
   removeRoleFromUser,
   addRoleToUser,
+  deleteFacultyUser,
 } from "../../../api/APIHelper";
 
 import MaterialTable from "material-table";
@@ -112,7 +113,7 @@ const FacultyTable = ({ columns, data, selectFaculty, refreshTable }) => {
 
   const handleRemoveFaculty = async (oldData) => {
     try {
-      const res = await removeRoleFromUser(oldData.euid, selectFaculty);
+      const res = await deleteFacultyUser(oldData.euid, selectFaculty);
       if (res) {
         console.log(res);
         if (res.status == "SUCCESS") {
