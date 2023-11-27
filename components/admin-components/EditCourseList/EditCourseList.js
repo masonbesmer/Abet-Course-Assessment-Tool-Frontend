@@ -78,10 +78,20 @@ const EditCourseList = () => {
         });
         return;
       }
-      setNewCourses({
-        ...theCourse,
-        courses: courseList,
-      });
+      if(courseList == "The specified semester has no courses.")
+      {
+        setNewCourses({
+          ...theCourse,
+          courses: [],
+        });
+      }
+      else
+      {
+        setNewCourses({
+          ...theCourse,
+          courses: courseList,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -172,6 +182,7 @@ const EditCourseList = () => {
   //Fetch course when semester or deparment change , or on table refresh
   useEffect(() => {
     getNewCourses();
+    console.log(theCourse);
   }, [semJson, theDepartment, refreshKey]);
 
   return (
