@@ -653,7 +653,7 @@ export default class API {
     };
     debug.time(`DELETE ${endpoint}`);
     try {
-      const response = await axios.delete(url, options);
+      const response = await axios.delete(endpoint, options);
       if (response) {
         let status = this.checkStatus(response.status);
         return {
