@@ -1069,7 +1069,9 @@ export default class API {
   //    Input: term, year, department, courseNumber, sectionNumber
   //    Output: List of faculty members with that role
   async getSection(term, year, department, courseNumber, sectionNumber) {
-    const endpoint = `/Section/GetSection?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
+    const url =
+      rootNew +
+      `/Section/GetSection?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
     try {
       var response = await axios.get(url, {
         headers: { Authorization: "bearer " + token },
