@@ -33,7 +33,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
   const [gradeForm, setGradeForm] = useState();
   const [outcomeForm, setOutcomeForm] = useState();
   const [refreshKey, setRefreshKey] = useState(0); //For refreshing the table
-  const [commentField, setCommentField] = useState(''); // instructor comments textarea
+  const [commentField, setCommentField] = useState(""); // instructor comments textarea
   const [fileInputField, setFileInputField] = useState();
   const toast = useToast({ position: "top" });
   const refreshTable = () => {
@@ -156,11 +156,11 @@ const formCompletion = ({ number, section, term, year, department }) => {
 
   const handleCommentFieldChange = (e) => {
     setCommentField(e.target.value);
-  }
+  };
 
   const handleFileInputChange = (e) => {
     setFileInputField(e.target.value);
-  }
+  };
 
   useEffect(() => {
     getOutcomeForm();
@@ -210,7 +210,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
 
       const gradeStatus = gradeRes.status;
       const outcomeStatus = outcomeRes.status;
-      const fileUploadStatus = fileUploadRes.status;
+      //const fileUploadStatus = fileUploadRes.status;
 
       if (gradeStatus == "SUCCESS" && outcomeStatus == "SUCCESS") {
         toast({
@@ -271,11 +271,9 @@ const formCompletion = ({ number, section, term, year, department }) => {
               handleOutcomesChange={handleOutcomesChange}
             />
 
-            <Text>
-              Student file upload
-            </Text>
+            <Text>Student file upload</Text>
             <input type="file" accept=".pdf" onChange={handleFileInputChange} />
-            
+
             <Text fontSize="xl" fontWeight="bold" mb="1em">
               Instructor Comments
             </Text>
