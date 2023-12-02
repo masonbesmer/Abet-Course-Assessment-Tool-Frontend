@@ -805,6 +805,7 @@ export async function login(userid, password) {
 }
 
 export async function getAllCourses(userid, semester, year) {
+  console.log(userid, semester, year);
   const api_helper = new API();
   const response = api_helper.getCourses(userid, semester, year);
   response.then((result) => {

@@ -8,7 +8,7 @@ import CourseList from "./CourseList";
 //THIS IS A TEMP FIX ACCORDING TO CURRENT UNDERSTANDING OF THE REQUIREMENTS
 //THIS NEEDS TO BE CHANGED BEFORE FINAL UPDATE AS WELL AS MAKING IT PROPERLY CONNECT TO THE DATES IN THE DATABASE
 //CHANFE
-const currYear = new Date().getFullYear()
+const currYear = new Date().getFullYear();
 
 const GenerateSectionReport = ({ user }) => {
   const [term, setTerm] = useState({
@@ -35,14 +35,17 @@ const GenerateSectionReport = ({ user }) => {
       semester: e.target.value.split(" ")[0],
       year: e.target.value.split(" ")[1],
     });
+    console.log(e.target.value.split(" ")[0]);
     console.log(e.target.value.split(" ")[1]);
     console.log(term.year);
-    const coursesRes = await getAllCourses(user, "fall", 2020);
+    const coursesRes = await getAllCourses(
+      user,
+      e.target.value.split(" ")[0],
+      e.target.value.split(" ")[1]
+    );
     console.log(coursesRes);
     setCourses(coursesRes);
   };
-
-  
 
   return (
     <VStack id="top" w="80%" m="0 auto" marginBottom="5em">
@@ -75,7 +78,7 @@ const GenerateSectionReport = ({ user }) => {
           <Text fontSize="20px" fontWeight="bold" mt="1em" marginBottom="2em">
             {term.semester} {term.year}
           </Text>
-          <CourseList courses={courses} term={term}/>
+          <CourseList courses={courses} term={term} />
         </>
       )}
     </VStack>
