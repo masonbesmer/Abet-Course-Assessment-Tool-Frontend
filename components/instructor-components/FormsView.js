@@ -15,14 +15,14 @@ import cookieCutter from "cookie-cutter";
 import jwt from "jsonwebtoken";
 import NextLink from "next/link";
 
-const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
+const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCourses, term, year }) => {
   const token = cookieCutter.get("token");
   const json = jwt.decode(token);
   var roleArray = json.role;
   var role = "";
   if (roleArray.length > 1) {
     for (var i = 0; i < roleArray.length; i++) {
-      if (roleArray[i] == "Instructor" || roleArray[i] == "Coordinator") {
+      if (roleArray[i] == "Instructor" || roleArray[i] == "Coordinator" || roleArray[i] == "Assistant") {
         role = roleArray[i];
       }
     }
@@ -36,6 +36,13 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
   }
   if (coordinatorCourses) {
     coordinatorCourses.sort((a, b) =>
+      a.courseNumber + a.sectionNumber > b.courseNumber + b.sectionNumber
+        ? 1
+        : -1
+    );
+  }
+  if (teachingAssistantCourses) {
+    teachingAssistantCourses.sort((a, b) =>
       a.courseNumber + a.sectionNumber > b.courseNumber + b.sectionNumber
         ? 1
         : -1
@@ -122,6 +129,51 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
               <Link
                 href={{
                   pathname: "/coordinatorForms",
+                  query: {
+                    department: "CSCE",
+                    number: course.courseNumber,
+                    section: course.sectionNumber,
+                    term: term,
+                    year: year,
+                  },
+                }}
+              >
+                Comment
+              </Link>
+            </Button>
+          </Td>
+        </Tr>
+      );
+    });
+
+  const renderTeachingAssistantCourses =
+    teachingAssistantCourses &&
+    teachingAssistantCourses.map((course, idx) => {
+      return (
+        <Tr key={idx}>
+          <Td>{course.courseFriendlyName}</Td>
+          <Td>
+            {course.courseNumber}.{course.sectionNumber}
+          </Td>
+          <Td>
+            <Button
+              color="white"
+              bg="#016a31"
+              height="10"
+              rounded="md"
+              width="20"
+              _hover={{
+                background: "teal",
+                color: "white",
+              }}
+              variant="link"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <Link
+                href={{
+                  pathname: "/teachingAssistantForms", // Not a real path yet
                   query: {
                     department: "CSCE",
                     number: course.courseNumber,
@@ -239,6 +291,34 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
               </Tr>
             </Thead>
             <Tbody>{renderCoordinatorCourses}</Tbody>
+          </Table>
+        </Box>
+      </VStack>
+    );
+  }
+  
+  if (roleArray.includes("Assistant")) {
+    return (
+      <VStack w="75%">
+        <Box
+          bg="#edf2f7"
+          align="center"
+          w={{ lg: "75%" }}
+          margin="auto"
+          padding="1em"
+        >
+          <Table variant="striped" colorScheme="green" padding="1em">
+            <TableCaption placement="top" fontWeight="bold" fontSize="xl">
+              Teaching Assistant Forms
+            </TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Code</Th>
+                <Th>Form</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderTeachingAssistantCourses}</Tbody>
           </Table>
         </Box>
       </VStack>

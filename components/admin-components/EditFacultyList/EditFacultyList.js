@@ -92,6 +92,7 @@ const EditFacultyList = () => {
           <option value="admin">Admin</option>
           <option value="coordinator">Coordinator</option>
           <option value="instructor">Instructor</option>
+		  <option value="assistant">Teaching Assistant</option>
         </Select>
         <Text fontWeight="bold" mt="1em" mb="1em" fontSize="lg" align="center">
           Faculty Table

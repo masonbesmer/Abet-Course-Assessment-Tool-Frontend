@@ -27,6 +27,7 @@ const instructorHome = () => {
   const [semJson, setSemJson] = useState();
   const [instructorCourse, setInstructorCourse] = useState();
   const [coordinatorCourse, setCoordinatorCourse] = useState();
+  const [teachingAssistantCourse, setTeachingAssistantCourse] = useState();
 
   const toast = useToast({ position: "top" });
 
@@ -112,10 +113,34 @@ const instructorHome = () => {
       console.log(error);
     }
   };
+  
+  const getTeachingAssistantCourses = async () => {
+    if (!semJson) {
+      return;
+    }
+    const semesterParse = JSON.parse(semJson);
+    setYear(semesterParse["year"]);
+    setTerm(semesterParse["term"]);
+    try {
+      const sectionRes = await GetSectionsByInstructor(
+        semesterParse.term,
+        semesterParse.year,
+        "instructor" // this is a hard-coded value but should be "user" with an actual GetSectionsByTA function.
+      );
+      const sectionData = sectionRes.data;
+
+      if (sectionData) {
+        setTeachingAssistantCourse(sectionData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getInstructorCourses();
     getCoordinatorCourse();
+	  getTeachingAssistantCourses();
   }, [semJson]);
 
   useEffect(() => {
@@ -165,6 +190,7 @@ const instructorHome = () => {
           <FormsView
             instructorCourses={instructorCourse}
             coordinatorCourses={coordinatorCourse}
+			      teachingAssistantCourses={teachingAssistantCourse}
             term={term}
             year={year}
           />
