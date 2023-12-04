@@ -27,6 +27,8 @@ function AuthProvider({ children }) {
       role = "Instructor";
     } else if (role.includes("Coordinator")) {
       role = "Coordinator";
+    } else if (role.includes("Assistant")) {
+      role = "Assistant";
     }
     isLoading = false;
   }
@@ -39,6 +41,8 @@ function AuthProvider({ children }) {
   if (
     router.pathname.startsWith("/instructor") &&
     role !== "Instructor" &&
+	router.pathname.startsWith("/instructor") &&
+    role !== "Assistant" &&
     router.pathname.startsWith("/instructor") &&
     role !== "Coordinator" &&
     router.pathname.startsWith("/instructor") &&
@@ -64,6 +68,8 @@ function AuthProvider({ children }) {
         router.push("/adminHome");
       } else if (router.pathname == "/" && role == "Instructor") {
         router.push("/instructorHome");
+      } else if (router.pathname == "/" && role == "Assistant") {
+        router.push("/instructorHome");
       } else if (router.pathname == "/" && role == "Coordinator") {
         console.log("Coordinator");
         router.push("/instructorHome");
@@ -82,6 +88,8 @@ function AuthProvider({ children }) {
       if (
         router.pathname.startsWith("/instructor") &&
         role !== "Instructor" &&
+		router.pathname.startsWith("/instructor") &&
+        role !== "Assistant" &&
         router.pathname.startsWith("/instructor") &&
         role !== "Admin" &&
         router.pathname.startsWith("/instructor") &&

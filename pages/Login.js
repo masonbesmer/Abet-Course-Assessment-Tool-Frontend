@@ -67,6 +67,10 @@ const Newlogin = () => {
           router.push("/studentHome");
           toastSuccess;
         }
+		else if (response.includes("Assistant")) {
+          router.push("/instructorHome");
+          toastSuccess;
+        }
         else { // if the response is not null but not one of the roles listed above
           toast({
             title: "Incorrect UserID or password",
