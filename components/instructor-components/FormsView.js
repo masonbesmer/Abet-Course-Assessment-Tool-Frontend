@@ -173,7 +173,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
             >
               <Link
                 href={{
-                  pathname: "/teachingAssistantForms", // Not a real path yet
+                  pathname: "/formCompletion", //same as instructor
                   query: {
                     department: "CSCE",
                     number: course.courseNumber,
