@@ -226,6 +226,10 @@ const LinkedCourseOutcomeToMajorOutcomes = () => {
         setLinkedMajorOutcomeList([]);
         setSelectOutcome(null); //clear selection box
       }
+      else if(linkedData == "The major specified has no major outcomes linked to the course outcome specified.") //no linked outcomes, show blank table
+      {
+        setLinkedMajorOutcomeList([]);
+      }
       else
       {
         setLinkedMajorOutcomeList(linkedData);
