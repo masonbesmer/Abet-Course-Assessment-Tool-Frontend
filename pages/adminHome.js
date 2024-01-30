@@ -227,6 +227,28 @@ const adminHome = () => {
                         Generate Full Report
                       </Td>
                     </Tr>
+                    <Tr>
+                      <Td
+                        as="button"
+                        mr="3"
+                        color="#016a31"
+                        onClick={() => {
+                          setView("ANMO");
+                        }}
+                      >
+                        Add Major Outcome
+                      </Td>
+                      <Td
+                        as="button"
+                        ml="4"
+                        color="#016a31"
+                        onClick={() => {
+                          setView("ESQ");
+                        }}
+                      >
+                        Edit Survey Questions
+                      </Td>
+                    </Tr>
                   </Tbody>
                 </Table>
               </Box>
