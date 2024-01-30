@@ -19,7 +19,7 @@ import StudentLoginBox from "../../components/survey-components/StudentLoginBox"
 import StudentInfoForm from "../../components/survey-components/StudentInfoForm";
 import CourseOutcomesSurvey from "../../components/survey-components/CourseOutcomesSurvey";
 import TAsurvey from "../../components/survey-components/TAsurvey";
-import InstructorSurvey from "../../components/survey-components/Instructorsurvey";
+import InstructorSurvey from "../../components/survey-components/InstructorSurvey";
 import StudentFeedback from "../../components/survey-components/StudentFeedback";
 //page data
 import {
