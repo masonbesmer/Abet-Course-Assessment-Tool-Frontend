@@ -2053,6 +2053,39 @@ export default class API {
   //Instructor and Coordinator Form
 
   /**
+   *
+   * @param {string} term The term (Spring, Fall, etc)
+   * @param {string} year Year from which to retreive sections
+   * @param {string} euid The TA's EUID
+   * @example
+   * const api = new API();
+   * const { status, data } = await api.getSectionsByAssistant("2024", "Spring", "ta1029");
+   */
+  async getSectionsByAssistant(term, year, euid) {
+    const url =
+      rootNew +
+      `/Section/GetSectionsByAssistant?term=${term}&year=${year}&assistantEUID=${euid}`;
+    try {
+      const response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  /**
    * @function getGrades() Sends a GET request to the backend /Grade/GetGrades endpoint.
    * @param {string} year year of the grades being retrieved
    * @param {string} term term of the grades being retrieved
@@ -2427,6 +2460,7 @@ export default class API {
   async getCourses(userid = "", semester = "", year = 0) {
     const body = { userid: userid, semester: semester, year: year };
 
+    // return await this.sendPost("/sections/by-userid-semester-year", body);
     return await this.sendPost("/sections/by-userid-semester-year", body);
 
     //To use this data you must do the following:

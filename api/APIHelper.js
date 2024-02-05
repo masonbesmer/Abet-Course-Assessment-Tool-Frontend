@@ -233,6 +233,16 @@ export async function GetSectionsByInstructor(term, year, instructorEUID) {
   return response;
 }
 
+export async function GetSectionsByAssistant(term, year, assistantEUID) {
+  let api_helper = new API();
+  let response = await api_helper.getSectionsByAssistant(
+    term,
+    year,
+    assistantEUID
+  );
+  return response;
+}
+
 export async function GetSectionsByCoordinator(term, year, coordinatorEUID) {
   let api_helper = new API();
   let response = await api_helper.GetSectionsByCoordinator(
