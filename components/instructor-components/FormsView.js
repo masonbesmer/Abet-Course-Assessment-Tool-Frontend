@@ -183,7 +183,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                   },
                 }}
               >
-                Comment
+                Start
               </Link>
             </Button>
           </Td>
