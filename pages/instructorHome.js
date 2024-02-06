@@ -17,6 +17,7 @@ import {
   GetSectionsByInstructor,
   getSemesters,
   GetSectionsByCoordinator,
+  GetSectionsByAssistant,
 } from "../api/APIHelper";
 
 const instructorHome = () => {
@@ -113,7 +114,7 @@ const instructorHome = () => {
       console.log(error);
     }
   };
-  
+
   const getTeachingAssistantCourses = async () => {
     if (!semJson) {
       return;
@@ -122,10 +123,10 @@ const instructorHome = () => {
     setYear(semesterParse["year"]);
     setTerm(semesterParse["term"]);
     try {
-      const sectionRes = await GetSectionsByInstructor(
+      const sectionRes = await GetSectionsByAssistant(
         semesterParse.term,
         semesterParse.year,
-        "instructor" // this is a hard-coded value but should be "user" with an actual GetSectionsByTA function.
+        user
       );
       const sectionData = sectionRes.data;
 
@@ -140,7 +141,7 @@ const instructorHome = () => {
   useEffect(() => {
     getInstructorCourses();
     getCoordinatorCourse();
-	  getTeachingAssistantCourses();
+    getTeachingAssistantCourses();
   }, [semJson]);
 
   useEffect(() => {
@@ -190,7 +191,7 @@ const instructorHome = () => {
           <FormsView
             instructorCourses={instructorCourse}
             coordinatorCourses={coordinatorCourse}
-			      teachingAssistantCourses={teachingAssistantCourse}
+            teachingAssistantCourses={teachingAssistantCourse}
             term={term}
             year={year}
           />
