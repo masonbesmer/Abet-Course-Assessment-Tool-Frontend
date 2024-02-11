@@ -1092,6 +1092,32 @@ export default class API {
     }
   }
 
+  //    Input: assistantEUID, term, year, department, courseNumber, sectionNumber
+  //    Output: List of faculty members with that role
+  async getSectionAssistant(assistantEUID, term, year, department, courseNumber, sectionNumber) {
+    const url =
+      rootNew +
+      `/Section/GetSectionAssistant?assistantEUID=${assistantEUID}&term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
+    try {
+      var response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
   /**
    * @function getSectionsByCourse Sends a GET request to the backend /Section/GetSectionsByCourse endpoint.
    * @param {string} term term of the course being edited

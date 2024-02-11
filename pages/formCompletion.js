@@ -19,6 +19,7 @@ import {
   GetStudentOutcomesCompleted,
   SetStudentOutcomesCompleted,
   getSection,
+  getSectionAssistant,
   getGrades,
   setGrades,
 } from "../api/APIHelper";
@@ -42,7 +43,6 @@ const formCompletion = ({ number, section, term, year, department }) => {
 
   const checkUser = async () => {
     const ISSERVER = typeof window === "undefined";
-    const sectionInstructorEUID = await getSectionInformation();
     if (!ISSERVER) {
       const token = cookieCutter.get("token");
       const json = jwt.decode(token);
@@ -52,25 +52,29 @@ const formCompletion = ({ number, section, term, year, department }) => {
       }
 
       const jsonUserId = json.unique_name;
+      const sectionInstructorEUID = await getInstructorSectionInformation();
+      const sectionAssistantEUID = await getAssistantSectionInformation();
       if (json == null) {
         router.push("/");
       } else {
         console.log(jsonUserId, sectionInstructorEUID);
-        if (jsonUserId != sectionInstructorEUID) {
-          toast({
-            title: "Error",
-            description: `This section instructor is not the same as the login user!`,
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          });
-          router.push("/");
+        if (jsonUserId != sectionInstructorEUID) {  
+          if (jsonUserId != sectionAssistantEUID){
+            toast({
+              title: "Error",
+              description: `User is not assigned to selected section!`,
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
+            router.push("/");
+          }
         }
       }
     }
   };
 
-  const getSectionInformation = async () => {
+  const getInstructorSectionInformation = async () => {
     try {
       const sectionRes = await getSection(
         term,
@@ -92,6 +96,37 @@ const formCompletion = ({ number, section, term, year, department }) => {
         return;
       }
       return sectionData.instructorEUID;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAssistantSectionInformation = async () => {
+    const token = cookieCutter.get("token");
+    const json = jwt.decode(token);
+    const jsonUserId = json.unique_name;
+    try {
+      const response = await getSectionAssistant(
+        jsonUserId,
+        term,
+        year,
+        department,
+        number,
+        section
+      );
+      const responseData = response.data;
+      const status = response.status;
+      if (status != "SUCCESS") {
+        toast({
+          title: "Error",
+          description: `There was an error fetching the section information! Error: ${status}`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+      return responseData;
     } catch (error) {
       console.log(error);
     }
@@ -168,7 +203,8 @@ const formCompletion = ({ number, section, term, year, department }) => {
   }, []);
 
   useEffect(() => {
-    getSectionInformation();
+    getInstructorSectionInformation();
+    getAssistantSectionInformation();
     checkUser();
   }, []);
 
