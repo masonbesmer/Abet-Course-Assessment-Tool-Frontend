@@ -152,7 +152,7 @@ const instructorHome = () => {
   return (
     <div>
       <Head>
-        <title>UNT ABET: Instructor Page</title>
+        <title>UNT ABET: Faculty Page</title>
       </Head>
       <Navigation />
 
