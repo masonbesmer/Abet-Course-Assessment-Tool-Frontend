@@ -51,6 +51,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
     instructorCourses &&
     instructorCourses.map((course, idx) => {
       console.log(instructorCourses);
+      const isFormCompleted = false; // TODO: Change this variable to map to a flag on the "course" object
       return (
         <Tr key={idx}>
           <Td>{course.courseFriendlyName}</Td>
@@ -86,10 +87,12 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                   },
                 }}
               >
-                Start
+                {false ? "Start" : "View"}
+                {/* TODO: change "false" to the flag name in the course object*/}
               </NextLink>
             </Button>
           </Td>
+          <Td>{isFormCompleted ? "Yes" : "No"}</Td>
         </Tr>
       );
     });
@@ -97,6 +100,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
   const renderCoordinatorCourses =
     coordinatorCourses &&
     coordinatorCourses.map((course, idx) => {
+      const isFormCompleted = false; // TODO: Change this variable to map to a flag on the "course" object
       return (
         <Tr key={idx}>
           <Td>{course.courseFriendlyName}</Td>
@@ -135,6 +139,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
               </Link>
             </Button>
           </Td>
+          <Td>{isFormCompleted ? "Yes" : "No"}</Td>
         </Tr>
       );
     });
@@ -158,6 +163,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Name</Th>
                 <Th>Code</Th>
                 <Th>Form</Th>
+                <Th>Completed</Th>
               </Tr>
             </Thead>
             <Tbody>{renderInstructorCourses}</Tbody>
@@ -180,6 +186,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                   <Th>Name</Th>
                   <Th>Code</Th>
                   <Th>Form</Th>
+                  <Th>Completed</Th>
                 </Tr>
               </Thead>
               <Tbody>{renderCoordinatorCourses}</Tbody>
@@ -208,6 +215,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Name</Th>
                 <Th>Code</Th>
                 <Th>Form</Th>
+                <Th>Completed</Th>
               </Tr>
             </Thead>
             <Tbody>{renderInstructorCourses}</Tbody>
@@ -236,6 +244,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Name</Th>
                 <Th>Code</Th>
                 <Th>Form</Th>
+                <Th>Completed</Th>
               </Tr>
             </Thead>
             <Tbody>{renderCoordinatorCourses}</Tbody>
