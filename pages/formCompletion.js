@@ -22,6 +22,7 @@ import {
   getSectionAssistant,
   getGrades,
   setGrades,
+  editComments,
 } from "../api/APIHelper";
 //components
 import GradesInput from "../components/form-components/GradesInput";
@@ -242,13 +243,24 @@ const formCompletion = ({ number, section, term, year, department }) => {
         outcomeForm
       );
 
+      const commentRes = await editComments(
+        term,
+        year,
+        department,
+        number,
+        section,
+        commentField,
+        null
+      );
+
       const fileUploadRes = null; // APIHelper function that sends the file to the backend
 
       const gradeStatus = gradeRes.status;
       const outcomeStatus = outcomeRes.status;
+      const commentStatus = commentRes.status;
       //const fileUploadStatus = fileUploadRes.status;
 
-      if (gradeStatus == "SUCCESS" && outcomeStatus == "SUCCESS") {
+      if (gradeStatus == "SUCCESS" && outcomeStatus == "SUCCESS" && commentStatus == "SUCCESS") {
         toast({
           description: `Form submitted!`,
           status: "success",
@@ -267,6 +279,14 @@ const formCompletion = ({ number, section, term, year, department }) => {
       } else if (!outcomeStatus == "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${outcomeStatus}`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      } else if (!commentStatus == "SUCCESS") {
+        toast({
+          description: `There was an error submitting the form! Error:${commentStatus}`,
           status: "error",
           duration: 3000,
           isClosable: true,
