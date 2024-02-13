@@ -7,9 +7,10 @@ import {
   Flex,
   Center,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 
-import { getGrades, GetStudentOutcomesCompleted } from "../api/APIHelper";
+import { getGrades, GetStudentOutcomesCompleted, editComments } from "../api/APIHelper";
 import CoordinatorGrades from "../components/form-components/CoordinatorGrades";
 import blankForm from "../components/form-components/blankForm.json";
 import CoordinatorOutcomes from "../components/form-components/CoordinatorOutcomes";
@@ -19,6 +20,7 @@ const formCompletion = ({ department, number, section, term, year }) => {
   const [comment, setComment] = useState("");
   const [gradeForm, setGradeForm] = useState();
   const [outcomeForm, setOutcomeForm] = useState();
+  const toast = useToast({ position: "top" });
 
   const getGradeForm = async () => {
     try {
@@ -62,8 +64,40 @@ const formCompletion = ({ department, number, section, term, year }) => {
     }
   };
 
-  const submitComment = () => {
+  const submitComment = async () => {
     console.log(comment);
+    const commentRes = await editComments(
+      term,
+      year,
+      department,
+      number,
+      section,
+      null,
+      comment
+    );
+    const commentStatus = commentRes.status;
+
+    if(commentStatus == "SUCCESS")
+    {
+      toast({
+        description: `Comment submitted!`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    else if (!commentStatus == "SUCCESS")
+    {
+      toast({
+        description: `There was an error submitting the comment! Error:${commentStatus}`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
   };
 
   useEffect(() => {
