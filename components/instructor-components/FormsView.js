@@ -165,7 +165,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{instructorCourses.length != 0 ? ("No courses"): renderInstructorCourses}</Tbody>
+            <Tbody>{instructorCourses?.length ? renderInstructorCourses : <div>No courses available!</div>}</Tbody>
 
           </Table>
         </Box>
@@ -189,7 +189,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                   <Th>Completed</Th>
                 </Tr>
               </Thead>
-              <Tbody>{renderCoordinatorCourses}</Tbody>
+              <Tbody>{renderCoordinatorCourses?.length ? renderCoordinatorCourses : <div>No courses available!</div>}</Tbody>
             </Table>
           </Box>
         )}
@@ -218,8 +218,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{instructorCourses.length == 0 ? <div>No courses available!</div>: renderInstructorCourses}</Tbody>
-
+            <Tbody>{instructorCourses?.length ? renderInstructorCourses : <div>No courses available!</div>}</Tbody>
           </Table>
         </Box>
       </VStack>
@@ -248,7 +247,8 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{renderCoordinatorCourses}</Tbody>
+            <Tbody>{renderCoordinatorCourses?.length ? renderCoordinatorCourses : <div>No courses available!</div>}</Tbody>
+
           </Table>
         </Box>
       </VStack>
