@@ -1304,6 +1304,7 @@ export default class API {
    * @param {boolean} newIsSectionCompleted boolean value indicating if the section is complete
    * @param {string} newSectionNumber new section number of the section being edited
    * @param {number} newNumberOfStudents new number of students in the section being edited
+   * @param {number} newIsFormSubmitted new number of students in the section being edited
    * @returns {object} response object with data and status
    * @example
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
@@ -1318,7 +1319,8 @@ export default class API {
     newInstructorEUID,
     newIsSectionCompleted,
     newSectionNumber,
-    newNumberOfStudents
+    newNumberOfStudents,
+    newIsFormSubmitted
   ) {
     const url =
       rootNew +
@@ -1331,6 +1333,7 @@ export default class API {
           isSectionCompleted: newIsSectionCompleted,
           sectionNumber: newSectionNumber,
           numberOfStudents: newNumberOfStudents,
+          isFormSubmitted: newIsFormSubmitted,
         },
         { headers: { Authorization: "bearer " + token } }
       );
