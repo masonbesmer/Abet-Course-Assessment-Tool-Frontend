@@ -471,12 +471,12 @@ const formCompletion = ({ number, section, term, year, department }) => {
                 {department} {number}.{section}
               </Text>
 
-              {gradeForm ? (
+              {outcomeForm ? (
                 <Text fontSize="2xl" fontWeight="bold" color="red" mb="2em">
                   Error: gradeForm data could not be retrieved. Contact your
                   admin for help!
                 </Text>
-              ) : outcomeForm ? (
+              ) : gradeForm ? (
                 <Text fontSize="2xl" fontWeight="bold" color="red" mb="2em">
                   No course outcome data could be retrieved for this course.
                   Contact your admin for help!

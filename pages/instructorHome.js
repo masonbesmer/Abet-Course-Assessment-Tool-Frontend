@@ -99,6 +99,7 @@ const instructorHome = () => {
     setTerm(semesterParse["term"]);
     try {
       const sectionRes = await GetSectionsByCoordinator(
+        //TODO: CHANGE ENDPOINT SO THAT IT RETURNS THE "IS FORM COMPLETED" FLAG
         semesterParse.term,
         semesterParse.year,
         user
