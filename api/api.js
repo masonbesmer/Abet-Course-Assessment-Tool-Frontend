@@ -1377,6 +1377,54 @@ export default class API {
     }
   }
 
+  /**
+   * @function editComments Sends a PATCH request to the backend /Section/EditComments endpoint.
+   * @param {string} term term of the course being edited
+   * @param {string} year year of the course being edited
+   * @param {string} department department of the course being edited
+   * @param {string} courseNumber course number of the course being edited
+   * @param {string} sectionNumber section number of the section being edited
+   * @param {string} newInstructorComment new instructor comment
+   * @param {string} newCoordinatorComment new coordinator comment
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.editSection("2023", "Spring", "CSCE", "121", "001", "123456789", false, "002", 20); // status is an object with code and message
+   **/
+  async editComments(
+    term,
+    year,
+    department,
+    courseNumber,
+    sectionNumber,
+    newInstructorComment,
+    newCoordinatorComment
+  ) {
+    const url =
+      rootNew +
+      `/Section/EditComments?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}&newInstructorComment=${newInstructorComment}&newCoordinatorComment=${newCoordinatorComment}`;
+    try {
+      const response = await axios.patch(
+        url,
+        { headers: { Authorization: "bearer " + token } }
+      );
+      if (response) {
+        let status = this.checkStatus(response.status);
+
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
   //Outcome
 
   /**
