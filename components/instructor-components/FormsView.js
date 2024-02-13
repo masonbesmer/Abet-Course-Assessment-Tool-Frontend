@@ -87,7 +87,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                   },
                 }}
               >
-                {false ? "Start" : "View"}
+                {isFormCompleted ? "View" : "Start"}
                 {/* TODO: change "false" to the flag name in the course object*/}
               </NextLink>
             </Button>

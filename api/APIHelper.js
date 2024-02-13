@@ -294,7 +294,8 @@ export async function editSection(
   newInstructorEUID,
   newIsSectionCompleted,
   newSectionNumber,
-  newNumberOfStudents
+  newNumberOfStudents,
+  newIsFormSubmitted
 ) {
   let api_helper = new API();
   let response = await api_helper.editSection(
@@ -306,7 +307,8 @@ export async function editSection(
     newInstructorEUID,
     newIsSectionCompleted,
     newSectionNumber,
-    newNumberOfStudents
+    newNumberOfStudents,
+    newIsFormSubmitted
   );
   return response;
 }
