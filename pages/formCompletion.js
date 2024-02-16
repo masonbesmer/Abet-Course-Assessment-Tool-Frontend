@@ -47,6 +47,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
   const router = useRouter();
   const [gradeForm, setGradeForm] = useState();
   const [outcomeForm, setOutcomeForm] = useState();
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0); //For refreshing the table
   const [commentField, setCommentField] = useState(""); // instructor comments textarea-------create way to save
   const [fileInputField, setFileInputField] = useState(); //^^
@@ -173,6 +174,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
     } catch (error) {
       console.log(error);
     }
+    setUnsavedChanges(true);
   };
 
   const handleOutcomesChange = (major, outcomeName, newValue) => {
@@ -183,15 +185,36 @@ const formCompletion = ({ number, section, term, year, department }) => {
       }
     }
     setOutcomeForm(tempForm);
+    setUnsavedChanges(true);
   };
 
   const handleCommentFieldChange = (e) => {
     setCommentField(e.target.value);
+    setUnsavedChanges(true);
   };
 
   const handleFileInputChange = (e) => {
     setFileInputField(e.target.value);
+    setUnsavedChanges(true);
   };
+
+  useEffect(() => {
+    //checks if user has unsaved changes and warns them if they try to leave
+    if (!unsavedChanges) return;
+    function handleBeforeUnload(event) {
+      if (unsavedChanges) {
+        const message =
+          "You have unsaved changes. Are you sure you want to leave?";
+        event.preventDefault();
+        event.returnValue = message;
+        return message;
+      }
+    }
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [unsavedChanges]);
 
   useEffect(() => {
     getOutcomeForm();
@@ -208,6 +231,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
 
   const handleSubmit = async (confirmed) => {
     onClose();
+    setUnsavedChanges(false);
     console.log(gradeForm, "grades");
     console.log("----------------------");
     console.log(outcomeForm, "outcome");
@@ -314,6 +338,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
     console.log(gradeForm);
     console.log("----------------------");
     console.log(outcomeForm);
+    setUnsavedChanges(false);
     try {
       //const res = await setGrades(year,term,department,number,section,form2)
       for (const key in gradeForm) {
