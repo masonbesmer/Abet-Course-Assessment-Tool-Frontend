@@ -1,5 +1,5 @@
 //imports
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import cookieCutter from "cookie-cutter";
 import jwt from "jsonwebtoken";
@@ -12,6 +12,17 @@ import {
   useToast,
   Center,
   Textarea,
+} from "@chakra-ui/react";
+
+//submitconfirmation
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 //api
@@ -192,16 +203,11 @@ const formCompletion = ({ number, section, term, year, department }) => {
     checkUser();
   }, []);
 
-  // const handleFormSubmit  = () => {
-  //   setFormSubmitted(true);
-  //   console.log(formSubmitted, "form sub");
-  //   handleSubmit();
-  //   return;
-  // }
+  const { isOpen, onOpen, onClose } = useDisclosure(); //used to show the confirmation menu when user clicks "submit"
+  const cancelRef = useRef();
 
-  const handleSubmit = async () => {
-    // setFormSubmitted(true);
-    // handleFormSubmit();
+  const handleSubmit = async (confirmed) => {
+    onClose();
     console.log(gradeForm, "grades");
     console.log("----------------------");
     console.log(outcomeForm, "outcome");
@@ -270,7 +276,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           duration: 3000,
           isClosable: true,
         });
-        // window.location.href = "/instructorHome";
+        window.location.reload(); // can change to router.push("/instructorHome") if we want to route them to the homepage instead
         return;
       } else if (!gradeStatus == "SUCCESS") {
         toast({
@@ -456,10 +462,41 @@ const formCompletion = ({ number, section, term, year, department }) => {
                     mb="1em"
                     colorScheme="green"
                     w="max-content"
-                    onClick={handleSubmit}
+                    onClick={onOpen}
                   >
                     Submit Report
                   </Button>
+                  <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                    motionPreset="slideInBottom"
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                          Submit Report
+                        </AlertDialogHeader>
+                        <AlertDialogBody>
+                          Are you sure you want to submit? You can not make
+                          changes afterwards.
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            Cancel
+                          </Button>
+                          <Button
+                            colorScheme="green"
+                            onClick={handleSubmit}
+                            ml={3}
+                          >
+                            Submit
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+                  </AlertDialog>
                 </Box>
               </Flex>
             </>

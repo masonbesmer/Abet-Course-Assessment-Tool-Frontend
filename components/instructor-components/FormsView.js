@@ -87,7 +87,6 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 }}
               >
                 {course.isFormSubmitted ? "View" : "Start"}
-                {/* TODO: change "false" to the flag name in the course object*/}
               </NextLink>
             </Button>
           </Td>
@@ -165,8 +164,13 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{instructorCourses?.length ? renderInstructorCourses : <div>No courses available!</div>}</Tbody>
-
+            <Tbody>
+              {instructorCourses?.length ? (
+                renderInstructorCourses
+              ) : (
+                <div>No courses available!</div>
+              )}
+            </Tbody>
           </Table>
         </Box>
         {coordinatorCourses && (
@@ -189,7 +193,13 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                   <Th>Completed</Th>
                 </Tr>
               </Thead>
-              <Tbody>{renderCoordinatorCourses?.length ? renderCoordinatorCourses : <div>No courses available!</div>}</Tbody>
+              <Tbody>
+                {renderCoordinatorCourses?.length ? (
+                  renderCoordinatorCourses
+                ) : (
+                  <div>No courses available!</div>
+                )}
+              </Tbody>
             </Table>
           </Box>
         )}
@@ -218,7 +228,13 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{instructorCourses?.length ? renderInstructorCourses : <div>No courses available!</div>}</Tbody>
+            <Tbody>
+              {instructorCourses?.length ? (
+                renderInstructorCourses
+              ) : (
+                <div>No courses available!</div>
+              )}
+            </Tbody>
           </Table>
         </Box>
       </VStack>
@@ -247,8 +263,13 @@ const FormsView = ({ instructorCourses, coordinatorCourses, term, year }) => {
                 <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{renderCoordinatorCourses?.length ? renderCoordinatorCourses : <div>No courses available!</div>}</Tbody>
-
+            <Tbody>
+              {renderCoordinatorCourses?.length ? (
+                renderCoordinatorCourses
+              ) : (
+                <div>No courses available!</div>
+              )}
+            </Tbody>
           </Table>
         </Box>
       </VStack>
