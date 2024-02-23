@@ -343,6 +343,28 @@ export async function editSection(
   return response;
 }
 
+export async function editComments(
+  term,
+  year,
+  department,
+  courseNumber,
+  sectionNumber,
+  newInstructorComment,
+  newCoordinatorComment
+) {
+  let api_helper = new API();
+  let response = await api_helper.editComments(
+    term,
+    year,
+    department,
+    courseNumber,
+    sectionNumber,
+    newInstructorComment,
+    newCoordinatorComment
+  );
+  return response;
+}
+
 //All outcome endpoint
 export async function assignCourseToMajor(
   year,
