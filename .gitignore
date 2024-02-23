@@ -9,6 +9,7 @@ build/
 .env.local
 .env.development
 .env.production
+.env.download
 
 # VS Code workspace
 vscode/

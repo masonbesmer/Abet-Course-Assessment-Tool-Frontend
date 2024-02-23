@@ -93,10 +93,11 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                   },
                 }}
               >
-                Start
+                {course.isFormSubmitted ? "View" : "Start"}
               </NextLink>
             </Button>
           </Td>
+          <Td>{course.isFormSubmitted ? "Yes" : "No"}</Td>
         </Tr>
       );
     });
@@ -104,6 +105,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
   const renderCoordinatorCourses =
     coordinatorCourses &&
     coordinatorCourses.map((course, idx) => {
+      console.log(course);
       return (
         <Tr key={idx}>
           <Td>{course.courseFriendlyName}</Td>
@@ -142,6 +144,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
               </Link>
             </Button>
           </Td>
+          <Td>{course.isFormSubmitted ? "Yes" : "No"}</Td>
         </Tr>
       );
     });
@@ -210,9 +213,16 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                 <Th>Name</Th>
                 <Th>Code</Th>
                 <Th>Form</Th>
+                <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{renderInstructorCourses}</Tbody>
+            <Tbody>
+              {instructorCourses?.length ? (
+                renderInstructorCourses
+              ) : (
+                <div>No courses available!</div>
+              )}
+            </Tbody>
           </Table>
         </Box>
         {coordinatorCourses && (
@@ -232,9 +242,16 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                   <Th>Name</Th>
                   <Th>Code</Th>
                   <Th>Form</Th>
+                  <Th>Completed</Th>
                 </Tr>
               </Thead>
-              <Tbody>{renderCoordinatorCourses}</Tbody>
+              <Tbody>
+                {renderCoordinatorCourses?.length ? (
+                  renderCoordinatorCourses
+                ) : (
+                  <div>No courses available!</div>
+                )}
+              </Tbody>
             </Table>
           </Box>
         )}
@@ -260,9 +277,16 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                 <Th>Name</Th>
                 <Th>Code</Th>
                 <Th>Form</Th>
+                <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{renderInstructorCourses}</Tbody>
+            <Tbody>
+              {instructorCourses?.length ? (
+                renderInstructorCourses
+              ) : (
+                <div>No courses available!</div>
+              )}
+            </Tbody>
           </Table>
         </Box>
       </VStack>
@@ -288,9 +312,16 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                 <Th>Name</Th>
                 <Th>Code</Th>
                 <Th>Form</Th>
+                <Th>Completed</Th>
               </Tr>
             </Thead>
-            <Tbody>{renderCoordinatorCourses}</Tbody>
+            <Tbody>
+              {renderCoordinatorCourses?.length ? (
+                renderCoordinatorCourses
+              ) : (
+                <div>No courses available!</div>
+              )}
+            </Tbody>
           </Table>
         </Box>
       </VStack>
