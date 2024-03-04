@@ -34,6 +34,7 @@ import {
   getGrades,
   setGrades,
   editComments,
+  editSection,
 } from "../api/APIHelper";
 //components
 import GradesInput from "../components/form-components/GradesInput";
@@ -80,8 +81,8 @@ const formCompletion = ({ number, section, term, year, department }) => {
         router.push("/");
       } else {
         console.log(jsonUserId, sectionInstructorEUID);
-        if (jsonUserId != sectionInstructorEUID) {  
-          if (jsonUserId != sectionAssistantEUID){
+        if (jsonUserId != sectionInstructorEUID) {
+          if (jsonUserId != sectionAssistantEUID) {
             toast({
               title: "Error",
               description: `User is not assigned to selected section!`,
@@ -337,8 +338,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         window.location.reload(); // can change to router.push("/instructorHome") if we want to route them to the homepage instead
-        return;
-      } else if (!gradeStatus == "SUCCESS") {
+      } else if (gradeStatus != "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${gradeStatus}`,
           status: "error",
@@ -346,7 +346,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         return;
-      } else if (!outcomeStatus == "SUCCESS") {
+      } else if (outcomeStatus != "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${outcomeStatus}`,
           status: "error",
@@ -354,7 +354,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         return;
-      } else if (!sectionStatus == "SUCCESS") {
+      } else if (sectionStatus != "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${sectionStatus}`,
           status: "error",
@@ -421,7 +421,11 @@ const formCompletion = ({ number, section, term, year, department }) => {
       const outcomeStatus = outcomeRes.status;
       const commentStatus = commentRes.status;
       // const fileUploadStatus = fileUploadRes.status;
-      if (gradeStatus == "SUCCESS" && outcomeStatus == "SUCCESS" && commentStatus == "SUCCESS") {
+      if (
+        gradeStatus == "SUCCESS" &&
+        outcomeStatus == "SUCCESS" &&
+        commentStatus == "SUCCESS"
+      ) {
         toast({
           description: `Form Saved!`,
           status: "success",
@@ -429,7 +433,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         return;
-      } else if (!gradeStatus == "SUCCESS") {
+      } else if (gradeStatus != "SUCCESS") {
         toast({
           description: `There was an error saving the form! Error:${gradeStatus}`,
           status: "error",
@@ -437,7 +441,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         return;
-      } else if (!outcomeStatus == "SUCCESS") {
+      } else if (outcomeStatus != "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${outcomeStatus}`,
           status: "error",
@@ -445,7 +449,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
           isClosable: true,
         });
         return;
-      } else if (!commentStatus == "SUCCESS") {
+      } else if (commentStatus != "SUCCESS") {
         toast({
           description: `There was an error submitting the form! Error:${commentStatus}`,
           status: "error",
