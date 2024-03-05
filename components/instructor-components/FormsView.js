@@ -162,6 +162,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
             <Button
               color="white"
               bg="#016a31"
+              as="a"
               height="10"
               rounded="md"
               width="20"
@@ -174,9 +175,9 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                 e.preventDefault();
               }}
             >
-              <Link
+              <NextLink
                 href={{
-                  pathname: "/formCompletion", //same as instructor
+                  pathname: "/formCompletion",
                   query: {
                     department: "CSCE",
                     number: course.courseNumber,
@@ -186,10 +187,11 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                   },
                 }}
               >
-                Start
-              </Link>
+                {course.isFormSubmitted ? "View" : "Start"}
+              </NextLink>
             </Button>
           </Td>
+          <Td>{course.isFormSubmitted ? "Yes" : "No"}</Td>
         </Tr>
       );
     });
@@ -347,6 +349,7 @@ const FormsView = ({ instructorCourses, coordinatorCourses, teachingAssistantCou
                 <Th>Name</Th>
                 <Th>Code</Th>
                 <Th>Form</Th>
+                <Th>Completed</Th>
               </Tr>
             </Thead>
             <Tbody>{renderTeachingAssistantCourses}</Tbody>
