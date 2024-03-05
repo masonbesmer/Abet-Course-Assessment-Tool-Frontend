@@ -3,7 +3,7 @@ import { Text, Button, VStack, HStack, Box } from "@chakra-ui/react";
 import Link from "next/link";
 
 const CourseList = ({ courses, term }) => {
-  console.log(courses);
+  console.log("Courses:", courses);
   const renderCourses =
     courses != null ? (
       courses.map((course) => {
@@ -48,7 +48,7 @@ const CourseList = ({ courses, term }) => {
                       number: course.courseNumber,
                       section: course.sectionNumber,
                       semester: term.semester,
-                      year: term.year
+                      year: term.year,
                     },
                   }}>
                   View Report

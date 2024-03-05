@@ -8,7 +8,9 @@ import CourseList from "./CourseList";
 //THIS IS A TEMP FIX ACCORDING TO CURRENT UNDERSTANDING OF THE REQUIREMENTS
 //THIS NEEDS TO BE CHANGED BEFORE FINAL UPDATE AS WELL AS MAKING IT PROPERLY CONNECT TO THE DATES IN THE DATABASE
 //CHANFE
-const currYear = new Date().getFullYear();
+//const currYear = new Date().getFullYear();
+// Update: Year set to 2023 (last year) as we've been using the Fall 2023 semester for testing
+const currYear = 2023; // new Date().getFullYear()
 
 const GenerateSectionReport = ({ user }) => {
   const [term, setTerm] = useState({
@@ -38,13 +40,14 @@ const GenerateSectionReport = ({ user }) => {
     console.log(e.target.value.split(" ")[0]);
     console.log(e.target.value.split(" ")[1]);
     console.log(term.year);
-    const coursesRes = await getAllCourses(
+    /*const coursesRes = await getAllCourses(
       user,
       e.target.value.split(" ")[0],
       e.target.value.split(" ")[1]
-    );
-    console.log(coursesRes);
-    setCourses(coursesRes);
+    );*/
+    const coursesRes = await getAllCourses("fall", currYear, "CSCE");
+    console.log("courseRes", coursesRes);
+    setCourses(coursesRes.data);
   };
 
   return (
@@ -75,6 +78,26 @@ const GenerateSectionReport = ({ user }) => {
         </Select>
       ) : (
         <>
+          <Select
+            mt="1em"
+            w="80%"
+            id="semester"
+            placeholder="Choose Semester"
+            variant="filled"
+            onChange={handleSetTerm}
+            value={term}
+            marginBottom="1em"
+          >
+            <option value={terms[0].semester + " " + terms[0].year.toString(10)}>
+              {terms[0].semester} {terms[0].year}
+            </option>
+            <option value={terms[1].semester + " " + terms[1].year.toString(10)}>
+              {terms[1].semester} {terms[1].year}
+            </option>
+            <option value={terms[2].semester + " " + terms[2].year.toString(10)}>
+              {terms[2].semester} {terms[2].year}
+            </option>
+          </Select>
           <Text fontSize="20px" fontWeight="bold" mt="1em" marginBottom="2em">
             {term.semester} {term.year}
           </Text>

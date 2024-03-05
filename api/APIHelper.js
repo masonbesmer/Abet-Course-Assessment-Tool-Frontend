@@ -858,10 +858,10 @@ export async function login(userid, password) {
   });
 }
 
-export async function getAllCourses(userid, semester, year) {
-  console.log(userid, semester, year);
+export async function getAllCourses(semester, year, department) {
+  console.log(semester, year, department);
   const api_helper = new API();
-  const response = api_helper.getCourses(userid, semester, year);
+  const response = api_helper.getCourses(semester, year, department);
   response.then((result) => {
     return result;
   });

@@ -2525,25 +2525,43 @@ export default class API {
   }
 
   /**
-   * @function getCourses() Sends a POST request to the backend /sections/by-userid-semester-year endpoint.
-   * @param {string} userid user id of the request being sent
+   * @function getCourses() Sends a GET request to /Course/GetCoursesByDepartment endpoint
    * @param {string} semester semester of the request being sent
    * @param {number} year year of the request being sent
+   * @param {string} department department of the request being sent
    * @returns {object} response object with data and status
    * @example
    * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
    * const { status, data } = await api.getCourses(userid, semester, year); // status is an object with code and message, data is an array of student outcomes
    */
-  async getCourses(userid = "", semester = "", year = 0) {
-    const body = { userid: userid, semester: semester, year: year };
-
-    // return await this.sendPost("/sections/by-userid-semester-year", body);
-    return await this.sendPost("/sections/by-userid-semester-year", body);
-
+  async getCourses(semester, year, department) {
     //To use this data you must do the following:
     //api.getCourses(userId, semester, year).then(courses => {/*here is where the data is accessible, courses is an array of JSON objects*/})
-  }
+    //api.getCourses(semester, year, department).then(courses => {/*here is where the data is accessible, courses is an array of JSON objects*/})
+    const url =
+      rootNew +
+      `/Course/GetCoursesByDepartment?term=${semester}&year=${year}&department=${department}`;
 
+    try {
+      const response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+  
   /**
    * @function getAllCourses() Sends a POST request to the backend /sections/by-semester-year endpoint.
    * @param {string} userid user id of the request being sent

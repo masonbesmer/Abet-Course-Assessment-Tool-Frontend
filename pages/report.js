@@ -19,7 +19,7 @@ import ReportOutcomesTable from '../components/report-components/ReportOutcomesT
 const report = ({ number, section, semester, year, id }) => {
     const [form, setForm] = useState();
     const getForm = async () => {
-        const formData = await getFormBySection(id, 2020, "Fall", "CSCE", number.toString(), section);
+        const formData = await getFormBySection(id, 2023, "Fall", "CSCE", number.toString(), section);
         setForm(formData);
     };
     console.log(form);
