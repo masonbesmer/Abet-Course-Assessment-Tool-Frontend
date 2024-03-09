@@ -47,52 +47,52 @@ const adminreportTable = ({ reportITJson, majorName }) => {
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 1
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 2
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 3
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 4
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 5
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 6
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 7
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 8
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 9
               </Text>
             </Th>
             <Th>
-              <Text fontWeight="bold" fontSize="14px">
+              <Text textAlign="center" fontWeight="bold" fontSize="14px">
                 10
               </Text>
             </Th>
@@ -105,16 +105,16 @@ const adminreportTable = ({ reportITJson, majorName }) => {
               {Object.keys(reportITJson).map((key) => (
                 <Tr>
                   <Td>{key}</Td>
-                  <Td>{reportITJson[key][0]}</Td>
-                  <Td>{reportITJson[key][1]}</Td>
-                  <Td>{reportITJson[key][2]}</Td>
-                  <Td>{reportITJson[key][3]}</Td>
-                  <Td>{reportITJson[key][4]}</Td>
-                  <Td>{reportITJson[key][5]}</Td>
-                  <Td>{reportITJson[key][6]}</Td>
-                  <Td>{reportITJson[key][7]}</Td>
-                  <Td>{reportITJson[key][8]}</Td>
-                  <Td>{reportITJson[key][9]}</Td>
+                  <Td textAlign="center">{reportITJson[key][0]}</Td>
+                  <Td textAlign="center">{reportITJson[key][1]}</Td>
+                  <Td textAlign="center">{reportITJson[key][2]}</Td>
+                  <Td textAlign="center">{reportITJson[key][3]}</Td>
+                  <Td textAlign="center">{reportITJson[key][4]}</Td>
+                  <Td textAlign="center">{reportITJson[key][5]}</Td>
+                  <Td textAlign="center">{reportITJson[key][6]}</Td>
+                  <Td textAlign="center">{reportITJson[key][7]}</Td>
+                  <Td textAlign="center">{reportITJson[key][8]}</Td>
+                  <Td textAlign="center">{reportITJson[key][9]}</Td>
                 </Tr>
               ))}
             </React.Fragment>
