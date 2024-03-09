@@ -1093,11 +1093,37 @@ export default class API {
   }
 
   //    Input: assistantEUID, term, year, department, courseNumber, sectionNumber
-  //    Output: List of faculty members with that role
+  //    Output: The EUID of the assistant IFF they are assigned as an assistant to the specified section
   async getSectionAssistant(assistantEUID, term, year, department, courseNumber, sectionNumber) {
     const url =
       rootNew +
       `/Section/GetSectionAssistant?assistantEUID=${assistantEUID}&term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
+    try {
+      var response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  //    Input: term, year, department, courseNumber, sectionNumber
+  //    Output: The entire list of assigned TAs from the specified section.
+  async getAssistantsFromSection(term, year, department, courseNumber, sectionNumber) {
+    const url =
+      rootNew +
+      `/Section/getAssistantsFromSection?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
     try {
       var response = await axios.get(url, {
         headers: { Authorization: "bearer " + token },

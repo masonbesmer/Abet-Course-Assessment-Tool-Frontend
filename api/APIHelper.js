@@ -227,6 +227,24 @@ export async function getSectionAssistant(
   return response;
 }
 
+export async function getAssistantsFromSection(
+  term,
+  year,
+  department,
+  courseNumber,
+  sectionNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.getAssistantsFromSection(
+    term,
+    year,
+    department,
+    courseNumber,
+    sectionNumber
+  );
+  return response;
+}
+
 export async function getSectionsByCourse(
   term,
   year,
