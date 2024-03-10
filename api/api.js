@@ -1228,6 +1228,88 @@ export default class API {
   }
 
   /**
+   * @function AddAssistantToSection Sends a POST request to the backend /Section/addAssistantToSection endpoint.
+   * @param {string} assistantEUID euid of the assistant to add
+   * @param {string} term term of the course being edited
+   * @param {string} year year of the course being edited
+   * @param {string} department department of the course being edited
+   * @param {string} courseNumber course number of the course being edited
+   * @param {string} sectionNumber section number of the section being added
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.addAssistantToSection("abc1234", "Spring", "2024", "CSCE", "1030", "001"); // status is an object with code and message
+   */
+  async AddAssistantToSection(
+    assistantEUID,
+    term,
+    year,
+    department,
+    courseNumber,
+    sectionNumber
+  ) {
+    const url =
+      rootNew +
+      `/Section/AddAssistantToSection?assistantEUID=${assistantEUID}&term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
+    try {
+      const response = await axios.post(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  /**
+   * @function RemoveAssistantFromSection Sends a DELETE request to the backend /Section/removeAssistantFromSection endpoint.
+   * @param {string} assistantEUID euid of the assistant to add
+   * @param {string} term term of the course being edited
+   * @param {string} year year of the course being edited
+   * @param {string} department department of the course being edited
+   * @param {string} courseNumber course number of the course being edited
+   * @param {string} sectionNumber section number of the section being added
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.removeAssistantFromSection("abc1234", "Spring", "2024", "CSCE", "1030", "001"); // status is an object with code and message
+   */
+  async RemoveAssistantFromSection(term, year, department, courseNumber, sectionNumber) {
+    const url =
+      rootNew +
+      `/Section/RemoveAssistantFromSection?assistantEUID=${assistantEUID}&term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
+    try {
+      const response = await axios.delete(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  /**
    * @function addNewSection Sends a POST request to the backend /Section/AddSection endpoint.
    * @param {string} year year of the course being edited
    * @param {string} term term of the course being edited

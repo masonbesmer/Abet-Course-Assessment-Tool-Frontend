@@ -273,6 +273,46 @@ export async function GetSectionsByCoordinator(term, year, coordinatorEUID) {
   return response;
 }
 
+export async function addAssistantToSection(
+  assistantEUID,
+  term,
+  year,
+  department,
+  courseNumber,
+  sectionNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.AddAssistantToSection(
+    assistantEUID,
+    term,
+    year,
+    department,
+    courseNumber,
+    sectionNumber
+  );
+  return response;
+}
+
+export async function removeAssistantFromSection(
+  assistantEUID,
+  term,
+  year,
+  department,
+  courseNumber,
+  sectionNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.RemoveAssistantFromSection(
+    assistantEUID,
+    term,
+    year,
+    department,
+    courseNumber,
+    sectionNumber
+  );
+  return response;
+}
+
 export async function addNewSection(
   year,
   term,
