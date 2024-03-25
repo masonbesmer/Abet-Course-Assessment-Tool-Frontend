@@ -238,7 +238,7 @@ const GenerateSectionReport = ({ user }) => {
               as="a"
               height="10"
               rounded="md"
-              width="20"
+              width="40"
               _hover={{
                 background: "teal",
                 color: "white",
