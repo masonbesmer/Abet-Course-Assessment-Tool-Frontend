@@ -59,6 +59,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
   const [isSectionCompleted, setIsSectionCompleted] = useState(false);
   const [numberOfStudents, setNumberOfStudents] = useState(0);
   //--------------------------------------------
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const refreshTable = () => {
     setRefreshKey(refreshKey + 1);
@@ -81,7 +82,7 @@ const formCompletion = ({ number, section, term, year, department }) => {
         router.push("/");
       } else {
         console.log(jsonUserId, sectionInstructorEUID);
-        if (jsonUserId != sectionInstructorEUID) {
+        if (jsonUserId != sectionInstructorEUID && json.role != "Admin") {
           if (jsonUserId != sectionAssistantEUID) {
             toast({
               title: "Error",
@@ -92,6 +93,8 @@ const formCompletion = ({ number, section, term, year, department }) => {
             });
             router.push("/");
           }
+        }else if(json.role == "Admin"){
+          setIsAdmin(true);
         }
       }
     }
@@ -514,6 +517,8 @@ const formCompletion = ({ number, section, term, year, department }) => {
                   courseOutcomes={outcomeForm}
                   handleOutcomesChange={handleOutcomesChange}
                 />
+                 {!isAdmin && (
+                <>
                 <Text>Student file upload</Text>
                 <input
                   type="file"
@@ -582,6 +587,8 @@ const formCompletion = ({ number, section, term, year, department }) => {
                     </AlertDialogOverlay>
                   </AlertDialog>
                 </Box>
+                 </>
+              )}
               </Flex>
             </>
           )
