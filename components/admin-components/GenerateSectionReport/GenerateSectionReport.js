@@ -222,8 +222,9 @@ const GenerateSectionReport = ({ user }) => {
       filtering: false,
     },
     {
-      title: "View Report",
+      title: "Completion Status",
       field: "isSectionCompleted",
+      defaultSort:"desc",
       validate: (rowData) =>
         rowData.isSectionCompleted != null
           ? true
