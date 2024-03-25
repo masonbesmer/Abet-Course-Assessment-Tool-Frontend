@@ -40,7 +40,10 @@ const formCompletion = ({ number, section, term, year, department }) => {
     setRefreshKey(refreshKey + 1);
   };
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
   const checkUser = async () => {
+    console.log("Checking user");
     const ISSERVER = typeof window === "undefined";
     const sectionInstructorEUID = await getSectionInformation();
     if (!ISSERVER) {
@@ -52,11 +55,13 @@ const formCompletion = ({ number, section, term, year, department }) => {
       }
 
       const jsonUserId = json.unique_name;
+      console.log("ROLE: ", json.role);
       if (json == null) {
         router.push("/");
       } else {
         console.log(jsonUserId, sectionInstructorEUID);
-        if (jsonUserId != sectionInstructorEUID) {
+        if (jsonUserId != sectionInstructorEUID && json.role != "Admin") {
+          console.log("Not the same user");
           toast({
             title: "Error",
             description: `This section instructor is not the same as the login user!`,
@@ -65,6 +70,8 @@ const formCompletion = ({ number, section, term, year, department }) => {
             isClosable: true,
           });
           router.push("/");
+        }else if (json.role == "Admin") {
+          setIsAdmin(true);
         }
       }
     }
@@ -271,32 +278,39 @@ const formCompletion = ({ number, section, term, year, department }) => {
               handleOutcomesChange={handleOutcomesChange}
             />
 
-            <Text>
-              Student file upload
-            </Text>
-            <input type="file" accept=".pdf" onChange={handleFileInputChange} />
-            
-            <Text fontSize="xl" fontWeight="bold" mb="1em">
-              Instructor Comments
-            </Text>
-            <Textarea
-              mb="1em"
-              size="lg"
-              fontSize="xl"
-              bg="#edf2f7"
-              placeholder="// Write a comment"
-              onChange={handleCommentFieldChange}
-            ></Textarea>
-            <Box>
-              <Button
-                mb="1em"
-                colorScheme="green"
-                w="max-content"
-                onClick={handleSubmit}
-              >
-                Submit Report
-              </Button>
-            </Box>
+            {!isAdmin && (
+              <>
+                <Text>Student file upload</Text>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={handleFileInputChange}
+                />
+
+                <Text fontSize="xl" fontWeight="bold" mb="1em">
+                  Instructor Comments
+                </Text>
+                <Textarea
+                  mb="1em"
+                  size="lg"
+                  fontSize="xl"
+                  bg="#edf2f7"
+                  placeholder="// Write a comment"
+                  onChange={handleCommentFieldChange}
+                ></Textarea>
+
+                <Box>
+                  <Button
+                    mb="1em"
+                    colorScheme="green"
+                    w="max-content"
+                    onClick={handleSubmit}
+                  >
+                    Submit Report
+                  </Button>
+                </Box>
+              </>
+            )}
           </Flex>
         ) : null}
       </Center>

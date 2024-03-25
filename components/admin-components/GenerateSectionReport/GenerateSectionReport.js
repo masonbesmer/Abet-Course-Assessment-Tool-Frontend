@@ -10,8 +10,9 @@ import {
   useToast,
   VStack,
   Portal,
+  Button,
 } from "@chakra-ui/react";
-import Link from "next/link";
+import NextLink from "next/link";
 
 import { SingleSelect } from "react-select-material-ui";
 
@@ -215,6 +216,47 @@ const GenerateSectionReport = ({ user }) => {
       field: "isSectionCompleted",
       validate: (rowData) => rowData.isSectionCompleted != null ? true : "isSectionCompleted cannot be empty",
       lookup: { true: "View Report", false: "Incomplete" },
+      render: (rowData) => {
+        if (rowData.isSectionCompleted) {
+          return (
+          <Button
+            color="white"
+            bg="#016a31"
+            as="a"
+            height="10"
+            rounded="md"
+            width="20"
+            _hover={{
+              background: "teal",
+              color: "white",
+            }}
+            variant="link"
+            onClick={(e) => {
+              e.preventDefault();
+              // Handle button click action here
+              // You can use rowData to access row data
+            }}
+          >
+            <NextLink
+              href={{
+                pathname: "/formCompletion",
+                query: {
+                  department: "CSCE",
+                  number: selectCourse,
+                  section: rowData.sectionNumber,
+                  term: term,
+                  year: year,
+                },
+              }}
+            >
+              View Report
+            </NextLink>
+          </Button>
+          );
+        }else{
+          return <p>Incomplete</p>
+        }
+      },
     },
    ];
 
