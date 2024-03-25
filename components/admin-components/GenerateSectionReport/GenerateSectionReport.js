@@ -20,6 +20,7 @@ import { SingleSelect } from "react-select-material-ui";
 
 import { getAllCourses, getInstructorCourses, getCoursesByDepartment, getSemesters, getSectionsByCourse, getUsersByRole } from "../../../api/APIHelper";
 import CourseList from "./CourseList";
+import FormsView from "../../instructor-components/FormsView";
 
 //THIS IS A TEMP FIX ACCORDING TO CURRENT UNDERSTANDING OF THE REQUIREMENTS
 //THIS NEEDS TO BE CHANGED BEFORE FINAL UPDATE AS WELL AS MAKING IT PROPERLY CONNECT TO THE DATES IN THE DATABASE
@@ -196,6 +197,27 @@ const GenerateSectionReport = ({ user }) => {
      console.log(refreshKey);
    };
 
+   const columns = [
+    {
+      title: "Section Number",
+      field: "sectionNumber",
+      type: "numeric",
+      validate: (rowData) => rowData.sectionNumber ? true : "Section Number cannot be empty or contain characters",
+    },
+    {
+      title: "Instructor EUID",
+      field: "instructorEUID",
+      validate: (rowData) => rowData.instructorEUID ? true : "Instructor EUID cannot be empty",
+      filtering: false,
+    },
+    {
+      title: "View Report",
+      field: "isSectionCompleted",
+      validate: (rowData) => rowData.isSectionCompleted != null ? true : "isSectionCompleted cannot be empty",
+      lookup: { true: "View Report", false: "Incomplete" },
+    },
+   ];
+
 
   return (
     <div>
@@ -269,7 +291,51 @@ const GenerateSectionReport = ({ user }) => {
           </GridItem>
         </Grid>
       </VStack>
-      </div>
+
+      <Box align="center" margin="auto" w={{ sm: "100%", md: "50%" }}>
+        {!selectCourse ||
+          !semJson ||
+          (!theDepartment && (
+            <Text
+              fontWeight="bold"
+              mt="1em"
+              mb="1em"
+              fontSize="lg"
+              align="center"
+            >
+              [Table] Waiting for department, semester, and course selection
+            </Text>
+          ))}
+
+        {selectCourse && semJson && theDepartment && (
+          <Text
+            fontWeight="bold"
+            mt="4em"
+            mb="1em"
+            fontSize="lg"
+            align="center"
+          >
+            Sections Table
+          </Text>
+        )}
+
+        {selectCourse &&
+          semJson &&
+          theDepartment &&
+          selectCourse != "There are no course for this semester" && (
+            <CourseList
+              year={year}
+              term={term}
+              department={theDepartment}
+              courseNumber={selectCourse}
+              columns={columns}
+              data={sectionList}
+              instructorList={instructorList}
+              refreshTable={refreshTable}
+            />
+          )}
+      </Box>
+    </div>
   );
 };
 

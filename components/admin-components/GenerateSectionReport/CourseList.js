@@ -1,67 +1,67 @@
 //import CourseCard from "../../instructor-components/CourseCard";
 import { Text, Button, VStack, HStack, Box } from "@chakra-ui/react";
+import MaterialTable from "material-table";
 import Link from "next/link";
 
-const CourseList = ({ courses, term }) => {
-  console.log(courses);
-  const renderCourses =
-    courses != null ? (
-      courses.map((course) => {
-        const handleClick = async (course, section) => {
-          document.cookie = `course=${course}; path=/`;
-          document.cookie = `section=${section}; path=/`;
-        };
-        return (
-          <>
-            <Box
-              w="100%"
-              justifyContent="center"
-              background="#edf2f7"
-              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              borderRadius="5px"
-            >
-              <VStack id="top" w="100%" m="0 auto" marginBottom="5em">
-                <HStack textAlign="center" verticalAlign="center">
-                  <Text fontSize="20px" fontWeight="bold">
-                    {course.department}
-                  </Text>
-                  <Text fontSize="20px" fontWeight="bold" color="#38A169">
-                    {course.courseNumber}. {course.sectionNumber}
-                  </Text>
-                  <Text fontSize="20px" fontWeight="bold">
-                    {course.displayName}
-                  </Text>
-                  <Text marginBottom="3em"></Text>
-                </HStack>
+//Table related
+import { forwardRef } from "react";
+import AddBox from "@material-ui/icons/AddBox";
+import ArrowDownward from "@material-ui/icons/ArrowDownward";
+import Check from "@material-ui/icons/Check";
+import ChevronLeft from "@material-ui/icons/ChevronLeft";
+import ChevronRight from "@material-ui/icons/ChevronRight";
+import Clear from "@material-ui/icons/Clear";
+import DeleteOutline from "@material-ui/icons/DeleteOutline";
+import Edit from "@material-ui/icons/Edit";
+import FilterList from "@material-ui/icons/FilterList";
+import FirstPage from "@material-ui/icons/FirstPage";
+import LastPage from "@material-ui/icons/LastPage";
+import Remove from "@material-ui/icons/Remove";
+import SaveAlt from "@material-ui/icons/SaveAlt";
+import Search from "@material-ui/icons/Search";
+import ViewColumn from "@material-ui/icons/ViewColumn";
 
-                {/* <Link href="/formCompletion">
-                    {   
-                        course.isCourseCompleted ? <Button fontWeight="bold" rightIcon="check" variantColor="teal" mt="1em" isDisabled="true" w="100%" size="sm">Form Complete</Button> : <Button size="sm" variantColor="green" mt="1em" w="100%" size="sm" onClick={
-                            alert('test')
-                        }>Work On ABET Form</Button>
-                    }
-                </Link> */}
-                <Link
-                  href={{
-                    pathname: "/report",
-                    query: {
-                      number: course.courseNumber,
-                      section: course.sectionNumber,
-                      semester: term.semester,
-                      year: term.year
-                    },
-                  }}>
-                  View Report
-                </Link>
-              </VStack>
-            </Box>
-          </>
-        );
-      })
-    ) : (
-      <Text>courses not found</Text>
-    );
-  return <div className="forms-grid">{renderCourses}</div>;
+const tableIcons = {
+  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  DetailPanel: forwardRef((props, ref) => (
+    <ChevronRight {...props} ref={ref} />
+  )),
+  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+  PreviousPage: forwardRef((props, ref) => (
+    <ChevronLeft {...props} ref={ref} />
+  )),
+  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
+};
+
+const CourseList = ({ year, term, department, courseNumber, columns, data, instructorList, refreshTable }) => {
+  //const toast = useToast({ position: "top" });
+
+  return (
+    <MaterialTable
+    icons={tableIcons}
+      options={{
+        search: true,
+        pageSize: 10,
+        pageSizeOptions: [10, 20, 30],
+      }}
+      columns={columns}
+      data={data}
+      title="Find Section Report"
+      />
+  );
+
 };
 
 export default CourseList;
