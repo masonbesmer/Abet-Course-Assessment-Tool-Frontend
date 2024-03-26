@@ -223,15 +223,15 @@ const GenerateSectionReport = ({ user }) => {
     },
     {
       title: "Completion Status",
-      field: "isSectionCompleted",
-      defaultSort:"desc",
+      field: "isFormSubmitted",
+      defaultSort: "desc",
       validate: (rowData) =>
-        rowData.isSectionCompleted != null
+        rowData.isFormSubmitted != null
           ? true
-          : "isSectionCompleted cannot be empty",
+          : "isFormSubmitted cannot be empty",
       lookup: { true: "View Report", false: "Incomplete" },
       render: (rowData) => {
-        if (rowData.isSectionCompleted) {
+        if (rowData.isFormSubmitted) {
           return (
             <Button
               color="white"
