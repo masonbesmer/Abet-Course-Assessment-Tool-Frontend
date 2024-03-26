@@ -194,7 +194,8 @@ const SectionTable = ({
         instructorEUID,
         isSectionComplete,
         newData.sectionNumber.toString(),
-        newData.numberOfStudents
+        newData.numberOfStudents,
+        newData.isFormSubmitted,
       );
       const status = editRes.status;
       if (status != "SUCCESS") {
