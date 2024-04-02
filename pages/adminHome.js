@@ -30,6 +30,7 @@ import EditSemesterList from "../components/admin-components/EditSemesters/EditS
 import EditFacultyList from "../components/admin-components/EditFacultyList/EditFacultyList";
 import EditCourseList from "../components/admin-components/EditCourseList/EditCourseList";
 import GenerateSectionReport from "../components/admin-components/GenerateSectionReport/GenerateSectionReport";
+import GenerateCourseReport from "../components/admin-components/GenerateCourseReport/GenerateCourseReport"//fix mapping
 import GenerateFullReport from "../components/admin-components/GenerateFullReport/GenerateFullReport";
 import GenerateStudentSurveys from "../components/admin-components/GenerateStudentSurveys/GenerateStudentSurveys";
 import EditAssignedCourses from "../components/admin-components/EditAssignedCourses/EditAssignedCourses";
@@ -117,8 +118,7 @@ const adminHome = () => {
                   <Tbody>
                     <Tr>
                       <Td
-                        as="button"
-                        mr="12"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("EFL");
@@ -127,22 +127,19 @@ const adminHome = () => {
                         Edit Faculty List
                       </Td>
                       <Td
-                        as="button"
-                        mr="3"
-                        ml="3"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
-                          setView("CNM");
+                          setView("ANMO");
                         }}
                       >
-                        Edit Major List
+                        Add Major Outcome
                       </Td>
                     </Tr>
                     <Tr>
                       {" "}
                       <Td
-                        as="button"
-                        mr="12"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("CNS");
@@ -151,8 +148,7 @@ const adminHome = () => {
                         Edit Semesters
                       </Td>
                       <Td
-                        as="button"
-                        ml="4"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("GSS");
@@ -163,8 +159,7 @@ const adminHome = () => {
                     </Tr>
                     <Tr>
                       <Td
-                        as="button"
-                        mr="12"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("ECL");
@@ -173,8 +168,7 @@ const adminHome = () => {
                         Edit Course List
                       </Td>
                       <Td
-                        as="button"
-                        ml="2.5"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("GSR");
@@ -185,8 +179,7 @@ const adminHome = () => {
                     </Tr>
                     <Tr>
                       <Td
-                        as="button"
-                        mr="3"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("EAC");
@@ -195,20 +188,18 @@ const adminHome = () => {
                         Edit Course Section
                       </Td>
                       <Td
-                        as="button"
-                        ml="5"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
-                          setView("LCOTMO");
+                          setView("GCR");
                         }}
                       >
-                        Link Outcome Mapping
+                        Generate Course Report
                       </Td>
                     </Tr>
                     <Tr>
                       <Td
-                        as="button"
-                        mr="3"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("ANCO");
@@ -217,8 +208,7 @@ const adminHome = () => {
                         Edit Course Outcome
                       </Td>
                       <Td
-                        as="button"
-                        ml="2"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("GFR");
@@ -229,24 +219,33 @@ const adminHome = () => {
                     </Tr>
                     <Tr>
                       <Td
-                        as="button"
-                        mr="3"
-                        color="#016a31"
-                        onClick={() => {
-                          setView("ANMO");
-                        }}
-                      >
-                        Add Major Outcome
-                      </Td>
-                      <Td
-                        as="button"
-                        ml="4"
+                        cursor="pointer"
                         color="#016a31"
                         onClick={() => {
                           setView("ESQ");
                         }}
                       >
                         Edit Survey Questions
+                      </Td>
+                      <Td
+                        cursor="pointer"
+                        color="#016a31"
+                        onClick={() => {
+                          setView("LCOTMO");
+                        }}
+                      >
+                        Link Outcome Mapping
+                      </Td>
+                    </Tr>
+                    <Tr>
+                    <Td
+                        cursor="pointer"
+                        color="#016a31"
+                        onClick={() => {
+                          setView("CNM");
+                        }}
+                      >
+                        Edit Major List
                       </Td>
                     </Tr>
                   </Tbody>
@@ -264,6 +263,8 @@ const adminHome = () => {
                 return <GenerateFullReport />;
               case "GSR":
                 return <GenerateSectionReport user={user} />;
+              case "GCR":
+                return <GenerateCourseReport />; //Change so that function exists
               case "OM":
                 return <OutcomeMapping />;
               case "CNS":
