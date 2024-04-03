@@ -245,6 +245,7 @@ const GenerateSectionReport = ({ user }) => {
                 color: "white",
               }}
               variant="link"
+              target="_blank"
               onClick={(e) => {
                 e.preventDefault();
                 // Handle button click action here
