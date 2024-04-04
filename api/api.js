@@ -1180,6 +1180,41 @@ export default class API {
   }
 
   /**
+   * @function getNumberOfSectionsInCourse Sends a GET request to the backend /Section/GetNumberOfSectionsInCourse endpoint.
+   * @param {string} term term of the course being edited
+   * @param {string} year year of the course being edited
+   * @param {string} department department of the course being edited
+   * @param {string} courseNumber course number of the course being edited
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status } = await api.getNumberOfSectionsInCourse("2023", "Spring", "CSCE", "121"); // status is an object with code and message
+   */
+  async getNumberOfSectionsInCourse(term, year, department, courseNumber) {
+    const url =
+      rootNew +
+      `/Course/GetNumberOfSectionsInCourse?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
+    try {
+      var response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  /**
    * @function getSectionsByInstructor Sends a GET request to the backend /Section/GetSectionsByInstructor endpoint.
    * @param {string} term term of the course being edited
    * @param {string} year year of the course being edited
