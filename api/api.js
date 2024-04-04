@@ -2226,6 +2226,42 @@ export default class API {
   }
 
   /**
+   * @function getGradesByCourse() Sends a GET request to the backend /Grade/GetGradesByCourse endpoint.
+   * @param {string} year year of the grades being retrieved
+   * @param {string} term term of the grades being retrieved
+   * @param {string} department department of the course being graded
+   * @param {string} courseNumber course number of the course being graded
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status, data } = await api.getGradesByCourse("2023", "Spring", "CSCE", "1234"); // status is an object with code and message, data is a List of Grade Lists.
+   */
+  async getGradesByCourse(year, term, department, courseNumber) {
+    const url =
+      rootNew +
+      `/Grade/GetGradesByCourse?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
+
+    try {
+      const response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  /**
    * @function setGrades() Sends a POST request to the backend /Grade/SetGrades endpoint.
    * @param {string} year year of the grades being set
    * @param {string} term term of the grades being set
@@ -2292,6 +2328,47 @@ export default class API {
     const url =
       rootNew +
       `/StudentOutcomesCompleted/GetStudentOutcomesCompleted?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}&sectionNumber=${sectionNumber}`;
+
+    try {
+      const response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  /**
+   * @function GetCourseStudentOutcomesCompleted() Sends a GET request to the backend /StudentOutcomesCompleted/GetCourseStudentOutcomesCompleted endpoint.
+   * @param {string} year year of the student outcomes being retrieved
+   * @param {string} term term of the student outcomes being retrieved
+   * @param {string} department department of the course being graded
+   * @param {string} courseNumber course number of the course being graded
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status, data } = await api.GetCourseStudentOutcomesCompleted("2023", "Spring", "CSCE", "1234"); // status is an object with code and message, data is an array of student outcomes
+   */
+  async GetCourseStudentOutcomesCompleted(
+    year,
+    term,
+    department,
+    courseNumber
+  ) {
+    const url =
+      rootNew +
+      `/StudentOutcomesCompleted/GetCourseStudentOutcomesCompleted?term=${term}&year=${year}&department=${department}&courseNumber=${courseNumber}`;
 
     try {
       const response = await axios.get(url, {

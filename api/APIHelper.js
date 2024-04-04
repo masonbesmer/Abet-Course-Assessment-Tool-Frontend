@@ -680,6 +680,22 @@ export async function getGrades(
   return response;
 }
 
+export async function getGradesByCourse(
+  year,
+  term,
+  department,
+  courseNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.getGradesByCourse(
+    year,
+    term,
+    department,
+    courseNumber
+  );
+  return response;
+}
+
 export async function setGrades(
   year,
   term,
@@ -714,6 +730,22 @@ export async function GetStudentOutcomesCompleted(
     department,
     courseNumber,
     sectionNumber
+  );
+  return response;
+}
+
+export async function GetCourseStudentOutcomesCompleted(
+  year,
+  term,
+  department,
+  courseNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.GetCourseStudentOutcomesCompleted(
+    year,
+    term,
+    department,
+    courseNumber
   );
   return response;
 }
