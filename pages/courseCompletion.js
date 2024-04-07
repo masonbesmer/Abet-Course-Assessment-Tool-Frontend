@@ -27,10 +27,13 @@ import {
 
 //api
 import {
+  getGradesByCourse,
+  GetCourseStudentOutcomesCompleted,
+  getNumberOfSectionsInCourse,
   GetStudentOutcomesCompleted,
   SetStudentOutcomesCompleted,
   getSection,
-  getSectionAssistant,
+  getSectionsByCourse,
   getGrades,
   setGrades,
   editComments,
@@ -49,17 +52,10 @@ const courseCompletion = ({ number, term, year, department }) => {
   const router = useRouter();
   const [gradeForm, setGradeForm] = useState();
   const [outcomeForm, setOutcomeForm] = useState();
-  const [unsavedChanges, setUnsavedChanges] = useState(false);
+  const [totalStudents, setTotalStudents] = useState();
+  const [secNum, setSecNum] = useState();
   const [refreshKey, setRefreshKey] = useState(0); //For refreshing the table
-  const [commentField, setCommentField] = useState(""); // instructor comments textarea-------create way to save
-  const [fileInputField, setFileInputField] = useState(); //^^
-  const [sectionList, setSectionList] = useState();
   const toast = useToast({ position: "top" });
-  //------------------------------------
-  const [instructorID, setInstructorID] = useState(0);
-  const [isSectionCompleted, setIsSectionCompleted] = useState(false);
-  const [numberOfStudents, setNumberOfStudents] = useState(0);
-  //--------------------------------------------
   const [isAdmin, setIsAdmin] = useState(false);
 
   const refreshTable = () => {
@@ -96,166 +92,207 @@ const courseCompletion = ({ number, term, year, department }) => {
     }
   };
 
-  const average = async () => {
-    //   let grades = {
-    //     CS: {
-    //       a: 0,
-    //       b: 0,
-    //       c: 0,
-    //       d: 0,
-    //       f: 0,
-    //       w: 0,
-    //       i: 0,
-    //       totalStudents: 0,
-    //     },
-    //     CE: {
-    //       a: 0,
-    //       b: 0,
-    //       c: 0,
-    //       d: 0,
-    //       f: 0,
-    //       w: 0,
-    //       i: 0,
-    //       totalStudents: 0,
-    //     },
-    //     CYS: {
-    //       a: 0,
-    //       b: 0,
-    //       c: 0,
-    //       d: 0,
-    //       f: 0,
-    //       w: 0,
-    //       i: 0,
-    //       totalStudents: 0,
-    //     },
-    //     IT: {
-    //       a: 0,
-    //       b: 0,
-    //       c: 0,
-    //       d: 0,
-    //       f: 0,
-    //       w: 0,
-    //       i: 0,
-    //       totalStudents: 0,
-    //     },
-    //   };
-    //   let outcomes = [
-    //     {},
-    //   ];
-    //   let outcomef = [
-    //     [
-    //       {},
-    //     ],
-    //   ];
-    //   for (let i = 0; i < sectionList.length; ++i) {
-    //     const section = sectionList[i].courseNumber;
-    //     try {
-    //       const res = await getGrades(year, term, department, number, section);
-    //       grades += res.data;
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   }
-    //   grades = grades / sectionList.length;
-    //   for (let i = 0; i < sectionList.length; i++) {
-    //     const section = sectionList[i].courseNumber;
-    //     try {
-    //       const res = await GetStudentOutcomesCompleted(
-    //         year,
-    //         term,
-    //         department,
-    //         number,
-    //         section
-    //       );
-    //       outcomes[i] = res.data;
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   }
-    //   console.log(outcomes);
-    //   for ( let i = 0; i < sectionList.length; i++){
-    //     outcomef[i].CS = outcomes[i.CS];
-    //     outcomef[i].CS = outcomes[i.CE];
-    //     outcomef[i].CYS = outcomes[i.CYS];
-    //   }
-  };
-
-  const getCourseSections = async () => {
+  const getGradeByCourse = async () => {
     try {
-      const sectionlistRes = await getSectionsByCourse(
-        term,
-        year,
-        department,
-        number
-      );
-      const sectionListData = sectionlistRes.data;
-      const status = sectionlistRes.status;
+      const gradesRes = await getGradesByCourse("2023", "Fall", "CSCE", "1234");
+      const status = gradesRes.status;
       if (status != "SUCCESS") {
         toast({
           title: "Error",
-          description: `There was an error fetching the course list! Error: ${status}`,
+          description: `There was an error fetching the data! Error: ${status}`,
           status: "error",
           duration: 9000,
           isClosable: true,
         });
         return;
       }
-      setSectionList(sectionListData);
-      console.log(sectionListData);
-    } catch (error) {
-      console.log(error);
-    }
-    console.log(sectionList);
-  };
-
-  const getGradeForm = async () => {
-    try {
-      const res = await getGrades(year, term, department, number, section);
-      const gradesData = res.data;
-      if (gradesData) {
-        if (Object.keys(gradesData).length < 1) {
-          //If the is the first time working on the form then create a blank form
-          await setGrades(year, term, department, number, section, blankForm);
-          setGradeForm(blankForm);
-        } else if (Object.keys(gradesData).length >= 1) {
-          setGradeForm(gradesData);
+      const grades = gradesRes.data;
+      console.log(grades);
+      let avg = grades;
+      let totStud = { //total number of students in this course seperated by major
+        CS: 0,
+        CE: 0,
+        CYS: 0,
+        IT: 0,
+      };
+      let temp = {};
+      Object.entries(avg).forEach((key) => {
+        if (key[0] == "CS") {
+          Object.entries(avg.CS).forEach(([key, value]) => {
+            if (key != "totalStudents") {
+              temp = (value / avg.CS.totalStudents) * 100;
+              if (key == "a") avg.CS.a = temp.toFixed(2);
+              if (key == "b") avg.CS.b = temp.toFixed(2);
+              if (key == "c") avg.CS.c = temp.toFixed(2);
+              if (key == "d") avg.CS.d = temp.toFixed(2);
+              if (key == "f") avg.CS.f = temp.toFixed(2);
+              if (key == "w") avg.CS.w = temp.toFixed(2);
+              if (key == "i") avg.CS.i = temp.toFixed(2);
+            }
+            if (key == "totalStudents") {
+              totStud.CS = avg.CS.totalStudents;
+              console.log(avg.CS.totalStudents);
+            }
+          });
         }
-      }
+        if (key[0] == "CE") {
+          temp = key[0];
+          Object.entries(avg.CE).forEach(([key, value]) => {
+            if (key != "totalStudents") {
+              temp = (value / avg.CE.totalStudents) * 100;
+              if (key == "a") avg.CE.a = temp.toFixed(2);
+              if (key == "b") avg.CE.b = temp.toFixed(2);
+              if (key == "c") avg.CE.c = temp.toFixed(2);
+              if (key == "d") avg.CE.d = temp.toFixed(2);
+              if (key == "f") avg.CE.f = temp.toFixed(2);
+              if (key == "w") avg.CE.w = temp.toFixed(2);
+              if (key == "i") avg.CE.i = temp.toFixed(2);
+            }
+            if (key == "totalStudents") totStud.CE = avg.CE.totalStudents;
+          });
+        }
+        if (key[0] == "CYS") {
+          temp = key[0];
+          Object.entries(avg.CYS).forEach(([key, value]) => {
+            if (key != "totalStudents") {
+              temp = (value / avg.CYS.totalStudents) * 100;
+              if (key == "a") avg.CYS.a = temp.toFixed(2);
+              if (key == "b") avg.CYS.b = temp.toFixed(2);
+              if (key == "c") avg.CYS.c = temp.toFixed(2);
+              if (key == "d") avg.CYS.d = temp.toFixed(2);
+              if (key == "f") avg.CYS.f = temp.toFixed(2);
+              if (key == "w") avg.CYS.w = temp.toFixed(2);
+              if (key == "i") avg.CYS.i = temp.toFixed(2);
+            }
+            if (key == "totalStudents") totStud.CYS = avg.CYS.totalStudents;
+          });
+        }
+        if (key[0] == "IT") {
+          temp = key[0];
+          Object.entries(avg.IT).forEach(([key, value]) => {
+            if (key != "totalStudents") {
+              temp = (value / avg.IT.totalStudents) * 100;
+              if (key == "a") avg.IT.a = temp.toFixed(2);
+              if (key == "b") avg.IT.b = temp.toFixed(2);
+              if (key == "c") avg.IT.c = temp.toFixed(2);
+              if (key == "d") avg.IT.d = temp.toFixed(2);
+              if (key == "f") avg.IT.f = temp.toFixed(2);
+              if (key == "w") avg.IT.w = temp.toFixed(2);
+              if (key == "i") avg.IT.i = temp.toFixed(2);
+            }
+            if (key == "totalStudents") totStud.IT = avg.IT.totalStudents;
+          });
+        }
+      });
+      console.log(totStud);
+      setTotalStudents(totStud);
+      console.log(avg);
+      setGradeForm(avg);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getOutcomeForm = async () => {
+  const getAllStudentOutcomes = async () => {
     try {
-      const outcomeFormRes = await GetStudentOutcomesCompleted(
-        year,
-        term,
-        department,
-        number,
-        section
+      const outRes = await GetCourseStudentOutcomesCompleted(
+        "2023",
+        "Fall",
+        "CSCE",
+        "1234"
       );
-      const outcomeFormData = outcomeFormRes.data;
-      console.log(outcomeFormData);
-      setOutcomeForm(outcomeFormData);
+      const status = outRes.status;
+      if (status != "SUCCESS") {
+        toast({
+          title: "Error",
+          description: `There was an error fetching the data! Error: ${status}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+        return;
+      }
+      const out = outRes.data;
+      console.log(out);
+      console.log(out[0]);
+      let avg = out;
+      let temp = {};
+      for (let i = 0; i < out.length; ++i) {
+        Object.entries(out[i]).forEach(key => {
+          if (key[0] == "CS") {
+            temp = (out[i].CS / totalStudents.CS) * 100;
+            console.log(`${key[0]}:`, temp.toFixed(2));
+            avg[i].CS = temp.toFixed(2);
+          }
+          if (key[0] == "CE") {
+            temp = (out[i].CE / totalStudents.CE) * 100;
+            console.log(`${key[0]}:`, temp.toFixed(2));
+            avg[i].CE = temp.toFixed(2);
+          }
+          if (key[0] == "CYS") {
+            temp = (out[i].CYS / totalStudents.CYS) * 100;
+            console.log(`${key[0]}:`, temp.toFixed(2));
+            avg[i].CYS = temp.toFixed(2);
+          }
+          if (key[0] == "IT") {
+            temp = (out[i].IT / totalStudents.IT) * 100;
+            console.log(`${key[0]}:`, temp.toFixed(2));
+            avg[i].IT = temp.toFixed(2);
+          }
+        });
+      }
+      console.log(avg);
+      setOutcomeForm(avg);
     } catch (error) {
       console.log(error);
     }
   };
+  // const getNumberSec = async () => {
+  //   try {
+  //     const numbersRes = await getNumberOfSectionsInCourse(
+  //       term,
+  //       year,
+  //       department,
+  //       number
+  //     );
+  //     const number = numbersRes.data;
+  //     console.log(numbersRes.data);
+  //     setSecNum(number);
+
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const average = () => {
+  //   if(!gradeForm || !outcomeForm) {
+  //     return;
+  //   }
+  //   let avg = gradeForm;
+  //   let outAvg = outcomeForm;
+
+  //   for(let i=0; i<avg.length; ++i){
+  //     avg.CS = avg.CS/secNum;
+  //     avg.CE = avg.CS/secNum;
+  //     avg.CYS = avg.CS/secNum;
+  //     avg.IT = avg.CS/secNum;
+  //   }
+  //   console.log(avg);
+  // };
 
   useEffect(() => {
-    average();
-  }, [outcomeForm, gradeForm]);
-
-  useEffect(() => {
-    getCourseSections();
+    // getNumberSec();
+    getGradeByCourse();
     checkUser();
-  }, [setSectionList, sectionList]);
+  }, []);
+  useEffect(() => {
+    getAllStudentOutcomes();
+  }, [totalStudents, refreshKey]);
 
   return (
     <div>
       <Navigation />
       <Center>
+        {console.log(gradeForm)};
         {gradeForm && outcomeForm ? ( //create condition for form
           <>
             <Flex mt="2em" direction="column" w="90%">

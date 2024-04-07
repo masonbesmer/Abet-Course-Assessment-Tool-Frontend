@@ -39,10 +39,6 @@ const CourseOutcomesMapping = ({ courseOutcomes }) => {
                   }}
                 >
                   <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
                 </NumberInput>
               </HStack>
             )}
@@ -61,10 +57,6 @@ const CourseOutcomesMapping = ({ courseOutcomes }) => {
                   }}
                 >
                   <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
                 </NumberInput>
               </HStack>
             )}
@@ -82,10 +74,6 @@ const CourseOutcomesMapping = ({ courseOutcomes }) => {
                   }}
                 >
                   <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
                 </NumberInput>
               </HStack>
             )}
@@ -103,10 +91,6 @@ const CourseOutcomesMapping = ({ courseOutcomes }) => {
                   }}
                 >
                   <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
                 </NumberInput>
               </HStack>
             )}
