@@ -13,7 +13,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env: NODE_OPTIONS=--openssl-legacy-provider
 
     strategy:
       matrix:
@@ -22,6 +21,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Set NODE_OPTIONS env
+      env:
+        NODE_OPTIONS: "--openssl-legacy-provider"
+      run: echo "NODE_OPTIONS=$NODE_OPTIONS" >> $GITHUB_ENV
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
