@@ -94,7 +94,7 @@ const courseCompletion = ({ number, term, year, department }) => {
 
   const getGradeByCourse = async () => {
     try {
-      const gradesRes = await getGradesByCourse("2023", "Fall", "CSCE", "1234");
+      const gradesRes = await getGradesByCourse(year, term, department, number);
       const status = gradesRes.status;
       if (status != "SUCCESS") {
         toast({
@@ -196,10 +196,10 @@ const courseCompletion = ({ number, term, year, department }) => {
   const getAllStudentOutcomes = async () => {
     try {
       const outRes = await GetCourseStudentOutcomesCompleted(
-        "2023",
-        "Fall",
-        "CSCE",
-        "1234"
+        year,
+        term,
+        department,
+        number
       );
       const status = outRes.status;
       if (status != "SUCCESS") {
@@ -214,7 +214,6 @@ const courseCompletion = ({ number, term, year, department }) => {
       }
       const out = outRes.data;
       console.log(out);
-      console.log(out[0]);
       let avg = out;
       let temp = {};
       for (let i = 0; i < out.length; ++i) {
@@ -292,7 +291,6 @@ const courseCompletion = ({ number, term, year, department }) => {
     <div>
       <Navigation />
       <Center>
-        {console.log(gradeForm)};
         {gradeForm && outcomeForm ? ( //create condition for form
           <>
             <Flex mt="2em" direction="column" w="90%">
@@ -304,7 +302,7 @@ const courseCompletion = ({ number, term, year, department }) => {
                   ABET Course Assesment
                 </Text>
               </Box>
-
+{console.log(outcomeForm.CYS)}
               <CoordinatorGrades
                 csGrades={gradeForm.CS}
                 ceGrades={gradeForm.CE}
