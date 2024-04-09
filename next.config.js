@@ -9,6 +9,7 @@ const nextConfig = {
         SURVEY_JWT_KEY: process.env.SURVEY_JWT_SECRET,
     },
     distDir: 'build',
+    staticPageGenerationTimeout: 1000,
 };
 
 module.exports = nextConfig;
