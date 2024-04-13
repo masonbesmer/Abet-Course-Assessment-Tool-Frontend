@@ -88,6 +88,12 @@ export async function deleteSemester(term, year) {
   return response;
 }
 
+export async function getCoursesCompleted(term, year) {
+  let api_helper = new API();
+  let response = await api_helper.getCoursesCompleted(term, year);
+  return response;
+}
+
 // All majors endpoint
 export async function getMajors(term, year) {
   let api_helper = new API();

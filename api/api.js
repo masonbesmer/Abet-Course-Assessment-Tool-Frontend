@@ -673,6 +673,37 @@ export default class API {
   }
 
   /**
+   * @function getCoursesCompleted() Sends a GET request to the backend /Semester/GetCoursesCompleted endpoint.
+   * @param {string} term term of the questions being retrieved
+   * @param {int} year year of the questions being retrieved
+   * @returns {object} response object with data and status
+   * @example
+   * const api = new API(); // create a new API object -- this is typically done in the APIHelper file
+   * const { status, data } = await api.getQuestions("Fall", 2023"); // status is an object with code and message, data is a Dictionary with (string) course number as keys and (boolean) course completion status as values.
+   */
+  async getCoursesCompleted(term, year) {
+    const url = rootNew + `/Semester/GetCoursesCompleted?year=${year}&term=${term}`;
+    try {
+      const response = await axios.get(url, {
+        headers: { Authorization: "bearer " + token },
+      });
+      if (response) {
+        let status = this.checkStatus(response.status);
+        return {
+          data: response.data,
+          status: status,
+        };
+      }
+    } catch (error) {
+      let status = this.checkStatus(error.message);
+      return {
+        data: null,
+        status: status,
+      };
+    }
+  }
+
+  /**
    * @function getMajors Sends a GET request to the backend /Major/GetMajors endpoint.
    * @param {string} year year that has the majors in that year
    * @param {string} term term that has the majors in that term
