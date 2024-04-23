@@ -296,7 +296,7 @@ const courseCompletion = ({ number, term, year, department }) => {
             <Flex mt="2em" direction="column" w="90%">
               <Box w="80%">
                 <Text fontSize="2xl" fontWeight="bold">
-                  {department} {number}
+                  {department} {number} % Based on Major
                 </Text>
                 <Text fontSize="xl" fontWeight="bold" color="green" mb="2em">
                   ABET Course Assesment
