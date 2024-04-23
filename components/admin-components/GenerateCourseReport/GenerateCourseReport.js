@@ -21,8 +21,7 @@ import {
   getInstructorCourses,
   getCoursesByDepartment,
   getSemesters,
-  GetCourseStudentOutcomesCompleted,
-  getGradesByCourse,
+  getCoursesCompleted,
   getSectionsByCourse,
   getNumberOfSectionsInCourse,
   getUsersByRole,
@@ -46,8 +45,10 @@ const GenerateCourseReport = ({ user }) => {
   const [courseList, setcourseList] = useState();
   const [sectionList, setSectionList] = useState();
   const [formReadyList, setFormReadyList] = useState(true);
+  const [coursesCompleted, setCoursesCompleted] = useState();
+  const [combinedList, setCombinedList] = useState(false);
 
-  //used to see if all sections have submitted their forms which will make course report be available to be shown.
+  // //used to see if all sections have submitted their forms which will make course report be available to be shown.
   // const checkFormReady = async () => {
   //   const courses = courseList;
   //   console.log(courses);
@@ -74,15 +75,38 @@ const GenerateCourseReport = ({ user }) => {
   //   return;
   // };
 
-  const getNumberSec = async () => {
+  const combineList = async () => {
+    console.log(coursesCompleted);
+    console.log(courseList);
+
+    if (courseList && coursesCompleted) {
+      let temp = courseList;
+      for (let i = 0; i < temp.length; ++i) {
+        temp[i].allSectionsSubmitted = coursesCompleted[temp[i].courseNumber];
+      }
+      console.log(temp);
+      setCombinedList(temp);
+    }
+    console.log(combinedList);
+  };
+
+  const getCoursesComp = async () => {
     try {
-      const numberRes = await getNumberOfSectionsInCourse(
-        "Fall",
-        "2023",
-        "CSCE",
-        "1234"
-      );
-      console.log(numberRes.data);
+      const coursesDoneRes = await getCoursesCompleted(term, year);
+      const res = coursesDoneRes.status;
+      if (res != "SUCCESS") {
+        toast({
+          title: "Error",
+          description: `There was an error fetching the data! Error: ${res}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+        return;
+      }
+      const coursesDone = coursesDoneRes.data;
+      console.log(coursesDone);
+      setCoursesCompleted(coursesDone);
     } catch (error) {
       console.log(error);
     }
@@ -158,6 +182,7 @@ const GenerateCourseReport = ({ user }) => {
         }
         return;
       }
+      console.log(courseListData);
       setcourseList(courseListData);
       // console.log(courseListData);
     } catch (error) {
@@ -170,12 +195,17 @@ const GenerateCourseReport = ({ user }) => {
   }, [semJson, theDepartment, refreshKey]);
 
   useEffect(() => {
+    getCoursesComp();
+  }, [term, year, theDepartment]);
+
+  useEffect(() => {
     getSemesterList();
   }, [theDepartment]);
 
   useEffect(() => {
-    getNumberSec();
-  }, []);
+    combineList();
+  }, [courseList, coursesCompleted]);
+
   // const getNewCourses = async () => {
   //   if (!semJson) {
   //     return;
@@ -270,6 +300,7 @@ const GenerateCourseReport = ({ user }) => {
       title: "Course Number",
       field: "courseNumber",
       type: "numeric",
+      defaultSort: "asc",
       validate: (rowData) =>
         rowData.courseNumber
           ? true
@@ -286,13 +317,14 @@ const GenerateCourseReport = ({ user }) => {
     },
     {
       title: "Completion Status",
-      field: "isFormSubmitted",
-      defaultSort: "desc",
-      validate: (formReadyList) =>
-        formReadyList != null ? true : "isFormSubmitted cannot be empty",
+      field: "coursesCompletion",
+      defaultSort: "asc",
+      align: "center",
+      validate: (rowData) =>
+        rowData.allSectionsSubmitted != null ? true : " cannot be empty",
       lookup: { true: "View Report", false: "Incomplete" },
       render: (rowData) => {
-        if (formReadyList) {
+        if (rowData.allSectionsSubmitted) {
           return (
             <Button
               color="white"
@@ -300,7 +332,8 @@ const GenerateCourseReport = ({ user }) => {
               as="a"
               height="10"
               rounded="md"
-              width="40"
+              width="100%"
+              
               _hover={{
                 background: "teal",
                 color: "white",
@@ -410,7 +443,7 @@ const GenerateCourseReport = ({ user }) => {
             </Text>
           ))}
 
-        {semJson && theDepartment && (
+        {semJson && theDepartment && combinedList &&(
           <Text
             fontWeight="bold"
             mt="4em"
@@ -422,20 +455,18 @@ const GenerateCourseReport = ({ user }) => {
           </Text>
         )}
 
-        {semJson &&
-          theDepartment &&
-          selectCourse != "There are no course for this semester" && (
-            <CourseList
-              year={year}
-              term={term}
-              department={theDepartment}
-              courseNumber={selectCourse}
-              columns={columns}
-              data={courseList}
-              instructorList={instructorList}
-              refreshTable={refreshTable}
-            />
-          )}
+        {semJson && theDepartment && combinedList &&(
+          <CourseList
+            year={year}
+            term={term}
+            department={theDepartment}
+            courseNumber={selectCourse}
+            columns={columns}
+            data={combinedList}
+            instructorList={instructorList}
+            refreshTable={refreshTable}
+          />
+        )}
       </Box>
     </div>
   );
