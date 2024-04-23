@@ -88,6 +88,12 @@ export async function deleteSemester(term, year) {
   return response;
 }
 
+export async function getCoursesCompleted(term, year) {
+  let api_helper = new API();
+  let response = await api_helper.getCoursesCompleted(term, year);
+  return response;
+}
+
 // All majors endpoint
 export async function getMajors(term, year) {
   let api_helper = new API();
@@ -253,6 +259,22 @@ export async function getSectionsByCourse(
 ) {
   let api_helper = new API();
   let response = await api_helper.getSectionsByCourse(
+    term,
+    year,
+    department,
+    courseNumber
+  );
+  return response;
+}
+
+export async function getNumberOfSectionsInCourse(
+  term,
+  year,
+  department,
+  courseNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.getNumberOfSectionsInCourse(
     term,
     year,
     department,
@@ -680,6 +702,22 @@ export async function getGrades(
   return response;
 }
 
+export async function getGradesByCourse(
+  year,
+  term,
+  department,
+  courseNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.getGradesByCourse(
+    year,
+    term,
+    department,
+    courseNumber
+  );
+  return response;
+}
+
 export async function setGrades(
   year,
   term,
@@ -714,6 +752,22 @@ export async function GetStudentOutcomesCompleted(
     department,
     courseNumber,
     sectionNumber
+  );
+  return response;
+}
+
+export async function GetCourseStudentOutcomesCompleted(
+  year,
+  term,
+  department,
+  courseNumber
+) {
+  let api_helper = new API();
+  let response = await api_helper.GetCourseStudentOutcomesCompleted(
+    year,
+    term,
+    department,
+    courseNumber
   );
   return response;
 }

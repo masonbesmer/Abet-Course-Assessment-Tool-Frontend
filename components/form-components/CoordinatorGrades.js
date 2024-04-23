@@ -23,7 +23,7 @@ const GradesInput = ({ ceGrades, csGrades, itGrades, cysGrades }) => {
           disabled
           defaultValue={ceGrades[entry]}
           min={0}
-          max={30}
+          max={100}
           w="50%"
         >
           <NumberInputField />
@@ -41,7 +41,7 @@ const GradesInput = ({ ceGrades, csGrades, itGrades, cysGrades }) => {
           disabled
           defaultValue={csGrades[entry]}
           min={0}
-          max={30}
+          max={100}
           w="50%"
         >
           <NumberInputField />
@@ -59,7 +59,7 @@ const GradesInput = ({ ceGrades, csGrades, itGrades, cysGrades }) => {
           disabled
           defaultValue={itGrades[entry]}
           min={0}
-          max={30}
+          max={100}
           w="50%"
         >
           <NumberInputField />
@@ -77,7 +77,7 @@ const GradesInput = ({ ceGrades, csGrades, itGrades, cysGrades }) => {
           disabled
           defaultValue={cysGrades[entry]}
           min={0}
-          max={30}
+          max={100}
           w="50%"
         >
           <NumberInputField />
@@ -112,7 +112,7 @@ const GradesInput = ({ ceGrades, csGrades, itGrades, cysGrades }) => {
                 <Text fontWeight="bold">CS</Text>
               </Td>
               <Td>
-                <HStack>{renderCeGrades}</HStack>
+                <HStack>{renderCsGrades}</HStack>
               </Td>
             </Tr>
             <Tr>
@@ -120,7 +120,7 @@ const GradesInput = ({ ceGrades, csGrades, itGrades, cysGrades }) => {
                 <Text fontWeight="bold">CE</Text>
               </Td>
               <Td>
-                <HStack>{renderCsGrades}</HStack>
+                <HStack>{renderCeGrades}</HStack>
               </Td>
             </Tr>
             <Tr>
